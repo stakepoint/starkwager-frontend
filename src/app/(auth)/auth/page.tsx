@@ -1,4 +1,7 @@
+import { buttonVariants } from "@/components/ui/button";
 import ConnectWallet from "@/components/wallets/connectWallet";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 import React from "react";
 
 export default function Page() {
@@ -16,6 +19,12 @@ export default function Page() {
       <div className="pt-5">
         <ConnectWallet />
       </div>
+      <Link
+        className={cn(buttonVariants({ variant: "default" }))}
+        href="/setup"
+      >
+        Demo Skip
+      </Link>
     </section>
   );
 }
