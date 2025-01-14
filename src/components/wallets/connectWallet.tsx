@@ -45,7 +45,7 @@ export default function ConnectWallet() {
               }}
             >
               <div className="flex text-blue-950 font-medium items-center gap-1">
-                {getSvgById(connector.id)}
+                {getSvgById(connector.id as any, { className: "" })}
                 <p className="text-sm tracking-tight">{connector.name}</p>
               </div>
             </button>

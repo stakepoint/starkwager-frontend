@@ -1,7 +1,9 @@
 export default function DashboardNavbar() {
   return (
-    <nav>
-      <h1>Dashboard navbar</h1>
+    <nav className=" h-[7rem] flex items-center   container mx-auto w-full">
+      <div>
+        <h1 className="text-2xl font-semibold">HOME</h1>
+      </div>
     </nav>
   );
 }
