@@ -1,4 +1,4 @@
-import { getSvgById, SVG_ICONS } from "@/svgs";
+import { getSvgById } from "@/svgs";
 import Link from "next/link";
 import React from "react";
 
