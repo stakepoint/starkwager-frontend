@@ -32,7 +32,8 @@ export default function ConnectWallet() {
               onClick={() => {
                 if (
                   (connector.id === "argentX" || connector.id === "braavos") &&
-                  !(globalThis as any)[`starknet_${connector.id}`]
+                  // @ts-expect-error lib not inferring types
+                  !globalThis[`starknet_${connector.id}`]
                 ) {
                   if (connector.id === "argentX")
                     window.open(ARGENT_X_INSTALL_URL);
@@ -45,7 +46,7 @@ export default function ConnectWallet() {
               }}
             >
               <div className="flex text-blue-950 font-medium items-center gap-1">
-                {/* @ts-expect-error  */}
+                {/* @ts-expect-error lib not inferring types  */}
                 {getSvgById(connector.id, { className: "" })}
                 <p className="text-sm tracking-tight">{connector.name}</p>
               </div>
