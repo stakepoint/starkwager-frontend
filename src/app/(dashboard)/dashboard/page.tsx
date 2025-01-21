@@ -1,5 +1,6 @@
+import DashboardHome from "@/module/dashboard/home";
 import React from "react";
 
-export default function Page() {
-  return <div className="w-full ">page</div>;
+export default function page() {
+  return <DashboardHome />;
 }
