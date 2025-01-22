@@ -1,4 +1,4 @@
-# StarkWager Mobile Contribution Guide 🎲
+# StarkWager Frontend Contribution Guide 🎲
 
 Thank you for contributing to StarkWager! Your efforts help make this platform great.
 
