@@ -1,75 +1,101 @@
-# StarkWager - mobile contribution guide 🎲
-First off, thank you for considering contributing to StarkWager! It's people like you that make StarkWager such a great platform.
+# StarkWager Mobile Contribution Guide 🎲
+
+Thank you for contributing to StarkWager! Your efforts help make this platform great.
+
+## 🚨 Important Note Before Applying
+
+Avoid generic comments like:  
+🚫 _"Can I help?"_  
+🚫 _"I’d love to contribute!"_  
+Instead, include:
+
+1. A brief introduction about yourself.
+2. A concise plan to solve the issue (3-6 lines).
+3. Your estimated completion time (ETA).
+
 ---
-## Important Note Before Applying 📝
-**⚠️ Avoid Generic Comments:**
-Comments like:
-🚫 *"Can I help on this one?"*
-🚫 *"I’d love to contribute!"*
-🚫 *"Checkout my profile!"*
-🚫 *"Can I tackle this?"*
-**Won't be considered**.
-Instead, provide a **clear explanation of your approach **, including:
-- An introduction about yourself
-- A concise plan to solve the issue (3-6 lines max).
-- Your estimated completion time (ETA).
----
-## Steps to Contribute🤝
+
+## Steps to Contribute 🤝
+
 ### 1. Apply for an Issue
-- Look for an open issue and comment expressing your interest to work on it.
+
+- Choose an open issue and comment with your plan.
 - Wait for the maintainer to assign the issue to you.
-- Remember to apply only if you are able to solve the issue.
-- In the comment, Add a quick introduction about yourself, The ETA, and how you plan to tackle the issue.
----
-### 2. Fork and Clone the Repository
-1. Fork the repository from GitHub.
-2. Clone it to your local machine:
+- Apply only if you’re confident in solving it.
+
+### 2. Fork & Clone the Repo
+
+1. Fork the repo on GitHub.
+2. Clone it locally:
    ```bash
    git clone https://github.com/stakepoint/starkwager-frontend.git
-   cd [reponame]
+   cd starkwager-frontend
    ```
-   
---- 
+
 ### 3. Create a Branch
-Create a new branch following our branch naming convention:
-```bash
-git checkout -b feature/issue-title-code
-```
-### Branch Naming Convention
-All branches should be created with the following naming pattern:
-Where XXX is the issue number from our issue tracking system. For example:
+
+Follow this naming convention:  
+`feature/issue-title-XXX` (where XXX is the issue number). Example:
+
 - `STRKWGR-001`
-- `STRKWGR-022`
 - `STRKWGR-123`
----
+
 ### 4. Write Code
-- Follow coding standards.
-- Ensure your code is well-documented and tested.
----
-### 6. Submit a Pull Request
-1. Push your branch to GitHub:
+
+- Adhere to coding standards.
+- Add documentation and tests.
+
+### 5. Submit a Pull Request (PR)
+
+1. Push your branch:
    ```bash
-   git push origin feature/issue-title
+   git push origin feature/issue-title-XXX
    ```
-2. Open a pull request (PR) with:
-    - A clear description of your solution.
-    - A reference to the issue number.
-    - Ensure your branch is up to date with the `staging` branch.
-    - Push your changes to your branch.
-Wait for reviews, make updates if needed, and get your PR merged!
---- 
-## Commit Message Guidelines
-Use the following types for your commit messages:
-- **feat:** A new feature
-- **fix:** A bug fix
-- **docs:** Documentation only changes
-- **style:** Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc.)
-- **refactor:** A code change that neither fixes a bug nor adds a feature (improvements of the code structure)
-- **perf:** A code change that improves performance
-- **test:** Adding missing or correcting existing tests
-- **build:** Changes that affect the build system or external dependencies (example scopes: gulp, npm)
-- **ci:** Changes to CI configuration files and scripts (example scopes: travis, circle)
-- **chore:** Other changes that don't modify src or test files
-- **revert:** Reverts a previous commit
+2. Open a PR with:
+   - A clear description of your solution.
+   - A reference to the issue number.
+   - Updates merged with `staging`.
+
 ---
-Thank you for contributing to StarkWager! Let us know if you need any help.
+
+## 📂 Project Structure
+
+### Folder Organization
+
+1. **`app/`**:
+
+   - **Purpose**: Use this folder only to render components.
+   - Keep it lean and focused on rendering logic.
+
+2. **`module/`**:
+
+   - **Purpose**: Build all new pages and related functionality here.
+   - Create modular, self-contained features for scalability.
+
+3. **Other Guidelines**:
+   - Keep components reusable and within their respective modules.
+   - Svgs should go inside the `/svgs` folder
+   - UI should go inside the `/components/ui` folder
+   - Shared utilities and assets should go into a designated `libs/` folder.
+
+---
+
+## Commit Message Guidelines
+
+Use these prefixes for commits:
+
+- **feat:** New feature
+- **fix:** Bug fix
+- **docs:** Documentation changes
+- **style:** Non-functional code changes (e.g., formatting)
+- **refactor:** Code structure improvements
+- **perf:** Performance enhancements
+- **test:** Adding or updating tests
+- **build:** Build-related changes
+- **ci:** CI configuration updates
+- **chore:** Non-code changes (e.g., config files)
+- **revert:** Reverting a commit
+
+---
+
+Thank you for helping StarkWager grow! If you need assistance, feel free to reach out. 😊
