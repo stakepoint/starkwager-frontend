@@ -1,10 +1,16 @@
+
+'use client';
+
 import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useState } from "react";
 import { Copy, Plus } from "lucide-react";
 import EmptyStateView from "@/components/ui/emptystate";
 import { getSvgById } from "@/svgs";
+import FundWalletModal from "@/components/fundWallet/FundWalletModal";
 
 export default function DashboardHome() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <section className="w-full pb-[10rem]  mx-auto ">
       <div className="grid  pb-10 lg:gap-6 pt-5 lg:pt-[4rem] ">
@@ -38,11 +44,14 @@ export default function DashboardHome() {
                 className="rounded-sm text-blue-950 h-12 w-12"
                 variant="secondary"
                 size="icon"
+                onClick={() => setIsOpen(true)}
               >
                 <Plus />
               </Button>
               <span className="text-sm">Add Money</span>
             </div>
+            <FundWalletModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+
             <div className="bg-white w-full flex text-blue-950  items-center lg:px-1.5 lg:pr-6 gap-2 lg:w-fit p-1.5 rounded-sm">
               <Button
                 className="rounded-sm text-blue-950 h-12 w-12"
