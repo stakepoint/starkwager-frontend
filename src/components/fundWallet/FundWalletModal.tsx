@@ -1,6 +1,6 @@
 import React from "react";
 import { FundIcon } from "../../svgs/fundIcon";
-
+import { Button } from "../ui/button";
 interface FundWalletModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -36,10 +36,10 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({
                 </svg>
               </button>
             </div>
-            <h3 className="text-center font-semibold text-2xl sm:text-xl leading-[2.1] sm:leading-[1.75]">
+            <h3 className="text-center font-semibold text-2xl sm:text-xl leading-[2.1] sm:leading-[1.75] text-headingBlue">
               Fund Your Wallet
             </h3>
-            <p className="text-center text-base sm:text-sm text-[rgba(74,85,120,1)] tracking-tighter leading-[1.3] sm:leading-[1.3] mb-3">
+            <p className="text-center text-base sm:text-sm text-[rgba(74,85,120,1)] tracking-[-0.36px] leading-[1.3] sm:leading-[1.3] mb-3">
               To be able to create wagers you need to fund your wallet with
               Strk.
             </p>
@@ -47,12 +47,12 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({
               <FundIcon />
             </div>
             <div className="mt-4 flex justify-center">
-              <button
+              <Button
+                className="w-full max-w-[352px] sm:max-w-[311px] "
                 type="button"
-                className="w-full max-w-[352px] sm:max-w-[311px] h-14 px-4 py-3 rounded-[16px] inline-flex items-center justify-center bg-[#E0FE10] text-black hover:bg-[#D8EA0F] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E0FE10] focus-visible:ring-offset-2"
               >
                 Fund
-              </button>
+              </Button>
             </div>
           </div>
         </div>
