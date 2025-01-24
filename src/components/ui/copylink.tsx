@@ -9,7 +9,7 @@ const CopyLink = React.forwardRef<HTMLInputElement, {text: string} & React.Compo
         try {
           
           await navigator.clipboard.writeText(text);
-          alert('copied to clipboardd!');
+          alert('copied to clipboard!');
         } catch (err) {
           console.error('Failed to copy: ', err);
         }
@@ -19,7 +19,7 @@ const CopyLink = React.forwardRef<HTMLInputElement, {text: string} & React.Compo
         <input
             type="text"
             className={cn(
-            "flex flex-grow h-18 bg-[#EFF1F5] px-3 py-2 text-[18px] text-[#102A56] shadow-sm transition-colors",
+            "flex flex-grow h-18 bg-[#EFF1F5] px-3 py-2 text-lg text-[#102A56] shadow-sm transition-colors",
             className
             )}
             ref={ref}
@@ -38,4 +38,30 @@ const CopyLink = React.forwardRef<HTMLInputElement, {text: string} & React.Compo
 )
 CopyLink.displayName = "CopyLink"
 
-export { CopyLink }
+const MiniCopyLink: React.FC<{text: string}> = ({text}) => {
+    const copyValue = async () => {
+        try {
+          
+          await navigator.clipboard.writeText(text);
+          alert('copied to clipboard!');
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+        }
+    }
+    return (
+        <button className="flex cursor-pointer py-1 px-2 rounded-sm bg-white w-auto" onClick={copyValue}>
+            <span className="inline-block mr-2 text-base text-[#102A56] text-left">
+              {text}
+            </span>
+            <span>
+              {getSvgById("copy_icon_alt", {
+                  className: " w-4 h-4 lg:w-6 lg:h-6 ",
+              })}
+            </span>
+        </button>
+    )
+}
+
+MiniCopyLink.displayName = "AvatarCopyLink"
+
+export { CopyLink, MiniCopyLink }
