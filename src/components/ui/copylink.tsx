@@ -62,6 +62,6 @@ const MiniCopyLink: React.FC<{text: string}> = ({text}) => {
     )
 }
 
-MiniCopyLink.displayName = "AvatarCopyLink"
+MiniCopyLink.displayName = "MiniCopyLink"
 
 export { CopyLink, MiniCopyLink }
