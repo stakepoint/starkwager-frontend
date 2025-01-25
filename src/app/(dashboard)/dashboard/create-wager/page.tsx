@@ -1,6 +1,4 @@
-import React from "react";
-import CreateWager from "@/module/dashboard/wagers/CreateWager";
+import CreateWager from "@/module/dashboard/wagers/create-wager";
 export default function page() {
-  return <CreateWager/>
+  return <CreateWager />;
 }
-

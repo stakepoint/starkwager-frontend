@@ -37,7 +37,7 @@ export default function Sidebar() {
 
 export function SidebarDesktop() {
   return (
-    <aside className=" hidden  w-[13rem] px-5 py-4  lg:flex flex-col items-center h-screen overflow-y-auto  bg-gray-900">
+    <aside className=" hidden sticky top-0  w-[13rem] px-5 py-4  lg:flex flex-col items-center h-screen overflow-y-auto  bg-gray-900">
       <div className="w-full flex gap-8 flex-col items-center">
         {getSvgById("appLogo", { className: "w-28" })}
         <Button className="w-full flex items-center text-base font-medium">
