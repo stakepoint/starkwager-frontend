@@ -4,21 +4,12 @@ import Image from "next/image";
 import { ArrowLeft, Bell, Hash, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function WagerSummary() {
+function Wagers() {
   // List of hashtags for the wager
-  // const hashtags = [
-  //   "Bitcoin",
-  //   "STRKWager",
-  //   "BTCto100k",
-  //   "CryptoWagerting",
-  //   "BlockchainWager",
-  //   "CryptoTrends",
-  //   "Web3Challenge",
-  //   "DeFiPrediction",
-  // ];
   const hashtagsData = {
     title: "Crypto Wager Leaderboard",
-    description: "Stay ahead in the crypto betting scene with our live leaderboard!",
+    description:
+      "Stay ahead in the crypto betting scene with our live leaderboard!",
     hashtags: [
       "Bitcoin",
       "STRKWager",
@@ -30,7 +21,6 @@ export default function WagerSummary() {
       "DeFiPrediction",
     ],
   };
-  
 
   return (
     // Main container with light gray background
@@ -75,7 +65,6 @@ export default function WagerSummary() {
 
         {/* Battle card section */}
         <div className="mt-6 rounded-2xl bg-white py-6 shadow-sm">
-
           {/* Stake amount badge */}
           <div className="flex items-center justify-center">
             <span className=" rounded-full bg-gray-100  p-2 text-base font-medium text-blue-950 flex items-center gap-1">
@@ -126,7 +115,9 @@ export default function WagerSummary() {
                   />
                 </div>
               </div>
-              <span className="text-xs md:text-sm font-medium">Awaiting Opponent</span>
+              <span className="text-xs md:text-sm font-medium">
+                Awaiting Opponent
+              </span>
             </div>
           </div>
         </div>
@@ -182,25 +173,26 @@ export default function WagerSummary() {
             </h3>
             <div className="mt-2 space-y-4 text-sm font-medium text-blue-950">
               <p>
-                Think Bitcoin is on track to skyrocket past $100k? Here&apos;s your
-                chance to put your prediction to the test! This wager challenges
-                participants to predict whether Bitcoin will reach or exceed the
-                $100,000 mark by January 31, 2025. The official price will be
-                determined using CoinMarketCap&apos;s data at 11:59 PM UTC on the
-                deadline date.
+                Think Bitcoin is on track to skyrocket past $100k? Here&apos;s
+                your chance to put your prediction to the test! This wager
+                challenges participants to predict whether Bitcoin will reach or
+                exceed the $100,000 mark by January 31, 2025. The official price
+                will be determined using CoinMarketCap&apos;s data at 11:59 PM
+                UTC on the deadline date.
               </p>
               <p>
                 Participants must stake an equal amount of STRK tokens to join
                 this head-to-head challenge. If Bitcoin hits or surpasses $100k
-                by the specified date and time, those who wager &apos;Yes&apos; win the
-                wager. If it falls short, those who wager &apos;No&apos; take the prize.
+                by the specified date and time, those who wager &apos;Yes&apos;
+                win the wager. If it falls short, those who wager &apos;No&apos;
+                take the prize.
               </p>
               <p>
                 No extensions, no exceptions—this is your chance to back your
                 crypto knowledge with real stakes! Join now and see if your
                 prediction skills can earn you the ultimate reward in STRK
-                tokens. Let&apos;s see who&apos;s got what it takes to call the next big
-                crypto move!
+                tokens. Let&apos;s see who&apos;s got what it takes to call the
+                next big crypto move!
               </p>
             </div>
           </div>
@@ -236,10 +228,15 @@ export default function WagerSummary() {
           </div>
         </div>
       </div>
-       {/* Create wager button */}
-       <div className="bg-white flex justify-center p-4"> 
-        <Button size={"lg"} className="px-20"> Create Wager</Button>
-        </div>
+      {/* Create wager button */}
+      <div className="bg-white flex justify-center p-4">
+        <Button size={"lg"} className="px-20">
+          {" "}
+          Create Wager
+        </Button>
+      </div>
     </div>
   );
 }
+
+export default Wagers;

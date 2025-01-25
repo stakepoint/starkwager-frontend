@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import Wagers from "@/module/wagers/wagers_summary";
 import React from "react";
 
