@@ -6,16 +6,31 @@ import { Button } from "@/components/ui/button";
 
 export default function WagerSummary() {
   // List of hashtags for the wager
-  const hashtags = [
-    "Bitcoin",
-    "STRKWager",
-    "BTCto100k",
-    "CryptoWagerting",
-    "BlockchainWager",
-    "CryptoTrends",
-    "Web3Challenge",
-    "DeFiPrediction",
-  ];
+  // const hashtags = [
+  //   "Bitcoin",
+  //   "STRKWager",
+  //   "BTCto100k",
+  //   "CryptoWagerting",
+  //   "BlockchainWager",
+  //   "CryptoTrends",
+  //   "Web3Challenge",
+  //   "DeFiPrediction",
+  // ];
+  const hashtagsData = {
+    title: "Crypto Wager Leaderboard",
+    description: "Stay ahead in the crypto betting scene with our live leaderboard!",
+    hashtags: [
+      "Bitcoin",
+      "STRKWager",
+      "BTCto100k",
+      "CryptoWagering",
+      "BlockchainWager",
+      "CryptoTrends",
+      "Web3Challenge",
+      "DeFiPrediction",
+    ],
+  };
+  
 
   return (
     // Main container with light gray background
@@ -25,12 +40,12 @@ export default function WagerSummary() {
         <header className="sticky top-0 z-10 flex items-center justify-between bg-gray-50 py-4">
           {/* Left side: Back button and title */}
           <div className="flex items-center gap-4">
-            <button
+            <span
               className="rounded-full p-2 hover:bg-gray-100 transition-colors"
               aria-label="Go back"
             >
               <ArrowLeft className="h-5 w-5" />
-            </button>
+            </span>
             <h1 className="text-xl font-bold text-[#1a1f36]">WAGER SUMMARY</h1>
           </div>
 
@@ -194,8 +209,8 @@ export default function WagerSummary() {
           <div>
             <h3 className="text-sm font-medium text-gray-500">Hashtags</h3>
             <div className="mt-2 flex flex-wrap gap-2">
-              {hashtags.map((tag) => (
-                <button
+              {hashtagsData.hashtags.map((tag) => (
+                <span
                   key={tag}
                   className="inline-flex items-center rounded-full bg-white space-x-2 p-[6px] text-sm font-medium text-gray-900 hover:bg-gray-200 transition-colors"
                 >
@@ -204,7 +219,7 @@ export default function WagerSummary() {
                     <Hash className="" />
                   </span>
                   {tag}
-                </button>
+                </span>
               ))}
             </div>
           </div>
