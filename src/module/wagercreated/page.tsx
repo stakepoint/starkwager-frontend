@@ -41,7 +41,6 @@ export default function WagerCreated() {
 
         {/* Main content */}
         <main className="mt-12 text-center h-16 w-[592px]">
-
           <div className="mx-3 sm:m-0 gap-6">
           {/* Title */}
           <h1 className="text-blue-950 text-3xl/10 font-semibold text-start w-[592px] h-10 font-sans">WAGER CREATED</h1>
@@ -89,7 +88,6 @@ export default function WagerCreated() {
               </div>
             </div>
           </div>
-
           </div>
 
           {/* Action buttons */}
