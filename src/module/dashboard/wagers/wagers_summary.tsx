@@ -1,68 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, Bell, Hash, Info } from "lucide-react";
+import { Hash, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-function Wagers() {
-  // List of hashtags for the wager
-  const hashtagsData = {
-    title: "Crypto Wager Leaderboard",
-    description:
-      "Stay ahead in the crypto betting scene with our live leaderboard!",
-    hashtags: [
-      "Bitcoin",
-      "STRKWager",
-      "BTCto100k",
-      "CryptoWagering",
-      "BlockchainWager",
-      "CryptoTrends",
-      "Web3Challenge",
-      "DeFiPrediction",
-    ],
-  };
-
+const hashtagsData = {
+  title: "Crypto Wager Leaderboard",
+  description:
+    "Stay ahead in the crypto betting scene with our live leaderboard!",
+  hashtags: [
+    "Bitcoin",
+    "STRKWager",
+    "BTCto100k",
+    "CryptoWagering",
+    "BlockchainWager",
+    "CryptoTrends",
+    "Web3Challenge",
+    "DeFiPrediction",
+  ],
+};
+export default function WagerSummary() {
   return (
-    // Main container with light gray background
-    <div className="min-h-screen bg-gray-50">
-      <div className="mx-auto max-w-2xl px-4 pb-24">
-        {/* Sticky header with navigation and profile */}
-        <header className="sticky top-0 z-10 flex items-center justify-between bg-gray-50 py-4">
-          {/* Left side: Back button and title */}
-          <div className="flex items-center gap-4">
-            <span
-              className="rounded-full p-2 hover:bg-gray-100 transition-colors"
-              aria-label="Go back"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </span>
-            <h1 className="text-xl font-bold text-[#1a1f36]">WAGER SUMMARY</h1>
-          </div>
-
-          {/* Right side: Profile and notifications */}
-          <div className=" hidden md:flex items-center gap-4">
-            {/* Profile section */}
-            <div className="flex items-center gap-2">
-              <div className="relative h-8 w-8 overflow-hidden rounded-xl">
-                <Image
-                  src="/images/avatar.svg"
-                  alt="Profile avatar"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <span className="text-sm font-medium">@noyi24_7</span>
-            </div>
-            {/* Notification button */}
-            <button
-              className="rounded-full p-2 hover:bg-gray-100 transition-colors"
-              aria-label="Notifications"
-            >
-              <Bell className="h-5 w-5" />
-            </button>
-          </div>
-        </header>
-
+    <div className="mx-auto pb-20 lg:pb-5  max-w-xl">
+      <div className="gap-4 grid">
         {/* Battle card section */}
         <div className="mt-6 rounded-2xl bg-white py-6 shadow-sm">
           {/* Stake amount badge */}
@@ -123,7 +83,7 @@ function Wagers() {
         </div>
 
         {/* Wager details section */}
-        <div className="mt-6 space-y-6">
+        <div className="space-y-6">
           {/* Wager title */}
           <div>
             <h3 className="text-sm font-medium text-gray-400">
@@ -216,27 +176,22 @@ function Wagers() {
             </div>
           </div>
         </div>
-
-        {/* Warning message */}
-        <div className="flex justify-center items-center mt-6  ">
-          <div className="flex justify-center items-center gap-1 rounded-lg bg-white p-4 text-blue-950">
-            <Info className="h-5 w-5 flex-shrink-0" />
-            <p className="text-xs md:text-base font-medium ">
-              Always keep verifiable evidence of your wagers for dispute
-              resolution purposes.
-            </p>
-          </div>
-        </div>
       </div>
-      {/* Create wager button */}
-      <div className="bg-white flex justify-center p-4">
-        <Button size={"lg"} className="px-20">
+
+      <section className="py-5 mt-6 grid gap-8 border-t">
+        <div className="flex items-center gap-1 rounded-sm border bg-white pl-3 p-3  text-blue-950">
+          <Info className="h-5 w-5 flex-shrink-0" />
+          <p className=" text-sm font-medium ">
+            Always keep verifiable evidence of your wagers for dispute
+            resolution purposes.
+          </p>
+        </div>
+
+        <Button size={"lg"} className=" w-full ">
           {" "}
           Create Wager
         </Button>
-      </div>
+      </section>
     </div>
   );
 }
-
-export default Wagers;
