@@ -4,6 +4,7 @@ import { toast } from "sonner";
 
 import { Input } from "./input";
 import { Button } from "./button";
+import { cn } from "@/lib/utils";
 
 const CopyLink = React.forwardRef<
   HTMLInputElement,
@@ -20,9 +21,10 @@ const CopyLink = React.forwardRef<
   return (
     <div className="overflow-hidden flex rounded-sm h-18 w-full">
       <Input
-        className={
-          "flex flex-grow h-18 bg-[#EFF1F5] px-3 py-2 text-lg disabled:text-[#102A56] shadow-sm transition-colors rounded-none disabled:opacity-100 outline-none border-none"
-        }
+        className={cn(
+          "flex flex-grow h-18 bg-[#EFF1F5] px-3 py-2 text-lg disabled:text-[#102A56] shadow-sm transition-colors rounded-none disabled:opacity-100 outline-none border-none",
+          props.className
+        )}
         ref={ref}
         value={text}
         disabled
