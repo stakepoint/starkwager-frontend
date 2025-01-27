@@ -1,12 +1,30 @@
-"use client";
-
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
+import * as Yup from "yup";
+import { Input } from "@/components/ui/form/input";
 import { Button } from "@/components/ui/button";
 import { Camera } from "lucide-react";
+import { FormWrapper } from "@/components/ui/form/formwrapper";
 
 export default function SetupPage() {
-  const [username, setUsername] = useState("");
+  // Initial form values
+  const initialValues = {
+    username: "",
+  };
+
+  // Validation schema
+  const validationSchema = Yup.object({
+    username: Yup.string()
+      .min(6, "Username must be at least 6 characters")
+      .required("Username is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+  });
+
+  // Form submission handler
+  const handleSubmit = (values: Record<string, any>) => {
+    console.log("Submitted values:", values);
+  };
+
 
   return (
     <div className="flex flex-col w-full pt-[5rem] items-center justify-center">
@@ -27,18 +45,26 @@ export default function SetupPage() {
             <Camera size="16" className="text-blue-950" />
           </div>
         </div>
-        <Input
-          type="text"
-          placeholder="wager.strk/@username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+        <FormWrapper
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+          inputs={
+            <div className="gap-5">
+              <div className="gap-3">
+                <Input name="username" type="text" includeSpans={true} />
+              </div>
+            </div>
+          }
+          button={
+            <Button
+              variant="default"
+              className="font-medium text-xl tracking-[-2%] h-14 rounded-2xl mt-6"
+            >
+              Continue
+            </Button>
+          }
         />
-        <Button
-          variant="secondary"
-          className="font-medium text-xl tracking-[-2%] h-14 rounded-2xl"
-        >
-          Continue
-        </Button>
       </div>
     </div>
   );
