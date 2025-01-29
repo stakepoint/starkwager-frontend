@@ -18,27 +18,27 @@ const geistMono = localFont({
 const GeneralSans = localFont({
   src: [
     {
-      path: "/fonts/GeneralSans-Regular.woff2",
+      path: "./fonts/GeneralSans-Regular.woff2",
       weight: "400",
       style: "normal",
     },
     {
-      path: "/fonts/GeneralSans-Italic.woff2",
+      path: "./fonts/GeneralSans-Italic.woff2",
       weight: "400",
       style: "Italic",
     },
     {
-      path: "/fonts/GeneralSans-Medium.woff2",
+      path: "./fonts/GeneralSans-Medium.woff2",
       weight: "500",
       style: "normal",
     },
     {
-      path: "/fonts/GeneralSans-Bold.woff2",
+      path: "./fonts/GeneralSans-Bold.woff2",
       weight: "700",
       style: "normal",
     },
     {
-      path: "/fonts/GeneralSans-BoldItalic.woff2",
+      path: "./fonts/GeneralSans-BoldItalic.woff2",
       weight: "700",
       style: "Italic",
     },
