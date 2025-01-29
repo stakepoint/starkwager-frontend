@@ -1,8 +1,10 @@
-import * as Yup from "yup";
-import { Input } from "@/components/ui/form/input";
-import { Button } from "@/components/ui/button";
 import { Camera } from "lucide-react";
+import { CopyLink } from "@/components/ui/copylink";
 import { FormWrapper } from "@/components/ui/form/formwrapper";
+import { Input } from "@/components/ui/input";
+import * as Yup from "yup";
+import { useField } from "formik";
+import { Button } from "@/components/ui/button";
 
 export default function SetupPage() {
   // Initial form values
@@ -15,16 +17,12 @@ export default function SetupPage() {
     username: Yup.string()
       .min(6, "Username must be at least 6 characters")
       .required("Username is required"),
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
   });
 
   // Form submission handler
   const handleSubmit = (values: Record<string, any>) => {
     console.log("Submitted values:", values);
   };
-
 
   return (
     <div className="flex flex-col w-full pt-[5rem] items-center justify-center">
@@ -50,14 +48,13 @@ export default function SetupPage() {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
           inputs={
-            <div className="gap-5">
-              <div className="gap-3">
-                <Input name="username" type="text" includeSpans={true} />
-              </div>
+            <div className="flex flex-col space-y-2">
+              <UsernameField name="username" />
             </div>
           }
           button={
             <Button
+              type="submit"
               variant="default"
               className="font-medium text-xl tracking-[-2%] h-14 rounded-2xl mt-6"
             >
@@ -65,7 +62,33 @@ export default function SetupPage() {
             </Button>
           }
         />
+        <CopyLink text="czvzcvsdasdfad" />
       </div>
     </div>
   );
 }
+
+const UsernameField = ({ name }: { name: string }) => {
+  const [field, meta] = useField(name);
+
+  return (
+    <div className="flex flex-col space-y-2">
+      <div className="flex items-center bg-[#EFF1F5] rounded-lg px-4 py-6 h-20">
+        <div className="h-5">
+          <span className="text-[#B9C0D4] w-24 text-base tracking-tighter">wager.strk/ </span>
+          <span className="text-[#102A56] w-24 text-base tracking-tighter">@</span>
+        </div>
+        <div className="h-5 overflow-hidden">
+          <Input
+            {...field}
+            type="text"
+            className="flex flex-grow h-18 bg-[#EFF1F5] py-2 text-[#102A56] shadow-sm transition-colors rounded-none text-base tracking-tighter outline-none border-none"
+          />
+        </div>
+      </div>
+      {meta.touched && meta.error && (
+        <span className="text-sm text-red-500">{meta.error}</span>
+      )}
+    </div>
+  );
+};

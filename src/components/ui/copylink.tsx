@@ -2,7 +2,7 @@ import * as React from "react";
 import { getSvgById } from "@/svgs";
 import { toast } from "sonner";
 
-import { Input } from "@/components/ui/form/input";
+import { Input } from "./input";
 import { Button } from "./button";
 import { cn } from "@/lib/utils";
 
