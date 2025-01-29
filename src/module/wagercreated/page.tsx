@@ -43,23 +43,25 @@ export default function WagerCreated() {
         <main className="mt-12 text-center w-[592px]">
           <div className="mx-3 sm:m-0 gap-6">
           {/* Title */}
-          <h1 className="text-[#102A56] text-3xl/10 font-semibold text-start font-sans">WAGER CREATED</h1>
-          <p className="mt-2 text-[#4A5578] font-normal text-start tracking-tighter text-lg h-6">
+          <h1 className="text-[#102A56] text-[32px]/[120%] font-semibold text-start font-sans">WAGER CREATED</h1>
+          <p className="mt-2 text-[#4A5578] font-normal text-start tracking-[-0.36px] text-lg">
             Your wager has been created, send wager invite 🚀
           </p>
-          <div className="w-full h-[1px] bg-gray-100 my-2"></div>
+          <div className="w-full h-[1px] bg-[#E2E5EB] my-2 mt-6"></div>
 
           {/* Invite through username */}
-          <div className="mt-8 gap-5 ">
+          <div className="mt-8 gap-5">
             <div className="gap-3">
-              <p className="text-sm font-medium text-[#102A56] text-start font-sans tracking-tighter">Invite through username</p>
-              <div className="mt-1 flex items-center bg-gray-100 rounded-lg px-4 py-6 h-20">
-                <div className="gap-1 h-5">
+              <p className="text-sm font-medium text-[#102A56] text-start font-sans tracking-[-0.36px]">Invite through username</p>
+              <div className="mt-1 flex items-center bg-[#EFF1F5] rounded-lg px-4 py-6 h-20">
+                <div className="w-full flex">
+                <div className="gap-1 h-5"> 
                 <span className="text-[#B9C0D4] w-24 text-base tracking-tighter">wager.strk/ </span>
                 <span className="text-[#102A56] w-24 text-base tracking-tighter">@</span>
+                </div>
                 <input
                   type="text"
-                  className="flex-1 bg-transparent text-[#102A56] outline-none text-base tracking-tighter"
+                  className="flex-1 items-start bg-transparent text-[#102A56] outline-none text-base tracking-tighter"
                 />
                 </div>
               </div>
@@ -69,8 +71,8 @@ export default function WagerCreated() {
             {/* Invite publicly */}
             <div className="mt-8 gap-5">
             <div className="gap-3">
-              <p className="text-sm font-medium text-gray-700 text-start font-sans tracking-tighter">Invite publicly (Anyone with this link can join it)</p>
-              <div className="mt-1 flex items-center bg-gray-100 rounded-lg px-4 py-6 h-[72px] relative">
+              <p className="text-sm font-medium text-[#102A56] text-start font-sans tracking-tighter">Invite publicly (Anyone with this link can join it)</p>
+              <div className="mt-1 flex items-center bg-[#EFF1F5] rounded-lg px-4 py-6 h-[72px] relative">
               <div className="gap-1 h-5 flex">
                 <input
                   type="text"
