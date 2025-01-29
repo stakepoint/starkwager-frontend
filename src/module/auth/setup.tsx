@@ -1,5 +1,4 @@
 import { Camera } from "lucide-react";
-import { CopyLink } from "@/components/ui/copylink";
 import { FormWrapper } from "@/components/ui/form/formwrapper";
 import { Input } from "@/components/ui/input";
 import * as Yup from "yup";
@@ -62,7 +61,6 @@ export default function SetupPage() {
             </Button>
           }
         />
-        <CopyLink text="czvzcvsdasdfad" />
       </div>
     </div>
   );
