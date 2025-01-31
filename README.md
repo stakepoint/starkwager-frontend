@@ -5,17 +5,17 @@
 
 ## STARKWAGER - FRONTEND 🎲
 
- **StarkWager** is a decentralized application (dApp) designed to leverage the **StarkNet** ecosystem, enabling users to place wagers on simple agreements or competitions with minimal transaction fees. The app ensures a seamless experience for users to deposit, withdraw, and interact with wagers, making it a powerful tool in the StarkNet ecosystem.
+**StarkWager** is a decentralized application (dApp) designed to leverage the **StarkNet** ecosystem, enabling users to place wagers on simple agreements or competitions with minimal transaction fees. The app ensures a seamless experience for users to deposit, withdraw, and interact with wagers, making it a powerful tool in the StarkNet ecosystem.
 
 ---
+
 ## 🌟 Features
 
 - **Create wallet**: Get a wallet that can be funded and used to place a wager 🚧
-- **Connect existing wallet**: Easily fund wagers from already existing wallet (E.g Argent)  🚧
-- **Create/Join Wagers**: All operations are handled through smart contracts  🚧
-- **Invite Others**: Invite other users to join a wager  🚧
-- **Fair Distribution**: Rewards are distributed proportionally based on stake  🚧
-
+- **Connect existing wallet**: Easily fund wagers from already existing wallet (E.g Argent) 🚧
+- **Create/Join Wagers**: All operations are handled through smart contracts 🚧
+- **Invite Others**: Invite other users to join a wager 🚧
+- **Fair Distribution**: Rewards are distributed proportionally based on stake 🚧
 
 ## 🛠 Technology Stack
 
@@ -25,11 +25,24 @@
 
 ---
 
+## Contributors ✨
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ## Getting Started
 
 To get started with the StarkWager App, follow the instructions below:
 
 ### 1. Install Dependencies
+
 The project uses [pnpm](https://pnpm.io/) as the package manager. First, install pnpm globally:
 
 ```bash
@@ -43,6 +56,7 @@ pnpm install
 ```
 
 ### 2. Running the Development Server
+
 Start the development server to run the app locally:
 
 ```bash

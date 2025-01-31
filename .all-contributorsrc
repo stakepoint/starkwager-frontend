@@ -1,0 +1,15 @@
+{
+  "projectName": "starkwager",
+  "projectOwner": "stakepoint",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 150,
+  "commit": false,
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "contributors": [],
+  "commitConvention": "angular"
+}

@@ -1,0 +1,35 @@
+name: Update Contributors
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  update-contributors:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install All Contributors CLI
+        run: pnpm install all-contributors-cli
+
+      - name: Add Contributor
+        run: |
+          npx all-contributors add ${GITHUB_ACTOR} code 
+          npm all-contributors generate
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions [bot]!
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com
+          git add .
+          git commit -m "docs: add ${GITHUB_ACTOR} as a contributor" 
+          git push
