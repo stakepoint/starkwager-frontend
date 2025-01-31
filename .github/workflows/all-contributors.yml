@@ -20,7 +20,6 @@ jobs:
 
       - name: Install pnpm
         run: npm install -g pnpm
-          node-version: 16
 
       - name: Install All Contributors CLI
         run: pnpm install all-contributors-cli
@@ -37,3 +36,4 @@ jobs:
           git add .
           git commit -m "docs: add ${GITHUB_ACTOR} as a contributor" 
           git push
+

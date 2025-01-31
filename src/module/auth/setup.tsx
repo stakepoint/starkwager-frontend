@@ -80,7 +80,7 @@ const UsernameField = ({ name }: { name: string }) => {
           <Input
             {...field}
             type="text"
-            className="flex flex-grow h-18 bg-[#EFF1F5] py-2 text-[#102A56] shadow-sm transition-colors rounded-none text-base tracking-tighter outline-none border-none"
+            className="flex flex-grow h-18 bg-[#EFF1F5] py-2 text-[#102A56] shadow-sm transition-colors rounded-none text-base tracking-tighter outline-none border-none px-0"
           />
         </div>
       </div>
