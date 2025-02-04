@@ -1,4 +1,3 @@
-"use client";
 import SetupPage from "@/module/auth/setup";
 import React from "react";
 

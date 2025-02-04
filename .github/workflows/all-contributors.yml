@@ -36,4 +36,3 @@ jobs:
           git add .
           git commit -m "docs: add ${GITHUB_ACTOR} as a contributor" 
           git push
-
