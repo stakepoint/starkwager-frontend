@@ -21,18 +21,21 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
+      - name: Install Dependencies
+        run: pnpm install
+
       - name: Install All Contributors CLI
-        run: pnpm install all-contributors-cli
+        run: pnpm add -g all-contributors-cli
 
       - name: Add Contributor
         run: |
-          npx all-contributors add ${GITHUB_ACTOR} code 
-          npm all-contributors generate
+          all-contributors add ${GITHUB_ACTOR} code 
+          all-contributors generate
 
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions [bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "docs: add ${GITHUB_ACTOR} as a contributor" 
+          git commit -m "docs: add ${GITHUB_ACTOR} as a contributor" || echo "No changes to commit"
           git push
