@@ -22,7 +22,7 @@ jobs:
         run: npm install -g pnpm
 
       - name: Set up pnpm global bin directory
-        run: pnpm setup
+        run: SHELL=/bin/bash pnpm setup
 
       - name: Add pnpm global bin directory to PATH
         run: echo "$(pnpm bin -g)" >> $GITHUB_PATH
