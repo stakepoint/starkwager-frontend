@@ -2,17 +2,19 @@
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Camera } from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default function SetupPage() {
   const [username, setUsername] = useState("");
 
   return (
-    <div className="flex flex-col w-full pt-[5rem] items-center justify-center">
-      <div className="text-primary w-full max-w-sm flex flex-col gap-6">
+    <div className="flex flex-col w-full pt-[5rem] items-center justify-center px-4 md:px-0">
+      <div className="text-primary w-full max-w-md flex flex-col gap-6">
         <div className="">
-          <h1 className="text-3xl font-semibold tracking-tight text-blue-950">
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-blue-950">
             SET UP YOUR PROFILE
           </h1>
           <p className="mt-2 text-blue-950 tracking-tighter">
@@ -27,18 +29,36 @@ export default function SetupPage() {
             <Camera size="16" className="text-blue-950" />
           </div>
         </div>
-        <Input
-          type="text"
-          placeholder="wager.strk/@username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        <div className="flex items-center bg-[#EFF1F5] rounded-lg px-[18px] py-6 h-[72px]">
+          <div className="">
+            <span className="text-[#B9C0D4] w-24 text-base tracking-tighter">
+              wager.strk/{" "}
+            </span>
+            <span className="text-[#102A56] w-24 text-base tracking-tighter">
+              @
+            </span>
+          </div>
+          <div className="flex flex-grow">
+            <Input
+              type="text"
+              value={username}
+              placeholder="username"
+              className="flex flex-grow text-[#102A56] py-8 bg-transparent transition-colors rounded-none text-base tracking-tighter outline-none border border-transparent px-0"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+        </div>
         <Button
-          variant="secondary"
-          className="font-medium text-xl tracking-[-2%] h-14 rounded-2xl"
-        >
+          variant="default"
+          disabled={!username}
+          className="font-medium text-xl tracking-[-2%] h-14 rounded-2xl disabled:cursor-not-allowed disabled:opacity-[0.32]">
           Continue
         </Button>
+        <Link
+          className={cn(buttonVariants({ variant: "default" }))}
+          href="/dashboard">
+          Demo Skip
+        </Link>
       </div>
     </div>
   );
