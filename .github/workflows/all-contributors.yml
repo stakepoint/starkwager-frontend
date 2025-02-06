@@ -21,11 +21,20 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
-      - name: Install Dependencies
-        run: pnpm install
+      - name: Set up pnpm global bin directory
+        run: pnpm setup
+
+      - name: Add pnpm global bin directory to PATH
+        run: echo "$(pnpm bin -g)" >> $GITHUB_PATH
 
       - name: Install All Contributors CLI
         run: pnpm add -g all-contributors-cli
+
+      - name: Verify Installation
+        run: all-contributors --version
+
+      - name: Install Dependencies
+        run: pnpm install
 
       - name: Add Contributor
         run: |
