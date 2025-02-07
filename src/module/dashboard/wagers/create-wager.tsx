@@ -13,11 +13,11 @@ import { getSvgById } from "@/svgs";
 export default function CreateWager() {
   return (
     <div className="w-full max-w-xl py-[4rem]  mx-auto">
-      <form className="">
-        <div className="grid gap-3 grid-cols-2">
+      <form className="flex flex-col gap-5">
+        <div className="flex flex-col md:flex-row gap-3">
           <Select>
             <SelectTrigger>
-              <SelectValue placeholder="Select Category" />
+              <SelectValue placeholder="Select Category" className="text-blue-1 font-medium" />
             </SelectTrigger>
             <SelectContent className="border-none text-blue-950">
               <SelectItem value="category1">Category 1</SelectItem>
@@ -53,14 +53,14 @@ export default function CreateWager() {
           <div className="mt-3">
             <label
               htmlFor="title"
-              className="text-sm tracking-tight text-blue-950"
+              className="text-sm tracking-tight text-blue-1 font-medium mb-3"
             >
               Title of your wager
             </label>
 
             <Input
               id="title"
-              className=" h-14 rounded-[12px]  border-none bg-accent-100 placeholder:text-[#B9C0D4] shadow-none focus:ring-0  mt-1 outline-none"
+              className=" h-14 rounded-[12px]  border-none bg-accent-100 placeholder:text-[#B9C0D4] shadow-none focus:ring-0  mt-3 outline-none"
               placeholder="wager.strk/"
             />
           </div>
@@ -75,7 +75,7 @@ export default function CreateWager() {
           <div>
             <label
               htmlFor="terms"
-              className="text-sm tracking-tight text-blue-950"
+              className="text-sm tracking-tight text-blue-1 font-medium"
             >
               Terms or Wager Description
             </label>
@@ -97,7 +97,7 @@ export default function CreateWager() {
           <div>
             <label
               htmlFor="stake"
-              className="text-sm tracking-tight text-blue-950"
+              className="text-sm tracking-tight text-blue-1 font-medium"
             >
               Stake
             </label>
@@ -116,7 +116,7 @@ export default function CreateWager() {
 
         {/* Continue Button */}
         <div className="flex justify-center pt-5">
-          <Button className="w-full">Continue</Button>
+          <Button className="w-full max-w-[384px] text-lg font-medium tracking-[-0.36px]">Continue</Button>
         </div>
       </form>
     </div>

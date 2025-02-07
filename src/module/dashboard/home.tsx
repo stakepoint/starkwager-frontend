@@ -8,13 +8,14 @@ import { getSvgById } from "@/svgs";
 
 import { ModalView } from "@/components/ui/modals";
 import FundWalletModal from "@/components/wallets/fundWallet";
+import { WithdrawIcon } from "@/svgs/withdrawIcon";
 
 export default function DashboardHome() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <ModalView open={isOpen} setOpen={setIsOpen}>
+      <ModalView open={isOpen} setOpen={setIsOpen} className="max-w-[400px] p-6 rounded-2xl">
         <FundWalletModal onClose={() => setIsOpen(false)} />
       </ModalView>
       <section className="w-full pb-[10rem]  mx-auto ">
@@ -62,7 +63,7 @@ export default function DashboardHome() {
                   variant="secondary"
                   size="icon"
                 >
-                  <Plus />
+                  <WithdrawIcon />
                 </Button>
                 <span className="text-sm">Withdraw</span>
               </div>
