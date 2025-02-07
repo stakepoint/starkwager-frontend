@@ -1,5 +1,4 @@
 import { getSvgById } from "@/svgs";
-import { Button } from "@/components/ui/button";
 import React from "react";
 import Link from "next/link";
 
@@ -40,10 +39,10 @@ export function SidebarDesktop() {
     <aside className=" hidden sticky top-0  w-[13rem] px-5 py-4  lg:flex flex-col items-center h-screen overflow-y-auto  bg-gray-900">
       <div className="w-full flex gap-8 flex-col items-center">
         {getSvgById("appLogo", { className: "w-28" })}
-        <Button className="w-full flex items-center text-base font-medium">
+        <Link href="/dashboard/create-wager" className="w-full flex items-center justify-center gap-3 text-base font-medium bg-secondary rounded-2xl p-4">
           {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}
           New Wager
-        </Button>
+        </Link>
       </div>
       <div className="pt-[5.5rem]">
         <div className="text-white flex flex-col items-center gap-4">
