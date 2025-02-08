@@ -14,7 +14,7 @@ const sideLinks = [
   },
   {
     name: "Wagers",
-    url: "/dashboard/wager",
+    url: "/dashboard/wagers",
     icon: (className: string) => getSvgById("shake_icon", { className }),
   },
   {
