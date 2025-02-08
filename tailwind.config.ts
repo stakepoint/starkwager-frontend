@@ -10,6 +10,7 @@ const config: Config = {
         foreground: "hsl(var(--foreground))",
         headingBlue: "rgba(16, 42, 86, 1)",
         "grey-1": "#4A5578",
+        "grey-2": "#9DA4AE",
         "body-bg": "#F9F9FB",
         "input-bg": "#EFF1F5",
         "blue-1": "#102A56",
