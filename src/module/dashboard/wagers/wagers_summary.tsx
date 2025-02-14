@@ -21,13 +21,13 @@ const hashtagsData = {
 };
 export default function WagerSummary() {
   return (
-    <div className="mx-auto pb-20 lg:pb-5  max-w-xl">
+    <div className="mx-auto pb-20 lg:pb-5 max-w-xl">
       <div className="gap-4 grid">
         {/* Battle card section */}
         <div className="mt-6 rounded-2xl bg-white py-6 shadow-sm">
           {/* Stake amount badge */}
           <div className="flex items-center justify-center">
-            <span className=" rounded-full bg-gray-100  p-2 text-base font-medium text-blue-950 flex items-center gap-1">
+            <span className=" rounded-full bg-input-bg p-2 text-base font-medium text-blue-1 flex items-center gap-1">
               <div className="relative h-4 w-4 overflow-hidden rounded-xl">
                 <Image
                   src="/images/StrkLogo.svg"
@@ -43,7 +43,7 @@ export default function WagerSummary() {
           {/* VS battle display */}
           <div className="mt-4 flex items-center justify-evenly">
             {/* Player 1 */}
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-2 w-[128px]">
               <div className="h-12 w-12 rounded-xl bg-gray-100 flex items-center justify-center">
                 <div className="relative h-12 w-12 overflow-hidden rounded-xl">
                   <Image
@@ -58,13 +58,13 @@ export default function WagerSummary() {
             </div>
 
             {/* VS indicator */}
-            <div className="text-center ml-5 text-blue-950">
+            <div className="text-center text-blue-950">
               <div className="text-xs md:text-sm  mb-1 ">One-on-One</div>
               <div className="text-2xl md:text-5xl font-bold italic">VS</div>
             </div>
 
             {/* Awaiting opponent */}
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-2 w-[128px]">
               <div className="h-12 w-12 rounded-xl bg-gray-100 flex items-center justify-center">
                 <div className="relative h-12 w-12 overflow-hidden rounded-xl">
                   <Image
@@ -82,21 +82,18 @@ export default function WagerSummary() {
           </div>
         </div>
 
-        {/* Wager details section */}
-        <div className="space-y-6">
-          {/* Wager title */}
+        <div className="space-y-5">
           <div>
-            <h3 className="text-sm font-medium text-gray-400">
+            <h3 className="text-sm md:text-base font-medium text-grey-3">
               Title of your Wager
             </h3>
-            <p className="mt-1 text-xs md:text-base font-semibold text-blue-950">
+            <p className="mt-2 text-sm md:text-base font-medium text-blue-1">
               Will Bitcoin Hit $100k Before January 31, 2025?
             </p>
           </div>
 
-          {/* Potential winnings */}
           <div>
-            <h3 className="text-sm font-medium text-gray-400">
+            <h3 className="text-sm md:text-base font-medium text-grey-3">
               Potential Winnings
             </h3>
             <div className="flex mt-2">
@@ -117,7 +114,7 @@ export default function WagerSummary() {
           {/* Platform fee */}
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-medium text-gray-400">
+              <h3 className="text-sm md:text-base font-medium text-grey-3">
                 Platform Fee
               </h3>
             </div>
@@ -126,12 +123,11 @@ export default function WagerSummary() {
             </span>
           </div>
 
-          {/* Terms and description */}
           <div>
-            <h3 className="text-sm font-medium text-gray-400">
+            <h3 className="text-sm md:text-base font-medium text-grey-3">
               Terms or Wager Description
             </h3>
-            <div className="mt-2 space-y-4 text-sm font-medium text-blue-950">
+            <div className="mt-2 space-y-4 text-sm md:text-base font-medium text-blue-950">
               <p>
                 Think Bitcoin is on track to skyrocket past $100k? Here&apos;s
                 your chance to put your prediction to the test! This wager
@@ -157,14 +153,13 @@ export default function WagerSummary() {
             </div>
           </div>
 
-          {/* Hashtags section */}
           <div>
-            <h3 className="text-sm font-medium text-gray-500">Hashtags</h3>
+            <h3 className="text-sm md:text-base font-medium text-grey-3">Hashtags</h3>
             <div className="mt-2 flex flex-wrap gap-2">
               {hashtagsData.hashtags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center rounded-full bg-white space-x-2 p-[6px] text-sm font-medium text-gray-900 hover:bg-gray-200 transition-colors"
+                  className="inline-flex items-center rounded-full bg-white space-x-2 p-[6px] text-sm md:text-base font-medium text-gray-900 hover:bg-gray-200 transition-colors"
                 >
                   <span className="pr-1">
                     {" "}
@@ -178,16 +173,16 @@ export default function WagerSummary() {
         </div>
       </div>
 
-      <section className="py-5 mt-6 grid gap-8 border-t">
-        <div className="flex items-center gap-1 rounded-sm border bg-white pl-3 p-3  text-blue-950">
+      <section className="py-6 mt-6 grid gap-8 border-t">
+        <div className="flex items-center gap-3 rounded-sm border bg-white pl-3 p-3 text-blue-1">
           <Info className="h-5 w-5 flex-shrink-0" />
-          <p className=" text-sm font-medium ">
+          <p className=" text-sm md:text-base font-medium ">
             Always keep verifiable evidence of your wagers for dispute
             resolution purposes.
           </p>
         </div>
 
-        <Button size={"lg"} className=" w-full ">
+        <Button size={"lg"} className=" w-full max-w-[343px] mx-auto h-14 text-lg font-medium tracking-[-0.36px]">
           {" "}
           Create Wager
         </Button>

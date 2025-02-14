@@ -11,7 +11,7 @@ export default function EmptyStateView({
       {getSvgById("empty_icon", {
         className: " w-16 h-16 lg:w-24 lg:h-24 ",
       })}
-      <p className="text-[#7D89B0]">{text}</p>
+      <p className="text-grey-3">{text}</p>
     </div>
   );
 }
