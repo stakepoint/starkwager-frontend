@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { getSvgById } from "@/svgs";
 import React from "react";
@@ -44,8 +44,10 @@ export function SidebarDesktop() {
   return (
     <aside className=" hidden sticky top-0  w-[13rem] px-5 py-4  lg:flex flex-col items-center h-screen overflow-y-auto  bg-gray-900">
       <div className="w-full flex gap-8 flex-col items-center">
-        {getSvgById("appLogo", { className: "w-28" })}
-        <Link href="/dashboard/create-wager" className="w-full flex items-center justify-center gap-3 text-base font-medium bg-secondary rounded-2xl p-4">
+        <Link href="/dashboard">{getSvgById("appLogo", { className: "w-28" })}</Link>
+        <Link
+          href="/dashboard/create-wager"
+          className="w-full flex items-center justify-center gap-3 text-base font-medium bg-secondary rounded-2xl p-4">
           {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}
           New Wager
         </Link>
@@ -54,10 +56,11 @@ export function SidebarDesktop() {
         <div className="text-white flex flex-col items-center gap-4">
           {sideLinks.map((item, idx) => (
             <Link
-              className={cn(`flex group fill-gray-500 text-gray-500 gap-2 flex-col items-center text-xs`)}
+              className={cn(
+                `flex group fill-gray-500 text-gray-500 gap-2 flex-col items-center text-xs`
+              )}
               href={item.url}
-              key={idx}
-            >
+              key={idx}>
               <div className="w-[3.5rem] h-8 justify-center flex flex-col items-center group-hover:fill-primary group-hover:bg-transparent bg-gray-800  rounded-2xl ">
                 {item.icon(
                   cn(
@@ -65,20 +68,24 @@ export function SidebarDesktop() {
                     path === item.url ? "fill-secondary" : "fill-gray-500"
                   )
                 )}
-
               </div>
-              <span className={cn(`group-hover:text-primary`, path === item.url && 'text-secondary font-bold')}>{item.name}</span>
+              <span
+                className={cn(
+                  `group-hover:text-primary`,
+                  path === item.url && "text-secondary font-bold"
+                )}>
+                {item.name}
+              </span>
             </Link>
           ))}
         </div>
       </div>
-    </aside >
+    </aside>
   );
 }
 
 export function SidebarMobile() {
   const path = usePathname();
-
 
   return (
     <aside className="md:hidden left-0  fixed bottom-0 w-full  py-3 flex flex-col items-center   bg-gray-900">
@@ -88,8 +95,7 @@ export function SidebarMobile() {
             <Link
               className="flex group w-full fill-gray-500 text-gray-500 gap-2 flex-col items-center text-xs"
               href="#"
-              key={idx}
-            >
+              key={idx}>
               <div className="w-[3.5rem] h-8 justify-center flex flex-col items-center group-hover:fill-primary group-hover:bg-transparent bg-gray-800  rounded-2xl ">
                 {item.icon(
                   cn(
@@ -97,9 +103,14 @@ export function SidebarMobile() {
                     path === item.url ? "fill-secondary" : "fill-gray-500"
                   )
                 )}
-
               </div>
-              <span className={cn(`group-hover:text-primary`, path === item.url && 'text-secondary font-bold')}>{item.name}</span>
+              <span
+                className={cn(
+                  `group-hover:text-primary`,
+                  path === item.url && "text-secondary font-bold"
+                )}>
+                {item.name}
+              </span>
             </Link>
           ))}
         </div>

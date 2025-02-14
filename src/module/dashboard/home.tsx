@@ -21,7 +21,7 @@ export default function DashboardHome() {
       <section className="w-full pb-[10rem]  mx-auto ">
         <div className="grid  pb-10 lg:gap-6 pt-5 lg:pt-[4rem] ">
           <div className="flex justify-between items-center">
-            <h2 className="text-[#7D89B0] tracking-tight">Wallet balance</h2>
+            <h2 className="text-grey-3 tracking-tight">Wallet balance</h2>
             <div className="flex items-center gap-2 bg-white p-1 px-2 rounded-[8px]">
               <span className="text-sm text-blue-950 font-medium">
                 0x336674474...
@@ -47,8 +47,7 @@ export default function DashboardHome() {
             <div className="flex h-fit gap-2">
               <div className="bg-white w-full text-blue-950 flex  items-center lg:px-1.5 lg:pr-6 gap-2 lg:w-fit p-1.5 rounded-sm">
                 <Button
-                  className="rounded-sm text-blue-950 h-12 w-12"
-                  variant="secondary"
+                  className="rounded-sm bg-body-bg text-blue-950 h-12 w-12"
                   size="icon"
                   onClick={() => setIsOpen(true)}
                 >
@@ -59,8 +58,7 @@ export default function DashboardHome() {
 
               <div className="bg-white w-full flex text-blue-950  items-center lg:px-1.5 lg:pr-6 gap-2 lg:w-fit p-1.5 rounded-sm">
                 <Button
-                  className="rounded-sm text-blue-950 h-12 w-12"
-                  variant="secondary"
+                  className="rounded-sm bg-body-bg text-blue-950 h-12 w-12"
                   size="icon"
                 >
                   <WithdrawIcon />
