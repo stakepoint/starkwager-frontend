@@ -10,12 +10,20 @@ import { ModalView } from "@/components/ui/modals";
 import FundWalletModal from "@/components/wallets/fundWallet";
 import { WithdrawIcon } from "@/svgs/withdrawIcon";
 
+import ActiveWagerCard from "@/components/ui/activeWager";
+import PendingWagerCard from "@/components/ui/pendingWager";
+
 export default function DashboardHome() {
   const [isOpen, setIsOpen] = useState(false);
+  const [dashboardPopulated, setDashboardPopulated] = useState(true);
 
   return (
     <>
-      <ModalView open={isOpen} setOpen={setIsOpen} className="max-w-[400px] p-6 rounded-2xl">
+      <ModalView
+        open={isOpen}
+        setOpen={setIsOpen}
+        className="max-w-[400px] p-6 rounded-2xl"
+      >
         <FundWalletModal onClose={() => setIsOpen(false)} />
       </ModalView>
       <section className="w-full pb-[10rem]  mx-auto ">
@@ -68,7 +76,32 @@ export default function DashboardHome() {
             </div>
           </section>
         </div>
-        <EmptyStateView />
+
+        {/* DASHBOARD POPULATED AREA */}
+        {dashboardPopulated ? (
+          <section className="flex flex-col gap-6">
+            {/* In Progress Section */}
+            <section className="bg-input-bg rounded-lg p-4 md:p-6">
+              <h2 className="text-sm lg:text-base font-medium text-blue-1">
+                Active Wagers
+              </h2>
+              <ActiveWagerCard />
+              <ActiveWagerCard />
+            </section>
+
+            {/* Pending Section */}
+            <section className="bg-input-bg rounded-lg p-4 md:p-6">
+              <h2 className="text-sm lg:text-base font-medium text-blue-1">
+                Pending Wagers
+              </h2>
+              <PendingWagerCard />
+              <PendingWagerCard />
+            </section>
+          </section>
+        ) : (
+          <EmptyStateView />
+        )}
+
         <div className="pt-5 lg:hidden">
           <Button className="w-fit mx-auto flex items-center text-base font-medium">
             {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}
