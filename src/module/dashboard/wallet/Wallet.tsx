@@ -9,6 +9,8 @@ import { WithdrawIcon } from "@/svgs/withdrawIcon";
 import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { getSvgById } from "@/svgs";
 
 const TRANSACTION_DATA = [
   {
@@ -45,7 +47,7 @@ export default function Wallet() {
       >
         <FundWalletModal onClose={() => setIsOpen(false)} />
       </ModalView>
-      <section className="w-full pb-[10rem]  mx-auto ">
+      <section className="w-full pb-[7rem] md:pb-[10rem] mx-auto">
         <div className="grid  pb-10 lg:gap-6 pt-5 lg:pt-[4rem] ">
           <div className="flex justify-between items-center">
             <h2 className="text-grey-3 tracking-tight">Wallet balance</h2>
@@ -114,7 +116,9 @@ export default function Wallet() {
                     )}
                   </div>
                   <div>
-                    <p className="font-medium text-sm md:text-base text-[#102A56] max-w-36 md:max-w-full w-full truncate">{item.title}</p>
+                    <p className="font-medium text-sm md:text-base text-[#102A56] max-w-36 md:max-w-full w-full truncate">
+                      {item.title}
+                    </p>
                     <p className="text-[#102A56] text-sm">{item.date}</p>
                   </div>
                 </div>
@@ -138,6 +142,13 @@ export default function Wallet() {
             ))}
           </div>
         </section>
+        <Link
+          href="/dashboard/create-wager"
+          className="w-full max-w-[160px] mx-auto flex items-center justify-center gap-3 text-base font-medium bg-secondary rounded-2xl p-4 mt-10 shadow-xl md:hidden"
+        >
+          {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}
+          New Wager
+        </Link>
       </section>
     </>
   );
