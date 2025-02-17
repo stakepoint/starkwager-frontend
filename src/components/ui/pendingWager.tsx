@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 
 interface WagerCardProps {
-  isInProgress?: boolean;
   question?: string;
   stakeAmount?: number;
   leftUser?: {
@@ -16,7 +15,6 @@ interface WagerCardProps {
 }
 
 const PendingWagerCard: React.FC<WagerCardProps> = ({
-  isInProgress = true,
   question = "Will Bitcoin Hit $100k Before January 31, 2025?",
   stakeAmount = 5,
   leftUser = {

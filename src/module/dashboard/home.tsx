@@ -15,7 +15,7 @@ import PendingWagerCard from "@/components/ui/pendingWager";
 
 export default function DashboardHome() {
   const [isOpen, setIsOpen] = useState(false);
-  const [dashboardPopulated, setDashboardPopulated] = useState(true);
+  const [dashboardPopulated] = useState(true);
 
   return (
     <>
