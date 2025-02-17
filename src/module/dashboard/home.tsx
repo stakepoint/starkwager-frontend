@@ -9,22 +9,31 @@ import { getSvgById } from "@/svgs";
 import { ModalView } from "@/components/ui/modals";
 import FundWalletModal from "@/components/wallets/fundWallet";
 import { WithdrawIcon } from "@/svgs/withdrawIcon";
+import WithdrawFundsModal from "@/components/wallets/withdrawFunds";
 
 import ActiveWagerCard from "@/components/ui/activeWager";
 import PendingWagerCard from "@/components/ui/pendingWager";
 
 export default function DashboardHome() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isFundModalOpen, setIsFundModalOpen] = useState(false);
+  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [dashboardPopulated] = useState(true);
 
   return (
     <>
       <ModalView
-        open={isOpen}
-        setOpen={setIsOpen}
+        open={isFundModalOpen}
+        setOpen={setIsFundModalOpen}
         className="max-w-[400px] p-6 rounded-2xl"
       >
-        <FundWalletModal onClose={() => setIsOpen(false)} />
+        <FundWalletModal onClose={() => setIsFundModalOpen(false)} />
+      </ModalView>
+      <ModalView
+        open={isWithdrawModalOpen}
+        setOpen={setIsWithdrawModalOpen}
+        className="max-w-[400px] p-6 rounded-2xl"
+      >
+        <WithdrawFundsModal onClose={() => setIsWithdrawModalOpen(false)} />
       </ModalView>
       <section className="w-full pb-[10rem]  mx-auto ">
         <div className="grid  pb-10 lg:gap-6 pt-5 lg:pt-[4rem] ">
@@ -57,7 +66,7 @@ export default function DashboardHome() {
                 <Button
                   className="rounded-sm bg-body-bg text-blue-950 h-12 w-12"
                   size="icon"
-                  onClick={() => setIsOpen(true)}
+                  onClick={() => setIsFundModalOpen(true)}
                 >
                   <Plus />
                 </Button>
@@ -68,6 +77,7 @@ export default function DashboardHome() {
                 <Button
                   className="rounded-sm bg-body-bg text-blue-950 h-12 w-12"
                   size="icon"
+                  onClick={() => setIsWithdrawModalOpen(true)}
                 >
                   <WithdrawIcon />
                 </Button>
