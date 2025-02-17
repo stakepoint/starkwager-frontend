@@ -1,12 +1,38 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Copy, Plus } from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, Copy, Plus } from "lucide-react";
 
-import { WithdrawIcon } from "@/svgs/withdrawIcon";
 import { ModalView } from "@/components/ui/modals";
 import FundWalletModal from "@/components/wallets/fundWallet";
-import React, { useState } from "react";
+import { WithdrawIcon } from "@/svgs/withdrawIcon";
+import { useState } from "react";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
+
+const TRANSACTION_DATA = [
+  {
+    id: 1,
+    title: "Created Wager: Will Bitcoin Hit $100k Before January 31, 2025?",
+    amount: "5 Strk",
+    date: "November 24,2024",
+    incoming: true,
+  },
+  {
+    id: 2,
+    title: "Created Wager: Will Bitcoin Hit $100k Before January 31, 2025?",
+    amount: "5 Strk",
+    date: "November 24,2024",
+    incoming: true,
+  },
+  {
+    id: 3,
+    title: "Created Wager: Will Bitcoin Hit $100k Before January 31, 2025?",
+    amount: "5 Strk",
+    date: "November 24,2024",
+    incoming: false,
+  },
+];
 
 export default function Wallet() {
   const [isOpen, setIsOpen] = useState(false);
@@ -69,6 +95,49 @@ export default function Wallet() {
             </div>
           </section>
         </div>
+        <section className="flex flex-col gap-4 md:p-6 w-full">
+          <h2 className="font-medium text-[#102A56] text-lg md:text-xl">
+            Recent Transactions
+          </h2>
+          <div className="flex flex-col gap-4 w-full">
+            {TRANSACTION_DATA.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center p-2 bg-white rounded-2xl w-full"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-11 h-11 md:w-12 md:h-12 rounded-2xl flex items-center justify-center bg-[#EFF1F5]">
+                    {item.incoming ? (
+                      <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5" />
+                    ) : (
+                      <ArrowDownLeft className="text-[#17B26A] w-4 h-4 md:w-5 md:h-5" />
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm md:text-base text-[#102A56] max-w-36 md:max-w-full w-full truncate">{item.title}</p>
+                    <p className="text-[#102A56] text-sm">{item.date}</p>
+                  </div>
+                </div>
+                <div className="ml-auto">
+                  <p
+                    className={cn(
+                      "font-medium text-[#102A56] flex items-center gap-1",
+                      { "text-[#17B26A]": !item.incoming }
+                    )}
+                  >
+                    <Image
+                      width="16"
+                      height="16"
+                      src="/images/StrkLogo.svg"
+                      alt=""
+                    />
+                    {item.amount}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </section>
     </>
   );
