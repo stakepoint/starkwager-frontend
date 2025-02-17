@@ -9,14 +9,25 @@ import { getSvgById } from "@/svgs";
 import { ModalView } from "@/components/ui/modals";
 import FundWalletModal from "@/components/wallets/fundWallet";
 import { WithdrawIcon } from "@/svgs/withdrawIcon";
+import WithdrawFundsModal from "@/components/wallets/withdrawFunds";
 
 export default function DashboardHome() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isFundModalOpen, setIsFundModalOpen] = useState(false);
+  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
 
   return (
     <>
-      <ModalView open={isOpen} setOpen={setIsOpen} className="max-w-[400px] p-6 rounded-2xl">
-        <FundWalletModal onClose={() => setIsOpen(false)} />
+      <ModalView
+        open={isFundModalOpen}
+        setOpen={setIsFundModalOpen}
+        className="max-w-[400px] p-6 rounded-2xl">
+        <FundWalletModal onClose={() => setIsFundModalOpen(false)} />
+      </ModalView>
+      <ModalView
+        open={isWithdrawModalOpen}
+        setOpen={setIsWithdrawModalOpen}
+        className="max-w-[400px] p-6 rounded-2xl">
+        <WithdrawFundsModal onClose={() => setIsWithdrawModalOpen(false)} />
       </ModalView>
       <section className="w-full pb-[10rem]  mx-auto ">
         <div className="grid  pb-10 lg:gap-6 pt-5 lg:pt-[4rem] ">
@@ -29,8 +40,7 @@ export default function DashboardHome() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="ml-1 text-blue-950 h-4 w-4"
-              >
+                className="ml-1 text-blue-950 h-4 w-4">
                 <Copy className="h-4 w-4" />
               </Button>
             </div>
@@ -49,8 +59,7 @@ export default function DashboardHome() {
                 <Button
                   className="rounded-sm bg-body-bg text-blue-950 h-12 w-12"
                   size="icon"
-                  onClick={() => setIsOpen(true)}
-                >
+                  onClick={() => setIsFundModalOpen(true)}>
                   <Plus />
                 </Button>
                 <span className="text-sm">Add Money</span>
@@ -60,6 +69,7 @@ export default function DashboardHome() {
                 <Button
                   className="rounded-sm bg-body-bg text-blue-950 h-12 w-12"
                   size="icon"
+                  onClick={() => setIsWithdrawModalOpen(true)}
                 >
                   <WithdrawIcon />
                 </Button>
