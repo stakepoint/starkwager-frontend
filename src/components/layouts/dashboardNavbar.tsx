@@ -1,13 +1,18 @@
+'use client'
+
 import { Bell, Copy } from "lucide-react";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { usePathname } from "next/navigation";
+import { getPageTitle } from "@/lib/utils";
 
 export default function DashboardNavbar() {
+  const pathname = usePathname();
   return (
     <nav className=" py-6 flex ">
       <header className="flex w-full items-center justify-between ">
         <h1 className="text-3xl font-bold hidden lg:block  text-blue-950">
-          HOME
+          {getPageTitle(pathname)}
         </h1>
         <div className="flex justify-between w-full lg:w-fit  items-center gap-4">
           <div className="flex items-center gap-2">
