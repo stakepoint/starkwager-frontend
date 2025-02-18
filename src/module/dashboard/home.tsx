@@ -71,7 +71,6 @@ const dummyWagers = [
 export default function DashboardHome() {
   const [isFundModalOpen, setIsFundModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
-  const [dashboardPopulated] = useState(true);
 
   return (
     <>
@@ -141,8 +140,7 @@ export default function DashboardHome() {
           </section>
         </div>
 
-        {/* DASHBOARD POPULATED AREA */}
-        {dashboardPopulated ? (
+        {dummyWagers ? (
           <section className="flex flex-col gap-6">
             {/* In Progress Section */}
             <section className="bg-input-bg rounded-lg p-4 md:p-6">
