@@ -105,7 +105,7 @@ export default function Wallet() {
             {TRANSACTION_DATA.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center p-2 bg-white rounded-2xl w-full"
+                className="flex items-center p-[6px] pr-4 bg-white rounded-2xl w-full"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-11 h-11 md:w-12 md:h-12 rounded-2xl flex items-center justify-center bg-[#EFF1F5]">
@@ -125,7 +125,7 @@ export default function Wallet() {
                 <div className="ml-auto">
                   <p
                     className={cn(
-                      "font-medium text-[#102A56] flex items-center gap-1",
+                      "font-medium text-[#102A56] flex items-center gap-1 p-1 pr-2 bg-[#F9F9FB] rounded-full",
                       { "text-[#17B26A]": !item.incoming }
                     )}
                   >
