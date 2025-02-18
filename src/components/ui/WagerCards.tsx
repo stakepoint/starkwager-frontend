@@ -3,36 +3,38 @@ import Image from "next/image";
 
 interface WagerCardProps {
   question?: string;
+  progress: boolean;
   stakeAmount?: number;
-  leftUser?: {
+  leftUser: {
     username: string;
     icon: string;
   };
-  rightUser?: {
+  rightUser: {
     username: string;
     icon: string;
   };
 }
 
-const ActiveWagerCard: React.FC<WagerCardProps> = ({
-  question = "Will Bitcoin Hit $100k Before January 31, 2025?",
-  stakeAmount = 5,
-  leftUser = {
-    username: "@noyi24_7",
-    icon: "/images/leftWagercardUserOneIcon.svg",
-  },
-  rightUser = {
-    username: "@babykeem",
-    icon: "/images/RightWagercardUserOneIcon.svg",
-  },
+const WagerCards: React.FC<WagerCardProps> = ({
+  question,
+  progress,
+  stakeAmount,
+  leftUser,
+  rightUser,
 }) => {
   return (
     <div className="w-full p-4 bg-white mt-3 rounded-lg">
       {/* Status Indicator */}
       <div className="flex items-center justify-center gap-2 mb-2">
-        <div className="w-2 h-2 rounded-full bg-green-500"></div>
+        {/* Progress Indicator */}
+        <div
+          className={`w-2 h-2 rounded-full ${
+            progress ? "bg-green-500" : "bg-[#EAAA08]"
+          }`}
+        ></div>
+
         <span className="text-gray-600 text-[13px] md:text-sm">
-          In Progress
+          {progress ? "In Progress" : "Pending"}
         </span>
       </div>
 
@@ -101,4 +103,4 @@ const ActiveWagerCard: React.FC<WagerCardProps> = ({
   );
 };
 
-export default ActiveWagerCard;
+export default WagerCards;

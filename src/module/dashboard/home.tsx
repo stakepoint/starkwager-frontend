@@ -11,8 +11,62 @@ import FundWalletModal from "@/components/wallets/fundWallet";
 import { WithdrawIcon } from "@/svgs/withdrawIcon";
 import WithdrawFundsModal from "@/components/wallets/withdrawFunds";
 
-import ActiveWagerCard from "@/components/ui/activeWager";
-import PendingWagerCard from "@/components/ui/pendingWager";
+import WagerCards from "@/components/ui/WagerCards";
+
+const dummyWagers = [
+  {
+    question: "Will Bitcoin Hit $100k Before January 31, 2025?",
+    progress: true,
+    stakeAmount: 5,
+    leftUser: {
+      username: "@noyi24_7",
+      icon: "/images/leftWagercardUserOneIcon.svg",
+    },
+    rightUser: {
+      username: "@babykeem",
+      icon: "/images/RightWagercardUserOneIcon.svg",
+    },
+  },
+  {
+    question: "Will Ethereum surpass $10k by 2026?",
+    progress: true,
+    stakeAmount: 3,
+    leftUser: {
+      username: "@noyi24_7",
+      icon: "/images/leftWagercardUserOneIcon.svg",
+    },
+    rightUser: {
+      username: "@babykeem",
+      icon: "/images/RightWagercardUserOneIcon.svg",
+    },
+  },
+  {
+    question: "Will Dogecoin reach $1 before 2027?",
+    progress: false,
+    stakeAmount: 2,
+    leftUser: {
+      username: "@noyi24_7",
+      icon: "/images/leftWagercardUserOneIcon.svg",
+    },
+    rightUser: {
+      username: "@babykeem",
+      icon: "/images/RightWagercardUserOneIcon.svg",
+    },
+  },
+  {
+    question: "Will Solana flip Ethereum in market cap by 2030?",
+    progress: false,
+    stakeAmount: 4,
+    leftUser: {
+      username: "@noyi24_7",
+      icon: "/images/leftWagercardUserOneIcon.svg",
+    },
+    rightUser: {
+      username: "@babykeem",
+      icon: "/images/RightWagercardUserOneIcon.svg",
+    },
+  },
+];
 
 export default function DashboardHome() {
   const [isFundModalOpen, setIsFundModalOpen] = useState(false);
@@ -95,8 +149,12 @@ export default function DashboardHome() {
               <h2 className="text-sm lg:text-base font-medium text-blue-1">
                 Active Wagers
               </h2>
-              <ActiveWagerCard />
-              <ActiveWagerCard />
+
+              {dummyWagers
+                .filter((wager) => wager.progress)
+                .map((wager, index) => (
+                  <WagerCards key={index} {...wager} />
+                ))}
             </section>
 
             {/* Pending Section */}
@@ -104,8 +162,12 @@ export default function DashboardHome() {
               <h2 className="text-sm lg:text-base font-medium text-blue-1">
                 Pending Wagers
               </h2>
-              <PendingWagerCard />
-              <PendingWagerCard />
+
+              {dummyWagers
+                .filter((wager) => !wager.progress)
+                .map((wager, index) => (
+                  <WagerCards key={index} {...wager} />
+                ))}
             </section>
           </section>
         ) : (
