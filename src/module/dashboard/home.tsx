@@ -11,6 +11,63 @@ import FundWalletModal from "@/components/wallets/fundWallet";
 import { WithdrawIcon } from "@/svgs/withdrawIcon";
 import WithdrawFundsModal from "@/components/wallets/withdrawFunds";
 
+import WagerCards from "@/components/ui/WagerCards";
+
+const dummyWagers = [
+  {
+    question: "Will Bitcoin Hit $100k Before January 31, 2025?",
+    progress: true,
+    stakeAmount: 5,
+    leftUser: {
+      username: "@noyi24_7",
+      icon: "/images/leftWagercardUserOneIcon.svg",
+    },
+    rightUser: {
+      username: "@babykeem",
+      icon: "/images/RightWagercardUserOneIcon.svg",
+    },
+  },
+  {
+    question: "Will Ethereum surpass $10k by 2026?",
+    progress: true,
+    stakeAmount: 3,
+    leftUser: {
+      username: "@noyi24_7",
+      icon: "/images/leftWagercardUserOneIcon.svg",
+    },
+    rightUser: {
+      username: "@babykeem",
+      icon: "/images/RightWagercardUserOneIcon.svg",
+    },
+  },
+  {
+    question: "Will Dogecoin reach $1 before 2027?",
+    progress: false,
+    stakeAmount: 2,
+    leftUser: {
+      username: "@noyi24_7",
+      icon: "/images/leftWagercardUserOneIcon.svg",
+    },
+    rightUser: {
+      username: "@babykeem",
+      icon: "/images/RightWagercardUserOneIcon.svg",
+    },
+  },
+  {
+    question: "Will Solana flip Ethereum in market cap by 2030?",
+    progress: false,
+    stakeAmount: 4,
+    leftUser: {
+      username: "@noyi24_7",
+      icon: "/images/leftWagercardUserOneIcon.svg",
+    },
+    rightUser: {
+      username: "@babykeem",
+      icon: "/images/RightWagercardUserOneIcon.svg",
+    },
+  },
+];
+
 export default function DashboardHome() {
   const [isFundModalOpen, setIsFundModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
@@ -20,13 +77,15 @@ export default function DashboardHome() {
       <ModalView
         open={isFundModalOpen}
         setOpen={setIsFundModalOpen}
-        className="max-w-[400px] p-6 rounded-2xl">
+        className="max-w-[400px] p-6 rounded-2xl"
+      >
         <FundWalletModal onClose={() => setIsFundModalOpen(false)} />
       </ModalView>
       <ModalView
         open={isWithdrawModalOpen}
         setOpen={setIsWithdrawModalOpen}
-        className="max-w-[400px] p-6 rounded-2xl">
+        className="max-w-[400px] p-6 rounded-2xl"
+      >
         <WithdrawFundsModal onClose={() => setIsWithdrawModalOpen(false)} />
       </ModalView>
       <section className="w-full pb-[10rem]  mx-auto ">
@@ -40,7 +99,8 @@ export default function DashboardHome() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="ml-1 text-blue-950 h-4 w-4">
+                className="ml-1 text-blue-950 h-4 w-4"
+              >
                 <Copy className="h-4 w-4" />
               </Button>
             </div>
@@ -59,7 +119,8 @@ export default function DashboardHome() {
                 <Button
                   className="rounded-sm bg-body-bg text-blue-950 h-12 w-12"
                   size="icon"
-                  onClick={() => setIsFundModalOpen(true)}>
+                  onClick={() => setIsFundModalOpen(true)}
+                >
                   <Plus />
                 </Button>
                 <span className="text-sm">Add Money</span>
@@ -78,7 +139,39 @@ export default function DashboardHome() {
             </div>
           </section>
         </div>
-        <EmptyStateView />
+
+        {dummyWagers ? (
+          <section className="flex flex-col gap-6">
+            {/* In Progress Section */}
+            <section className="bg-input-bg rounded-lg p-4 md:p-6">
+              <h2 className="text-sm lg:text-base font-medium text-blue-1">
+                Active Wagers
+              </h2>
+
+              {dummyWagers
+                .filter((wager) => wager.progress)
+                .map((wager, index) => (
+                  <WagerCards key={index} {...wager} />
+                ))}
+            </section>
+
+            {/* Pending Section */}
+            <section className="bg-input-bg rounded-lg p-4 md:p-6">
+              <h2 className="text-sm lg:text-base font-medium text-blue-1">
+                Pending Wagers
+              </h2>
+
+              {dummyWagers
+                .filter((wager) => !wager.progress)
+                .map((wager, index) => (
+                  <WagerCards key={index} {...wager} />
+                ))}
+            </section>
+          </section>
+        ) : (
+          <EmptyStateView />
+        )}
+
         <div className="pt-5 lg:hidden">
           <Button className="w-fit mx-auto flex items-center text-base font-medium">
             {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}
