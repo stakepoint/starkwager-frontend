@@ -1,3 +1,4 @@
+
 "use client";
 import React from "react";
 import WalletDetail from '@/components/layouts/walletDetails';
@@ -31,3 +32,10 @@ export default function Wallets() {
         </div>
     )
 }
+
+import Wallet from "@/module/dashboard/wallet/Wallet";
+
+export default function Wallets() {
+  return <Wallet />;
+}
+

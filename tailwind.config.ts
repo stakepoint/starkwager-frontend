@@ -15,7 +15,7 @@ const config: Config = {
         "body-bg": "#F9F9FB",
         "input-bg": "#EFF1F5",
         "blue-1": "#102A56",
-        "secondary": "#E0FE10",
+        secondary: "#E0FE10",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
