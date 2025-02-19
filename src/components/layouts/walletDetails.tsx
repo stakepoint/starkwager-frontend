@@ -4,9 +4,7 @@ import React from 'react'
 import { Button } from "@/components/ui/button";
 import { Copy, Plus } from "lucide-react";
 import { WithdrawIcon } from "@/svgs/withdrawIcon";
-//import { ModalView } from "@/components/ui/modals";
-//import FundWalletModal from "@/components/wallets/fundWallet";
-//import WithdrawFundsModal from "@/components/wallets/withdrawFunds";
+
 
 
 interface WalletDetailsProps {
@@ -15,22 +13,9 @@ interface WalletDetailsProps {
 }
 
 export default function WalletDetails({ setIsFundModalOpen, setIsWithdrawModalOpen }: WalletDetailsProps) {
-      //const [isFundModalOpen, setIsFundModalOpen] = useState(false);
-      //const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
+     
   return (
     <div>
-    {/*<ModalView
-        open={isFundModalOpen}
-        setOpen={setIsFundModalOpen}
-        className="max-w-[400px] p-6 rounded-2xl">
-        <FundWalletModal onClose={() => setIsFundModalOpen(false)} />
-    </ModalView>
-    <ModalView
-        open={isWithdrawModalOpen}
-        setOpen={setIsWithdrawModalOpen}
-        className="max-w-[400px] p-6 rounded-2xl">
-        <WithdrawFundsModal onClose={() => setIsWithdrawModalOpen(false)} />
-    </ModalView>*/}
         <div className="grid  pb-10 lg:gap-6 pt-5 lg:pt-[4rem] ">
           <div className="flex justify-between items-center">
             <h2 className="text-grey-3 tracking-tight">Wallet balance</h2>

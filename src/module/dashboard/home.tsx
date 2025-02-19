@@ -2,13 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
-//import { Copy, Plus } from "lucide-react";
 import EmptyStateView from "@/components/ui/emptystate";
 import { getSvgById } from "@/svgs";
-
 import { ModalView } from "@/components/ui/modals";
 import FundWalletModal from "@/components/wallets/fundWallet";
-//import { WithdrawIcon } from "@/svgs/withdrawIcon";
 import WithdrawFundsModal from "@/components/wallets/withdrawFunds";
 import WalletDetail from "@/components/layouts/walletDetails";
 
