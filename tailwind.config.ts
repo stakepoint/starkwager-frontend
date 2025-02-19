@@ -12,8 +12,8 @@ const config: Config = {
         "grey-1": "#4A5578",
         "grey-2": "#9DA4AE",
         "grey-3": "#7D89B0",
-        "body-bg": "#EFF1F5",
-        "input-bg": "#F9F9FB",
+        "body-bg": "#F9F9FB",
+        "input-bg": "#EFF1F5",
         "blue-1": "#102A56",
         secondary: "#E0FE10",
         card: {
