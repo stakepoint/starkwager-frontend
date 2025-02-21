@@ -11,6 +11,7 @@
     "contributors:generate": "all-contributors generate"
   },
   "dependencies": {
+    "@multiavatar/multiavatar": "^1.0.7",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.5",
     "@radix-ui/react-select": "^2.1.5",
