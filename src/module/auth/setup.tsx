@@ -32,13 +32,13 @@ export default function SetupPage() {
     null
   );
 
-  // const handleSubmit = () => {
-  //   const payload = {
-  //     username,
-  //     avatarString: selectedAvatar?.string,
-  //   };
-  //   console.log("Submitting payload:", payload);
-  // };
+  const handleSubmit = () => {
+    const payload = {
+      username,
+      avatarString: selectedAvatar?.string,
+    };
+    console.log("Submitting payload:", payload);
+  };
 
   return (
     <div className="flex flex-col w-full pt-[5rem] items-center justify-center px-4 md:px-0">
@@ -94,6 +94,7 @@ export default function SetupPage() {
         <Button
           variant="default"
           disabled={!username}
+          onClick={handleSubmit}
           className="font-medium text-xl tracking-[-2%] h-14 rounded-2xl disabled:cursor-not-allowed disabled:opacity-[0.32]"
         >
           Continue
