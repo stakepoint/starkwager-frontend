@@ -16,7 +16,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Set up pnpm global bin directory
+        run: |
+          export PNPM_HOME=$HOME/.local/share/pnpm
+          export PATH=$PNPM_HOME:$PATH
+          echo "PNPM_HOME=$PNPM_HOME" >> $GITHUB_ENV
+          echo "$PNPM_HOME" >> $GITHUB_PATH
+          pnpm setup
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -24,17 +35,23 @@ jobs:
           version: 8
 
       - name: Install All Contributors CLI
-        run: pnpm install all-contributors-cli
+        run: pnpm add -g all-contributors-cli
+
+      - name: Verify Installation
+        run: all-contributors --version
+
+      - name: Install Dependencies
+        run: pnpm install
 
       - name: Add Contributor
         run: |
-          npx all-contributors add ${GITHUB_ACTOR} code 
-          npm all-contributors generate
+          all-contributors add ${GITHUB_ACTOR} code 
+          all-contributors generate
 
       - name: Commit and Push Changes
         run: |
-          git config --global user.name "github-actions [bot]!
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com
+          git config --global user.name "github-actions [bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "docs: add ${GITHUB_ACTOR} as a contributor" 
+          git commit -m "docs: add ${GITHUB_ACTOR} as a contributor" || echo "No changes to commit"
           git push

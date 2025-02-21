@@ -9,6 +9,13 @@ const config: Config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         headingBlue: "rgba(16, 42, 86, 1)",
+        "grey-1": "#4A5578",
+        "grey-2": "#9DA4AE",
+        "grey-3": "#7D89B0",
+        "body-bg": "#F9F9FB",
+        "input-bg": "#EFF1F5",
+        "blue-1": "#102A56",
+        secondary: "#E0FE10",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -21,10 +28,10 @@ const config: Config = {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
+        // secondary: {
+        //   DEFAULT: "hsl(var(--secondary))",
+        //   foreground: "hsl(var(--secondary-foreground))",
+        // },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
