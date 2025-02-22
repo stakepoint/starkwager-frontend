@@ -1,16 +1,27 @@
+"use client"
+
 import * as React from "react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} 
+
+from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { getSvgById } from "@/svgs";
+import { HashtagSelector } from "@/components/ui/modals/HashtagSelector";
+
 
 export default function CreateWager() {
+  const [open, setOpen] = useState(false)
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
+
   return (
     <div className="w-full max-w-xl py-[4rem]  mx-auto">
       <form className="flex flex-col gap-5">
@@ -32,20 +43,19 @@ export default function CreateWager() {
           </div>
 
           <Select>
-            <SelectTrigger className="">
-              <SelectValue placeholder="Add Hashtags" className="flex-grow " />
-            </SelectTrigger>
-            <SelectContent className="border-none text-blue-950">
-              <SelectItem value="tag1">Tag 1</SelectItem>
-              <SelectItem value="tag2">Tag 2</SelectItem>
-              <SelectItem value="tag3">Tag 3</SelectItem>
-            </SelectContent>
+          <SelectTrigger className="" onClick={() => setOpen(true)}>
+          <SelectValue placeholder="Add Hashtags" className="flex-grow" />
+        </SelectTrigger>
           </Select>
-          <div className="flex-shrink-0 absolute right-1 ml-2">
-            {getSvgById("arrowDown", {
-              className: "w-4 h-4",
-            })}
-          </div>
+
+          <HashtagSelector
+        open={open}
+        onOpenChange={setOpen}
+        selectedTags={selectedTags}
+        onTagsChange={setSelectedTags}
+      />
+
+         
         </div>
 
         {/* Title of wager field */}
