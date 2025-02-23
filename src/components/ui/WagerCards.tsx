@@ -1,7 +1,10 @@
+"use client";
 import React from "react";
+import { useRouter } from "next/navigation"; // Import router for navigation
 import Image from "next/image";
 
 interface WagerCardProps {
+  wagerId: string;
   question?: string;
   wagerStatus: "active" | "pending" | "completed";
   stakeAmount?: number;
@@ -16,12 +19,19 @@ interface WagerCardProps {
 }
 
 const WagerCards: React.FC<WagerCardProps> = ({
+  wagerId,
   question,
   wagerStatus,
   stakeAmount,
   leftUser,
   rightUser,
 }) => {
+  const router = useRouter();
+
+  const handleCardClick = () => {
+    router.push(`/wagers/${wagerId}`);
+  };
+
   const getStatusColor = () => {
     switch (wagerStatus) {
       case "active":
@@ -43,13 +53,15 @@ const WagerCards: React.FC<WagerCardProps> = ({
         return "Completed";
     }
   };
+
   return (
-    <div className="w-full p-4 bg-white mt-3 rounded-lg">
+    <div
+      className="w-full p-4 bg-white mt-3 rounded-lg cursor-pointer hover:shadow-sm transition"
+      onClick={handleCardClick}
+    >
       {/* Status Indicator */}
       <div className="flex items-center justify-center gap-2 mb-2">
-        {/* Progress Indicator */}
         <div className={`w-2 h-2 rounded-full ${getStatusColor()}`}></div>
-
         <span className="text-gray-600 text-[13px] md:text-sm">
           {getStatusText()}
         </span>
