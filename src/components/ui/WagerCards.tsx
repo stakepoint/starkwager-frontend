@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation"; // Import router for navigation
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 interface WagerCardProps {
