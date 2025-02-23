@@ -44,10 +44,13 @@ export function SidebarDesktop() {
   return (
     <aside className=" hidden sticky top-0  w-[13rem] px-5 py-4  lg:flex flex-col items-center h-screen overflow-y-auto  bg-gray-900">
       <div className="w-full flex gap-8 flex-col items-center">
-        <Link href="/dashboard">{getSvgById("appLogo", { className: "w-28" })}</Link>
+        <Link href="/dashboard">
+          {getSvgById("appLogo", { className: "w-28" })}
+        </Link>
         <Link
           href="/dashboard/create-wager"
-          className="w-full flex items-center justify-center gap-3 text-base font-medium bg-secondary rounded-2xl p-4">
+          className="w-full flex items-center justify-center gap-3 text-base font-medium bg-secondary rounded-2xl p-4"
+        >
           {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}
           New Wager
         </Link>
@@ -60,7 +63,8 @@ export function SidebarDesktop() {
                 `flex group fill-gray-500 text-gray-500 gap-2 flex-col items-center text-xs`
               )}
               href={item.url}
-              key={idx}>
+              key={idx}
+            >
               <div className="w-[3.5rem] h-8 justify-center flex flex-col items-center group-hover:fill-primary group-hover:bg-transparent bg-gray-800  rounded-2xl ">
                 {item.icon(
                   cn(
@@ -73,7 +77,8 @@ export function SidebarDesktop() {
                 className={cn(
                   `group-hover:text-primary`,
                   path === item.url && "text-secondary font-bold"
-                )}>
+                )}
+              >
                 {item.name}
               </span>
             </Link>
@@ -94,8 +99,9 @@ export function SidebarMobile() {
           {sideLinks.map((item, idx) => (
             <Link
               className="flex group w-full fill-gray-500 text-gray-500 gap-2 flex-col items-center text-xs"
-              href="#"
-              key={idx}>
+              href={item.url}
+              key={idx}
+            >
               <div className="w-[3.5rem] h-8 justify-center flex flex-col items-center group-hover:fill-primary group-hover:bg-transparent bg-gray-800  rounded-2xl ">
                 {item.icon(
                   cn(
@@ -108,7 +114,8 @@ export function SidebarMobile() {
                 className={cn(
                   `group-hover:text-primary`,
                   path === item.url && "text-secondary font-bold"
-                )}>
+                )}
+              >
                 {item.name}
               </span>
             </Link>
