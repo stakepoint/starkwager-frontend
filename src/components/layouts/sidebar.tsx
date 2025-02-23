@@ -93,7 +93,7 @@ export function SidebarMobile() {
   const path = usePathname();
 
   return (
-    <aside className="md:hidden left-0  fixed bottom-0 w-full  py-3 flex flex-col items-center   bg-gray-900">
+    <aside className="md:hidden left-0  z-10 fixed bottom-0 w-full  py-3 flex flex-col items-center   bg-gray-900">
       <div className="w-full">
         <div className="text-white flex justify-between w-full items-center gap-4">
           {sideLinks.map((item, idx) => (
