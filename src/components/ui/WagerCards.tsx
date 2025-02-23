@@ -3,7 +3,7 @@ import Image from "next/image";
 
 interface WagerCardProps {
   question?: string;
-  progress: boolean;
+  wagerStatus: "active" | "pending" | "completed";
   stakeAmount?: number;
   leftUser: {
     username: string;
@@ -17,24 +17,41 @@ interface WagerCardProps {
 
 const WagerCards: React.FC<WagerCardProps> = ({
   question,
-  progress,
+  wagerStatus,
   stakeAmount,
   leftUser,
   rightUser,
 }) => {
+  const getStatusColor = () => {
+    switch (wagerStatus) {
+      case "active":
+        return "bg-green-500";
+      case "pending":
+        return "bg-[#EAAA08]";
+      case "completed":
+        return "bg-[#102A56]";
+    }
+  };
+
+  const getStatusText = () => {
+    switch (wagerStatus) {
+      case "active":
+        return "In Progress";
+      case "pending":
+        return "Pending";
+      case "completed":
+        return "Completed";
+    }
+  };
   return (
     <div className="w-full p-4 bg-white mt-3 rounded-lg">
       {/* Status Indicator */}
       <div className="flex items-center justify-center gap-2 mb-2">
         {/* Progress Indicator */}
-        <div
-          className={`w-2 h-2 rounded-full ${
-            progress ? "bg-green-500" : "bg-[#EAAA08]"
-          }`}
-        ></div>
+        <div className={`w-2 h-2 rounded-full ${getStatusColor()}`}></div>
 
         <span className="text-gray-600 text-[13px] md:text-sm">
-          {progress ? "In Progress" : "Pending"}
+          {getStatusText()}
         </span>
       </div>
 
