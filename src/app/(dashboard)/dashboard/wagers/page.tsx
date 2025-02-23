@@ -12,8 +12,8 @@ export default function Wagers() {
         </TabsList>
         <TabsContent value="active">
           <WagerCards
+            wagerStatus="active"
             question="Will Bitcoin Hit $100k Before January 31, 2025?"
-            progress={true}
             stakeAmount={100}
             leftUser={{
               username: "@noyi24_7",
@@ -25,8 +25,8 @@ export default function Wagers() {
             }}
           />
           <WagerCards
+            wagerStatus="pending"
             question="Will Bitcoin Hit $100k Before January 31, 2025?"
-            progress={true}
             stakeAmount={100}
             leftUser={{
               username: "@noyi24_7",
@@ -40,8 +40,8 @@ export default function Wagers() {
         </TabsContent>
         <TabsContent value="pending">
           <WagerCards
+            wagerStatus="pending"
             question="Will Bitcoin Hit $100k Before January 31, 2025?"
-            progress={false}
             stakeAmount={100}
             leftUser={{
               username: "@noyi24_7",
@@ -50,6 +50,21 @@ export default function Wagers() {
             rightUser={{
               username: "Awaiting Opponent",
               icon: "/images/opponent.svg",
+            }}
+          />
+        </TabsContent>
+        <TabsContent value="complete">
+          <WagerCards
+            wagerStatus="completed"
+            question="Will Bitcoin Hit $100k Before January 31, 2025?"
+            stakeAmount={100}
+            leftUser={{
+              username: "@noyi24_7",
+              icon: "/images/leftWagercardUserOneIcon.svg",
+            }}
+            rightUser={{
+              username: "@babykeem",
+              icon: "/images/rightWagercardUserOneIcon.svg",
             }}
           />
         </TabsContent>
