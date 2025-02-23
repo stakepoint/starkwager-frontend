@@ -1,7 +1,6 @@
 "use client"
 
 import { Hash } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
@@ -39,11 +38,6 @@ export function HashtagSelector({ open, onOpenChange, selectedTags, onTagsChange
 
         <DialogHeader className="">
           <DialogTitle className="text-xl font-semibold flex items-center justify-center text-[#1E2875]">Add Hashtag(s)</DialogTitle>
-
-          {/* <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => onOpenChange(false)}>
-            <X className="h-4 w-4" />
-          </Button> */}
-
         </DialogHeader>
         <DialogDescription className="text-center text-[#1E2875] pb-4">
           Hashtags helps other users find your wager easily and quickly.

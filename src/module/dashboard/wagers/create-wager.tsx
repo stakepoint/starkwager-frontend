@@ -3,20 +3,11 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} 
-
+import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue,} 
 from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { getSvgById } from "@/svgs";
 import { HashtagSelector } from "@/components/ui/modals/HashtagSelector";
-
 
 export default function CreateWager() {
   const [open, setOpen] = useState(false)
@@ -53,9 +44,7 @@ export default function CreateWager() {
         onOpenChange={setOpen}
         selectedTags={selectedTags}
         onTagsChange={setSelectedTags}
-      />
-
-         
+      /> 
         </div>
 
         {/* Title of wager field */}
