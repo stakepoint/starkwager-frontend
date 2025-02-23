@@ -29,7 +29,7 @@ const WagerCards: React.FC<WagerCardProps> = ({
   const router = useRouter();
 
   const handleCardClick = () => {
-    router.push(`/wagers/${wagerId}`);
+    router.push(`/dashboard/wagers/wagers_summary?wagerId=${wagerId}`);
   };
 
   const getStatusColor = () => {
