@@ -7,6 +7,7 @@ import { Camera, X } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import multiavatar from "@multiavatar/multiavatar";
+import parse from "html-react-parser";
 
 // Generate 30 random avatars
 const mockAvatars = Array.from({ length: 30 }, (_, i) => {
@@ -59,10 +60,7 @@ export default function SetupPage() {
           className="flex items-center justify-center bg-secondary rounded-full w-20 h-20 relative cursor-pointer hover:opacity-90 transition-opacity overflow-hidden"
         >
           {selectedAvatar ? (
-            <div
-              dangerouslySetInnerHTML={{ __html: selectedAvatar.svgCode }}
-              className="w-full h-full"
-            />
+            <div className="w-full h-full">{parse(selectedAvatar.svgCode)}</div>
           ) : (
             <p className="text-4xl text-white font-medium">N</p>
           )}
@@ -136,17 +134,14 @@ export default function SetupPage() {
                   key={avatar.id}
                   onClick={() => setTempSelectedAvatar(avatar)}
                   className={`aspect-square rounded-full overflow-hidden transition-all duration-200 hover:scale-105 
-                    ${
-                      tempSelectedAvatar?.id === avatar.id
-                        ? "ring-2 ring-white p-2"
-                        : ""
-                    }
+                  ${
+                    tempSelectedAvatar?.id === avatar.id
+                      ? "ring-2 ring-white p-2"
+                      : ""
+                  }
                   `}
                 >
-                  <div
-                    dangerouslySetInnerHTML={{ __html: avatar.svgCode }}
-                    className="w-full h-full"
-                  />
+                  <div className="w-full h-full"> {parse(avatar.svgCode)}</div>
                 </button>
               ))}
             </div>
