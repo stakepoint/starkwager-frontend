@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Check, Camera, Wallet } from 'lucide-react';
+import { X } from 'lucide-react';
 import Image from 'next/image';
 
 interface Notification {
@@ -195,9 +195,7 @@ const NotificationPanel: React.FC = () => {
         {notifications.map((notification) => (
           <li 
             key={notification.id} 
-            className={`bg-white rounded-lg p-3 md:p-4 flex items-start gap-3 md:gap-4 relative ${
-              notification.status === 'unread' ? 'border-l-4 border-secondary' : ''
-            }`}
+            className="bg-white rounded-lg p-3 md:p-4 flex items-start gap-3 md:gap-4 relative"
           >
             {getIcon(notification.message)}
             <div className="flex-1">
