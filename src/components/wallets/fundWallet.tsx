@@ -8,28 +8,28 @@ interface FundWalletModalProps {
 }
 
 const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
-    const [walletBalance, setWalletBalance] = useState(0);
-    const [inputValue, setInputValue] = useState("");
-    const [inputWidth, setInputWidth] = useState(100);
-    const inputRef = useRef<HTMLInputElement>(null);
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [inputValue, setInputValue] = useState("");
+  const [inputWidth, setInputWidth] = useState(100);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-    const showFundForm = () => {
-      setWalletBalance(1);
-    };
+  const showFundForm = () => {
+    setWalletBalance(1);
+  };
 
-    useEffect(() => {
-      if (walletBalance > 0 && inputRef.current) {
-        inputRef.current.focus();
-      }
-    }, [walletBalance]);
+  useEffect(() => {
+    if (walletBalance > 0 && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [walletBalance]);
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setInputValue(event.target.value);
-      setInputWidth(Math.max(100, event.target.value.length * 30));
-    };
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+    setInputWidth(Math.max(100, event.target.value.length * 30));
+  };
   return (
     <div>
-      <h3 className="text-center font-semibold text-xl md:text-2xl leading-[2.1] sm:leading-[1.75] text-headingBlue mt-2">
+      <h3 className="text-center font-medium text-xl md:text-2xl leading-[2.1] sm:leading-[1.75] text-headingBlue mt-2">
         Fund Your Wallet
       </h3>
       <div className="flex flex-col w-full justify-center items-center">
@@ -69,7 +69,8 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
               <Button
                 onClick={onClose}
                 className="w-full max-w-[352px] sm:max-w-full text-lg font-medium"
-                type="button">
+                type="button"
+              >
                 Fund
               </Button>
             </div>
@@ -87,7 +88,8 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
               <Button
                 onClick={showFundForm}
                 className="w-full max-w-[352px] sm:max-w-full text-lg font-medium"
-                type="button">
+                type="button"
+              >
                 Fund
               </Button>
             </div>

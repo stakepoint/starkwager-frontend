@@ -11,6 +11,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { getSvgById } from "@/svgs";
+import WithdrawFundsModal from "@/components/wallets/withdrawFunds";
 
 const TRANSACTION_DATA = [
   {
@@ -38,6 +39,8 @@ const TRANSACTION_DATA = [
 
 export default function Wallet() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
+
   return (
     <>
       <ModalView
@@ -47,6 +50,15 @@ export default function Wallet() {
       >
         <FundWalletModal onClose={() => setIsOpen(false)} />
       </ModalView>
+
+      <ModalView
+        open={isWithdrawModalOpen}
+        setOpen={setIsWithdrawModalOpen}
+        className="max-w-[400px] p-6 rounded-2xl"
+      >
+        <WithdrawFundsModal onClose={() => setIsWithdrawModalOpen(false)} />
+      </ModalView>
+
       <section className="w-full pb-[7rem] md:pb-[10rem] mx-auto">
         <div className="grid  pb-10 lg:gap-6 pt-5 lg:pt-[4rem] ">
           <div className="flex justify-between items-center">
@@ -68,7 +80,7 @@ export default function Wallet() {
           <section className="flex flex-col gap-5 lg:gap-0 lg:flex-row  justify-between">
             <div className=" pt-2 lg:pt-0 lg:gap-3 items-center flex justify-between lg:grid ">
               <h1 className="lg:text-[3.5rem] text-2xl tracking-tight lg:leading-10 text-blue-950 font-semibold">
-                $1000.00
+                $500.00
               </h1>
               <p className="text-blue-950">50 Strk</p>
             </div>
@@ -89,6 +101,7 @@ export default function Wallet() {
                 <Button
                   className="rounded-sm bg-body-bg text-blue-950 h-12 w-12"
                   size="icon"
+                  onClick={() => setIsWithdrawModalOpen(true)}
                 >
                   <WithdrawIcon />
                 </Button>
