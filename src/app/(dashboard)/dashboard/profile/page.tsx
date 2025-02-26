@@ -6,8 +6,8 @@ export default function Profile() {
     return (
         <div className="flex flex-col justify-between w-full max-w-[500px] lg:max-w-[50%] mx-auto py-16 px-4 lg:px-0 items-start min-h-[90%]">
             <div className="w-full">
-                <h1 className="text-3xl font-bold text-blue-950 text-left block lg:hidden">
-                    hello world
+                <h1 className="text-3xl font-bold mb-3.5 text-blue-950 text-left block lg:hidden">
+                    Profile
                 </h1>
 
                 <img className="pb-2 w-auto" src="/images/avatar_camera.svg" alt="Avatar" />
