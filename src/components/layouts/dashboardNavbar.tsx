@@ -24,12 +24,14 @@ export default function DashboardNavbar() {
         </h1>
         <div className="flex justify-between w-full lg:w-fit  items-center gap-4">
           <div className="flex items-center gap-2">
-            <Avatar className="h-12 rounded-md w-12">
-              <AvatarImage src="" alt="Avatar" />
-              <AvatarFallback className="h-12 rounded-md border w-12">
-                CN
-              </AvatarFallback>
-            </Avatar>
+            {/*<Avatar className="h-12 rounded-md w-12">*/}
+            {/*  <AvatarImage src="" alt="Avatar.svg" />*/}
+            {/*  <AvatarFallback className="h-12 rounded-md border w-12">*/}
+            {/*    CN*/}
+            {/*  </AvatarFallback>*/}
+            {/*</Avatar>*/}
+            <img src='/images/avatar.svg' alt='Avatar' />
+
 
             <div className="flex items-center gap-2 bg-white p-1 px-2 rounded-[8px]">
               <span className="text-sm text-blue-950 font-medium">
