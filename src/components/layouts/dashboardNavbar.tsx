@@ -17,7 +17,7 @@ export default function DashboardNavbar() {
   };
 
   return (
-    <nav className=" py-6 flex ">
+    <nav className="hidden  lg:py-6 lg:flex ">
       <header className="flex w-full items-center justify-between ">
         <h1 className="text-3xl font-bold hidden lg:block  text-blue-950">
           {getPageTitle(pathname)}

@@ -4,23 +4,31 @@ import {Button} from "@/components/ui/button";
 
 export default function Profile() {
     return (
-        <div className="flex justify-between flex-col w-[50%] mx-auto py-[6em] ">
-            <div>
-                <img className='pb-2' src='/images/avatar_camera.svg' alt="Avatar" />
+        <div className="flex flex-col justify-between w-full max-w-[500px] lg:max-w-[50%] mx-auto py-16 px-4 lg:px-0 items-start min-h-[90%]">
+            <div className="w-full">
+                <h1 className="text-3xl font-bold text-blue-950 text-left block lg:hidden">
+                    hello world
+                </h1>
+
+                <img className="pb-2 w-auto" src="/images/avatar_camera.svg" alt="Avatar" />
+
                 <Input
-                    id="title"
-                    className=" h-14 rounded-[12px]  border-none bg-accent-100 placeholder:text-[#B9C0D4] shadow-none focus:ring-0  mt-3 outline-none"
+                    id="fullName"
+                    className="h-14 rounded-[12px] border-none bg-accent-100 placeholder:text-[#B9C0D4] shadow-none focus:ring-0 mt-3 outline-none w-full"
                     placeholder="Full Name"
                 />
                 <Input
-                    id="title"
-                    className=" h-14 rounded-[12px]  border-none bg-accent-100 placeholder:text-[#B9C0D4] shadow-none focus:ring-0  mt-3 outline-none"
+                    id="username"
+                    className="h-14 rounded-[12px] border-none bg-accent-100 placeholder:text-[#B9C0D4] shadow-none focus:ring-0 mt-3 outline-none w-full"
                     placeholder="wager.strk/"
                 />
             </div>
-            <div className="flex justify-center pt-[8rem]">
-                <Button className="w-full max-w-[384px] text-lg font-medium tracking-[-0.36px]">Update Changes</Button>
+            <div className="flex justify-start w-full  lg:pt-8 lg:-mt-6">
+                <Button className="w-full max-w-[384px] text-lg font-medium tracking-[-0.36px]">
+                    Update Changes
+                </Button>
             </div>
         </div>
+
     )
 }
