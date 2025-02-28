@@ -1,5 +1,4 @@
 "use client";
-
 import { WagerLayout } from "@/components/wagers/wager-layout";
 import { BattleDisplay } from "@/components/wagers/battle-display";
 import { WagerDetails } from "@/components/wagers/wager_details";
@@ -28,7 +27,10 @@ const wagerDetails = {
 
 export default function WagerSummary() {
   const searchParams = useSearchParams();
-  const state = searchParams.get('state') || 'pending';
+  const state = searchParams.get('state') || 'pending'
+
+  const shouldShowClaimButton = state === 'active' || state === 'won';
+  const shouldShowCreateButton = state === 'pending';
 
   const renderBattleDisplay = () => {
     switch (state) {
@@ -76,12 +78,26 @@ export default function WagerSummary() {
           />
         );
       default:
-        return null;
+        return (   
+        <BattleDisplay
+          player1={{
+            username: "@noyi24_7",
+            avatar: "/images/avatar.svg"
+          }}
+          player2={{
+            username: "@@babykeem",
+            avatar: "/images/player2.svg"
+          }}
+          amount="5 STRK each"
+        />
+      );
     }
   };
 
   return (
-    <WagerLayout showCreateButton={state === 'pending'}>
+    <WagerLayout 
+      showCreateButton={shouldShowCreateButton}
+      showClaimButton={shouldShowClaimButton}>
       {renderBattleDisplay()}
       <WagerDetails {...wagerDetails} />
     </WagerLayout>
