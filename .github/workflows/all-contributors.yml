@@ -29,6 +29,11 @@ jobs:
           echo "$PNPM_HOME" >> $GITHUB_PATH
           pnpm setup
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Install All Contributors CLI
         run: pnpm add -g all-contributors-cli
 
