@@ -1,4 +1,4 @@
-import { icons, Timer } from "lucide-react";
+import { Timer } from "lucide-react";
 import Image from "next/image";
 import { Button } from "./button";
 
