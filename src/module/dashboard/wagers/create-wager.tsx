@@ -17,7 +17,7 @@ export default function CreateWager() {
     <div className="w-full max-w-xl py-[4rem] mx-auto">
       <form className="flex flex-col gap-5">
         <div className="flex flex-col md:flex-row gap-3">
-          {/* Dropdown de Categoría con Modal */}
+          {/* Dropdown de Categoría con Modal */}
           <CategoryDropdown onSelect={(category) => console.log(category)} />
 
           {/* Dropdown de Hashtags */}
@@ -35,7 +35,7 @@ export default function CreateWager() {
           />
         </div>
 
-        {/* Título del Wager */}
+        {/* Título del Wager */}
         <div>
           <div className="mt-3">
             <label htmlFor="title" className="text-sm tracking-tight text-blue-1 font-medium mb-3">
@@ -46,7 +46,7 @@ export default function CreateWager() {
           <span className="flex justify-end text-sm py-2 text-gray-400">0/50</span>
         </div>
 
-        {/* Descripción del Wager */}
+        {/* Descripción del Wager */}
         <div>
           <div>
             <label htmlFor="terms" className="text-sm tracking-tight text-blue-1 font-medium">
