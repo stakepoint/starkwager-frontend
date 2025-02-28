@@ -8,6 +8,7 @@ import { ModalView } from "@/components/ui/modals";
 import FundWalletModal from "@/components/wallets/fundWallet";
 import WithdrawFundsModal from "@/components/wallets/withdrawFunds";
 import WalletDetail from "@/components/layouts/walletDetails";
+import ClaimWager from "@/components/ui/claimWager";
 
 
 
@@ -37,6 +38,7 @@ export default function DashboardHome() {
               setIsWithdrawModalOpen={setIsWithdrawModalOpen}
       />
 
+        <ClaimWager />
         <EmptyStateView />
         <div className="pt-5 lg:hidden">
           <Button className="w-fit mx-auto flex items-center text-base font-medium">
