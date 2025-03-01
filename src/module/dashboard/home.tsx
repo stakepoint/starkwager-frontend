@@ -12,6 +12,7 @@ import { SlidersHorizontal } from "lucide-react";
 import WagerCards from "@/components/ui/WagerCards";
 import HashtagsModal from "@/components/ui/hashtags";
 import WagerTabOptions from "@/components/ui/wager-tab-options";
+import ClaimWager from "@/components/ui/claimWager";
 
 export default function DashboardHome() {
   const [isFundModalOpen, setIsFundModalOpen] = useState(false);
@@ -100,7 +101,14 @@ export default function DashboardHome() {
         )}
 
         {wagerCards.length === 0 && <EmptyStateView />}
+      
+      <section className="w-full pb-[10rem] mx-auto">
+        <WalletDetail 
+          setIsFundModalOpen={setIsFundModalOpen}
+          setIsWithdrawModalOpen={setIsWithdrawModalOpen}
+        />
 
+        <ClaimWager />
         <div className="pt-5 lg:hidden">
           <Button className="w-fit mx-auto flex items-center text-base font-medium">
             {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}
