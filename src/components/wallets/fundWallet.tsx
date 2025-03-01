@@ -8,7 +8,7 @@ interface FundWalletModalProps {
   onClose: () => void;
 }
 
-const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
+const FundWalletModal: React.FC<FundWalletModalProps> = () => {
   const [walletBalance, setWalletBalance] = useState(1000); // Set to a test balance
   const [inputValue, setInputValue] = useState("");
   const [inputWidth, setInputWidth] = useState(100);
