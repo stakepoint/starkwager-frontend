@@ -17,8 +17,6 @@ export const getPageTitle = (path: string) => {
       return "PROFILE";
     case "/dashboard/create-wager":
       return "CREATE WAGER";
-    case "/account-settings":
-      return "ACCOUNT SETTINGS";
     default:
       return "HOME";
   }

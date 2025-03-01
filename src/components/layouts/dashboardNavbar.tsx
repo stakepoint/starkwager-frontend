@@ -1,21 +1,13 @@
 'use client'
 
-import React, { useState } from 'react';
 import { Bell, Copy } from "lucide-react";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { usePathname } from "next/navigation";
 import { getPageTitle } from "@/lib/utils";
-import NotificationPanel from '@/components/layouts/notificationPanel';
 
 export default function DashboardNavbar() {
   const pathname = usePathname();
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
-
-  const toggleNotificationPanel = () => {
-    setIsPanelOpen(!isPanelOpen);
-  };
-
   return (
     <nav className=" py-6 flex ">
       <header className="flex w-full items-center justify-between ">
@@ -44,17 +36,11 @@ export default function DashboardNavbar() {
               </Button>
             </div>
           </div>
-          <Button
-            className="text-blue-950"
-            variant="ghost"
-            size="icon"
-            onClick={toggleNotificationPanel}
-          >
+          <Button className="text-blue-950 " variant="ghost" size="icon">
             <Bell className="h-5 w-5" />
           </Button>
         </div>
       </header>
-      {isPanelOpen && <NotificationPanel />}
     </nav>
   );
 }

@@ -8,10 +8,10 @@ import { ModalView } from "@/components/ui/modals";
 import FundWalletModal from "@/components/wallets/fundWallet";
 import WithdrawFundsModal from "@/components/wallets/withdrawFunds";
 import WalletDetail from "@/components/layouts/walletDetails";
-import WagerTabOptions from "@/components/ui/wager-tab-options";
 import { SlidersHorizontal } from "lucide-react";
 import WagerCards from "@/components/ui/WagerCards";
 import HashtagsModal from "@/components/ui/hashtags";
+import WagerTabOptions from "@/components/ui/wager-tab-options";
 
 export default function DashboardHome() {
   const [isFundModalOpen, setIsFundModalOpen] = useState(false);
