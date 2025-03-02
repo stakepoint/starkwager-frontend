@@ -3,30 +3,49 @@ import { FundIcon } from "../../svgs/fundIcon";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import Image from "next/image";
+
 interface FundWalletModalProps {
   onClose: () => void;
 }
 
 const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
-    const [walletBalance, setWalletBalance] = useState(0);
-    const [inputValue, setInputValue] = useState("");
-    const [inputWidth, setInputWidth] = useState(100);
-    const inputRef = useRef<HTMLInputElement>(null);
+  const [walletBalance, setWalletBalance] = useState(1000); // Set to a test balance
+  const [inputValue, setInputValue] = useState("");
+  const [inputWidth, setInputWidth] = useState(100);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
-    const showFundForm = () => {
-      setWalletBalance(1);
-    };
+  const handleFundWallet = () => {
+    const amount = parseFloat(inputValue);
 
-    useEffect(() => {
-      if (walletBalance > 0 && inputRef.current) {
-        inputRef.current.focus();
-      }
-    }, [walletBalance]);
+    if (isNaN(amount) || amount <= 0) {
+      alert("Please enter a valid amount.");
+      return;
+    }
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setInputValue(event.target.value);
-      setInputWidth(Math.max(100, event.target.value.length * 30));
-    };
+    if (amount > walletBalance) {
+      setShowErrorModal(true);
+    } else {
+      console.log("Wallet funded successfully!");
+      onClose(); // Cierra el modal después de completar la transacción
+    }
+  };
+
+  const showFundForm = () => {
+    setWalletBalance(1);
+  };
+
+  useEffect(() => {
+    if (walletBalance > 0 && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [walletBalance]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+    setInputWidth(Math.max(100, event.target.value.length * 30));
+  };
+
   return (
     <div>
       <h3 className="text-center font-semibold text-xl md:text-2xl leading-[2.1] sm:leading-[1.75] text-headingBlue mt-2">
@@ -67,9 +86,10 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
             </div>
             <div className="mt-4 flex justify-center w-full">
               <Button
-                onClick={onClose}
+                onClick={handleFundWallet}
                 className="w-full max-w-[352px] sm:max-w-full text-lg font-medium"
-                type="button">
+                type="button"
+              >
                 Fund
               </Button>
             </div>
@@ -87,13 +107,48 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({ onClose }) => {
               <Button
                 onClick={showFundForm}
                 className="w-full max-w-[352px] sm:max-w-full text-lg font-medium"
-                type="button">
+                type="button"
+              >
                 Fund
               </Button>
             </div>
           </>
         )}
       </div>
+
+      {/* Error Modal */}
+      {showErrorModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">
+          <div className="bg-white px-4 py-10 rounded-lg text-center w-96">
+            <h2 className="text-xl font-semibold text-headingBlue">
+              Failed, Insufficient Funds
+            </h2>
+            <p className="text-grey-1 text-sm mt-2">
+              You couldn’t fund your wallet due to <br /> insufficient funds.
+            </p>
+            <div className="flex justify-center my-4">
+              <Image
+                src="/images/Warning.png"
+                alt="Error Icon"
+                width={75}
+                height={75}
+              />
+            </div>
+            <button
+              className="w-full py-2 bg-[#F9F9FB] text-headingBlue rounded-md mt-2 hover:bg-[#e3e3e9]"
+              onClick={() => setShowErrorModal(false)}
+            >
+              Back Home
+            </button>
+            <button
+              className="w-full py-2 bg-[#E0FE10] text-black font-semibold rounded-md mt-2 hover:bg-[#ddf738]"
+              onClick={() => setShowErrorModal(false)}
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

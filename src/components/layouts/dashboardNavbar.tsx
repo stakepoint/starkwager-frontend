@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { usePathname } from "next/navigation";
 import { getPageTitle } from "@/lib/utils";
 import NotificationPanel from '@/components/layouts/notificationPanel';
+import Image from "next/image";
 
 export default function DashboardNavbar() {
   const pathname = usePathname();
@@ -17,17 +18,18 @@ export default function DashboardNavbar() {
   };
 
   return (
-    <nav className=" py-6 flex ">
-      <header className="flex w-full items-center justify-between ">
-        <h1 className="text-3xl font-bold hidden lg:block  text-blue-950">
+    <nav className="hidden lg:py-6 lg:flex">
+      <header className="flex w-full items-center justify-between">
+        <h1 className="text-3xl font-bold hidden lg:block text-blue-950">
           {getPageTitle(pathname)}
         </h1>
-        <div className="flex justify-between w-full lg:w-fit  items-center gap-4">
+        <div className="flex justify-between w-full lg:w-fit items-center gap-4">
           <div className="flex items-center gap-2">
-            <Avatar className="h-12 rounded-md w-12">
+            {/* Usa Avatar con fallback */}
+            <Avatar className="h-12 w-12 rounded-md">
               <AvatarImage src="" alt="Avatar" />
-              <AvatarFallback className="h-12 rounded-md border w-12">
-                CN
+              <AvatarFallback className="h-12 w-12 rounded-md border">
+                <Image width={64} height={64} src='/images/avatar.svg' alt='Avatar' />
               </AvatarFallback>
             </Avatar>
 
