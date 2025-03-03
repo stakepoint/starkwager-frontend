@@ -23,16 +23,31 @@ const wagerDetails = {
     'Web3Challenge',
     'DeFiPrediction',
   ],
+  claimStatus: {
+    // ? change this to toggle between claimed and not claimed
+    isClaimed: true,
+    claimedBy: '@babykeem',
+    dispute: {
+      initiated: false,
+      reason: '',
+      proofRequested: false,
+    },
+  },
 };
 
 export default function WagerSummary() {
   const searchParams = useSearchParams();
   const state = searchParams.get('state') || 'pending';
 
-  const shouldShowClaimButton = state === 'active' || state === 'won';
+  const shouldShowClaimButton =
+    (state === 'active' || state === 'won') &&
+    !wagerDetails.claimStatus?.isClaimed;
   const shouldShowCreateButton = state === 'pending';
 
-  console.log('shouldShowCreateButton', shouldShowCreateButton);
+  const isClaimedByOpponent = wagerDetails.claimStatus?.isClaimed;
+  // !This is to make sure that the claim is not by you and is truly done,
+  // ! the opponent. This cannot be used yet until integration where we have users data
+  // && wagerDetails.claimStatus?.claimedBy !== '@currentUser';
 
   const renderBattleDisplay = () => {
     switch (state) {
@@ -98,8 +113,9 @@ export default function WagerSummary() {
 
   return (
     <WagerLayout
-      showCreateButton={false}
+      showCreateButton={shouldShowCreateButton}
       showClaimButton={shouldShowClaimButton}
+      isClaimedByOpponent={isClaimedByOpponent}
     >
       {renderBattleDisplay()}
       <WagerDetails {...wagerDetails} />

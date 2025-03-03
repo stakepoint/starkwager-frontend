@@ -11,17 +11,17 @@ interface WagerLayoutProps {
   children: ReactNode;
   showCreateButton?: boolean;
   showClaimButton?: boolean;
+  isClaimedByOpponent?: boolean;
 }
 
 export function WagerLayout({
   children,
   showCreateButton = false,
   showClaimButton = false,
+  isClaimedByOpponent = false,
 }: WagerLayoutProps) {
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
   const [hasClaimed, setHasClaimed] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isClaimedByOpponent, setIsClaimedByOpponent] = useState(true);
   const [isDisagreementOpen, setIsDisagreementOpen] = useState(false);
 
   const handleClaimClick = () => {
