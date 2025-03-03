@@ -15,6 +15,7 @@ import {
 const WagerTabOptions = () => {
   const [selectedTab, setSelectedTab] = useState<number>(1);
 
+
   const options = [
     {
       id: 1,
