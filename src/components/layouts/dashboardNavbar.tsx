@@ -4,7 +4,6 @@ import { Bell, Copy } from "lucide-react";
 import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import { getPageTitle } from "@/lib/utils";
-import NotificationPanel from '@/components/layouts/notificationPanel';
 import Image from "next/image";
 
 export default function DashboardNavbar() {

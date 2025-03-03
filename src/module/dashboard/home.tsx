@@ -21,8 +21,9 @@ export default function DashboardHome() {
 
     const wagerCards = [
         {
+            wagerId: "1",
             question: "Will Bitcoin Hit $100k Before January 31, 2025?",
-            progress: true,
+            wagerStatus: "active" as const,
             leftUser: {
                 username: "@noyi24_7",
                 icon: "",
@@ -89,8 +90,9 @@ export default function DashboardHome() {
                             {wagerCards.map((card, idx) => (
                                 <WagerCards
                                     key={idx}
+                                    wagerId={card.wagerId}
                                     question={card.question}
-                                    progress={card.progress}
+                                    wagerStatus={card.wagerStatus as "active" | "pending" | "completed"}
                                     leftUser={card.leftUser}
                                     rightUser={card.rightUser}
                                     stakeAmount={card.stakeAmount}
