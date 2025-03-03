@@ -3,9 +3,8 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { getSvgById } from "@/svgs";
 import { HashtagSelector } from "@/components/ui/modals/HashtagSelector";
 import CategoryDropdown from "@/components/ui/CategoryDropdown"; 
 
