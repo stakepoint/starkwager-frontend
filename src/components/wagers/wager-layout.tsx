@@ -113,7 +113,7 @@ export function WagerLayout({
       >
         <DisagreementModal
           onClose={() => setIsDisagreementOpen(false)}
-          onProceed={() => {}}
+          onProceed={() => setIsDisagreementOpen(false)}
         />
       </ModalView>
 
