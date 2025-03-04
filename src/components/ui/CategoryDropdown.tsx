@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ChevronDown } from "lucide-react"; // Importamos el icono correcto
 import Image from "next/image";
+import { ChevronDown } from "lucide-react"; // Usando el mismo icono que Add Hashtags
 
 const categories = [
   "Sports",
@@ -25,9 +26,12 @@ export default function CategoryDropdown({ onSelect }: { onSelect: (category: st
       <DialogTrigger asChild>
         <button
           className="w-full h-18 px-4 bg-accent-100 rounded-md flex justify-between items-center 
+          text-blue-950 font-medium shadow-none border-none min-w-[320px] max-w-[380px]"
+          className="w-full h-18 px-4 bg-accent-100 rounded-md flex justify-between items-center 
           text-blue-950 font-medium shadow-none border-none min-w-[320px] max-w-[380px]" 
         >
           {selectedCategory ? selectedCategory : "Select Category"}
+          <ChevronDown className="w-4 h-4 text-blue-950" /> {/* Ícono igual al de Add Hashtags */}
           <ChevronDown className="h-5 w-5 text-blue-950" />  {/* Nuevo icono aquí */}
         </button>
       </DialogTrigger>
