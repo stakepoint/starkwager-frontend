@@ -2,61 +2,62 @@
 
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { ChevronDown } from "lucide-react"; // Importamos el icono correcto
 import Image from "next/image";
 
 const categories = [
-  { id: 1, name: "Sports" },
-  { id: 2, name: "Esports" },
-  { id: 3, name: "Politics" },
-  { id: 4, name: "Crypto" },
-  { id: 5, name: "Stocks" },
-  { id: 6, name: "Entertainment" },
-  { id: 7, name: "Games" },
-  { id: 8, name: "Others" }
+  "Sports",
+  "Esports",
+  "Politics",
+  "Crypto",
+  "Stocks",
+  "Entertainment",
+  "Games",
+  "Others"
 ];
 
 export default function CategoryDropdown({ onSelect }: { onSelect: (category: string) => void }) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [isOpen, setIsOpen] = useState(false); 
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <button
-          className="w-full h-14 px-4 bg-white border border-gray-300 rounded-md text-center flex justify-between items-center 
-          text-blue-1 font-medium shadow-sm focus:outline-none"
+          className="w-full h-18 px-4 bg-accent-100 rounded-md flex justify-between items-center 
+          text-blue-950 font-medium shadow-none border-none min-w-[320px] max-w-[380px]" 
         >
           {selectedCategory ? selectedCategory : "Select Category"}
-          <span className="text-gray-500">▼</span>
+          <ChevronDown className="h-5 w-5 text-blue-950" />  {/* Nuevo icono aquí */}
         </button>
       </DialogTrigger>
 
-      <DialogContent className="w-[90%] max-w-md mx-auto rounded-lg p-6 bg-white">
+      <DialogContent className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto px-2 sm:px-4">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold text-center text-blue-950 font-sans">
+          <DialogTitle className="text-xl font-semibold flex items-center justify-center text-[#1E2875]">
             Select Category
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex flex-col items-center"> 
+        <div className="flex flex-col items-center">
           {categories.map((category, index) => (
-            <div key={category.id} className="w-full flex flex-col items-center">
+            <div key={category} className="w-full flex flex-col items-center">
               <button
-                className="py-4 text-lg text-center w-full flex justify-center items-center hover:bg-gray-100 font-sans"
+                className="py-4 text-lg text-center w-full flex justify-center items-center hover:bg-[#1E2875]/10 font-sans"
                 onClick={() => {
-                  setSelectedCategory(category.name);
-                  onSelect(category.name);
-                  
+                  setSelectedCategory(category);
+                  onSelect(category);
+
                   setTimeout(() => {
                     setIsOpen(false);
-                  }, 30); 
+                  }, 100);
                 }}
               >
-                <span className={selectedCategory === category.name ? "text-blue-600 font-bold" : "text-blue-950"}>
-                  {category.name}
+                <span className={selectedCategory === category ? "text-[#1E2875] font-bold" : "text-blue-950"}>
+                  {category}
                 </span>
 
-                {selectedCategory === category.name && (
+                {selectedCategory === category && (
                   <Image src="/images/Container.svg" alt="Selected" width={20} height={20} className="ml-2" />
                 )}
               </button>
