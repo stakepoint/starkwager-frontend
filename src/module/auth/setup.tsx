@@ -44,9 +44,7 @@ export default function SetupPage() {
     console.log("Submitting payload:", payload);
   };
 
-  // Add this function to check username availability
   const checkUsernameAvailability = (username: string) => {
-    // Mock API call - replace with actual API call
     setTimeout(() => {
       setIsUsernameAvailable(username.length > 3);
     }, 500);
@@ -124,7 +122,7 @@ export default function SetupPage() {
         </Button>
         <Link
           className={cn(buttonVariants({ variant: "default" }))}
-          href="/pin"
+          href="/dashboard"
         >
           Demo Skip
         </Link>
