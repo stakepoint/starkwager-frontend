@@ -1,8 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { ChevronDown } from "lucide-react"; 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 
 const categories = [
@@ -13,24 +19,27 @@ const categories = [
   "Stocks",
   "Entertainment",
   "Games",
-  "Others"
+  "Others",
 ];
 
-export default function CategoryDropdown({ onSelect }: { onSelect: (category: string) => void }) {
+export default function CategoryDropdown({
+  onSelect,
+}: {
+  onSelect: (category: string) => void;
+}) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-      <button
-  className="w-full h-18 px-4 bg-accent-100 rounded-md flex justify-between items-center 
-  text-blue-950 font-normal text-sm shadow-none border-none min-w-[320px] max-w-[380px]"
->
-  {selectedCategory ? selectedCategory : "Select Category"}
-  <ChevronDown className="h-6 w-6 text-blue-950" />  
-</button>
-
+        <button
+          className="w-full h-18 px-4 bg-accent-100 rounded-md flex justify-between items-center 
+  text-blue-950 font-normal text-sm shadow-none border-none md:min-w-[320px] max-w-[380px]"
+        >
+          {selectedCategory ? selectedCategory : "Select Category"}
+          <ChevronDown className="h-6 w-6 text-blue-950" />
+        </button>
       </DialogTrigger>
 
       <DialogContent className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto px-2 sm:px-4">
@@ -54,18 +63,35 @@ export default function CategoryDropdown({ onSelect }: { onSelect: (category: st
                   }, 100);
                 }}
               >
-                <span className={selectedCategory === category ? "text-[#1E2875] font-bold" : "text-blue-950"}>
+                <span
+                  className={
+                    selectedCategory === category
+                      ? "text-[#1E2875] font-bold"
+                      : "text-blue-950"
+                  }
+                >
                   {category}
                 </span>
 
                 {selectedCategory === category && (
-                  <Image src="/images/Container.svg" alt="Selected" width={20} height={20} className="ml-2" />
+                  <Image
+                    src="/images/Container.svg"
+                    alt="Selected"
+                    width={20}
+                    height={20}
+                    className="ml-2"
+                  />
                 )}
               </button>
 
               {index < categories.length - 1 && (
                 <div className="flex justify-center">
-                  <Image src="/images/Divider.svg" alt="Divider" width={352} height={16} />
+                  <Image
+                    src="/images/Divider.svg"
+                    alt="Divider"
+                    width={352}
+                    height={16}
+                  />
                 </div>
               )}
             </div>

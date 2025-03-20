@@ -79,6 +79,8 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+
+
 }
 
 @keyframes modalEnter {

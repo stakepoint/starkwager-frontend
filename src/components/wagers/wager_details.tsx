@@ -9,6 +9,7 @@ interface WagerDetailsProps {
   platformFee: string;
   description: string[];
   hashtags: string[];
+  category: string;
 }
 
 export function WagerDetails({
@@ -16,7 +17,8 @@ export function WagerDetails({
   potentialWinnings,
   platformFee,
   description,
-  hashtags
+  hashtags,
+  category,
 }: WagerDetailsProps) {
   return (
     <div className="space-y-5">
@@ -72,7 +74,20 @@ export function WagerDetails({
       </div>
 
       <div>
-        <h3 className="text-sm md:text-base font-medium text-grey-3">Hashtags</h3>
+        <h3 className="text-sm md:text-base font-medium text-grey-3">
+          Category
+        </h3>
+        <div className="mt-2 flex flex-wrap gap-2">
+          <span className="inline-flex items-center rounded-full bg-white space-x-2 p-[6px] text-sm md:text-base font-medium text-gray-900 hover:bg-gray-200 transition-colors">
+            {category}
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-sm md:text-base font-medium text-grey-3">
+          Hashtags
+        </h3>
         <div className="mt-2 flex flex-wrap gap-2">
           {hashtags.map((tag) => (
             <span

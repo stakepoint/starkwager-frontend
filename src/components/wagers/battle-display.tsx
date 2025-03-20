@@ -15,7 +15,12 @@ interface BattleDisplayProps {
   amount: string;
 }
 
-export function BattleDisplay({ player1, player2, isPending = false, amount }: BattleDisplayProps) {
+export function BattleDisplay({
+  player1,
+  player2,
+  isPending = false,
+  amount,
+}: BattleDisplayProps) {
   return (
     <div className="mt-6 rounded-2xl bg-white py-6 shadow-sm">
       {/* Stake amount badge */}
@@ -81,7 +86,11 @@ export function BattleDisplay({ player1, player2, isPending = false, amount }: B
           <div className="h-12 w-12 rounded-xl bg-gray-100 flex items-center justify-center">
             <div className="relative h-12 w-12 overflow-hidden rounded-xl">
               <Image
-                src={isPending ? "/images/opponent.svg" : (player2?.avatar || "/images/player2.svg")}
+                src={
+                  isPending
+                    ? "/images/opponent.svg"
+                    : player2?.avatar || "/images/player2.svg"
+                }
                 alt="Player avatar"
                 fill
                 className="object-cover"

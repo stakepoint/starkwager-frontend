@@ -11,14 +11,16 @@ export const getPageTitle = (path: string) => {
       return "HOME";
     case "/dashboard/wagers":
       return "WAGERS";
+    case "/dashboard/wagers/wagers_summary":
+      return "WAGER SUMMARY";
     case "/dashboard/wallet":
       return "WALLET";
     case "/dashboard/profile":
       return "PROFILE";
     case "/dashboard/create-wager":
       return "CREATE WAGER";
-      case "/dashboard/profile/setting":
-        return "ACCOUNT SETTINGS";
+    case "/dashboard/profile/setting":
+      return "ACCOUNT SETTINGS";
     default:
       return "HOME";
   }

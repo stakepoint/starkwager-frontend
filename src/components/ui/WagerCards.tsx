@@ -97,7 +97,7 @@ const WagerCards: React.FC<WagerCardProps> = ({
             alt={leftUser.username}
             width={56}
             height={56}
-            className="w-8 h-8 md:w-20 md:h-20 rounded-lg mb-1"
+            className="w-8 h-8 md:w-20 md:h-20 rounded-lg mb-1 mx-auto"
           />
           <span className="text-blue-1 font-medium text-[12px] md:text-sm">
             {leftUser.username}
@@ -121,7 +121,7 @@ const WagerCards: React.FC<WagerCardProps> = ({
             alt={rightUser.username}
             width={56}
             height={56}
-            className="w-8 h-8 md:w-20 md:h-20 rounded-lg mb-1"
+            className="w-8 h-8 md:w-20 md:h-20 rounded-lg mb-1 mx-auto"
           />
           <span className="text-blue-1 font-medium text-[12px] md:text-sm">
             {rightUser.username}

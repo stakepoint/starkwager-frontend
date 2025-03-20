@@ -5,7 +5,7 @@ import { BattleDisplay } from "../../../components/wagers/battle-display";
 import { WagerDetails } from "../../../components/wagers/wager_details";
 
 interface ClosedWagerSummaryProps {
-  winner: 'player1' | 'player2';
+  winner: "player1" | "player2";
   player1: {
     username: string;
     avatar: string;
@@ -21,6 +21,7 @@ interface ClosedWagerSummaryProps {
     platformFee: string;
     description: string[];
     hashtags: string[];
+    category: string;
   };
 }
 
@@ -28,7 +29,7 @@ export default function ClosedWagerSummary({
   winner,
   player1,
   player2,
-  wagerDetails
+  wagerDetails,
 }: ClosedWagerSummaryProps) {
   return (
     <WagerLayout>
@@ -36,11 +37,11 @@ export default function ClosedWagerSummary({
         <BattleDisplay
           player1={{
             ...player1,
-            isWinner: winner === 'player1'
+            isWinner: winner === "player1",
           }}
           player2={{
             ...player2,
-            isWinner: winner === 'player2'
+            isWinner: winner === "player2",
           }}
           amount={wagerDetails.amount}
         />
