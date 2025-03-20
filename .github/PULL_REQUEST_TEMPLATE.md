@@ -11,6 +11,6 @@ Please include a summary of the changes and the related issue. List any dependen
 - [ ] My code follows the code style of this project.
 
 ## Related Issue
-- Issue #
+- Closes #
 
 ## Screenshots (if applicable)
