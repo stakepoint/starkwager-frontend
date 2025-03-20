@@ -8,6 +8,9 @@ jobs:
   update-contributors:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - name: Checkout repository
@@ -18,13 +21,16 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
 
-      - name: Set up pnpm global bin directory
+      - name: Set PNPM environment
         run: |
-          export PNPM_HOME=$HOME/.local/share/pnpm
-          export PATH=$PNPM_HOME:$PATH
+          echo "PNPM_HOME=$HOME/.local/share/pnpm" >> $GITHUB_ENV
+          echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
           echo "PNPM_HOME=$PNPM_HOME" >> $GITHUB_ENV
           echo "$PNPM_HOME" >> $GITHUB_PATH
           pnpm setup

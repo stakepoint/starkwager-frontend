@@ -71,7 +71,8 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({ onClose }) => {
               <Button
                 onClick={showSuccess}
                 className="w-full max-w-[352px] sm:max-w-full text-lg font-medium"
-                type="button">
+                type="button"
+              >
                 Withdraw
               </Button>
             </div>
@@ -100,12 +101,14 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({ onClose }) => {
               <Button
                 onClick={onClose}
                 className="w-full bg-body-bg max-w-[352px] sm:max-w-full text-lg/[130%] tracking-[-0.36px] font-medium"
-                type="button">
+                type="button"
+              >
                 Back Home
               </Button>
               <Link
                 href="/dashboard/create-wager"
-                className="w-full text-lg/[130%] tracking-[-0.36px] flex justify-center font-medium bg-secondary rounded-2xl p-4">
+                className="w-full text-lg/[130%] tracking-[-0.36px] flex justify-center font-medium bg-secondary rounded-2xl p-4"
+              >
                 New Wager
               </Link>
             </div>

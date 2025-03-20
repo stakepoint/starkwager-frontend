@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"],
+  darkMode: "class",
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
@@ -15,6 +15,8 @@ const config: Config = {
         "body-bg": "#F9F9FB",
         "input-bg": "#EFF1F5",
         "blue-1": "#102A56",
+        error: "#F04438",
+        success: "#17B268",
         secondary: "#E0FE10",
         card: {
           DEFAULT: "hsl(var(--card))",

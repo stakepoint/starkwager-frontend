@@ -27,6 +27,9 @@ interface Avatar {
 
 export default function SetupPage() {
   const [username, setUsername] = useState("");
+  const [isUsernameAvailable, setIsUsernameAvailable] = useState<
+    boolean | null
+  >(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState<Avatar | null>(null);
   const [tempSelectedAvatar, setTempSelectedAvatar] = useState<Avatar | null>(
@@ -41,6 +44,14 @@ export default function SetupPage() {
     console.log("Submitting payload:", payload);
   };
 
+  // Add this function to check username availability
+  const checkUsernameAvailability = (username: string) => {
+    // Mock API call - replace with actual API call
+    setTimeout(() => {
+      setIsUsernameAvailable(username.length > 3);
+    }, 500);
+  };
+
   return (
     <div className="flex flex-col w-full pt-[5rem] items-center justify-center px-4 md:px-0">
       <div className="text-primary w-full max-w-md flex flex-col gap-6">
@@ -48,7 +59,7 @@ export default function SetupPage() {
           <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-blue-950">
             SET UP YOUR PROFILE
           </h1>
-          <p className="mt-2 text-blue-950 tracking-tighter">
+          <p className="mt-2 text-blue-1 tracking-tighter">
             Choose your picture and a unique username other users can use to
             invite you to wagers
           </p>
@@ -69,24 +80,38 @@ export default function SetupPage() {
           </div>
         </div>
 
-        <div className="flex items-center bg-[#EFF1F5] rounded-lg px-[18px] py-6 h-[72px]">
-          <div className="">
-            <span className="text-[#B9C0D4] w-24 text-base tracking-tighter">
-              wager.strk/{" "}
-            </span>
-            <span className="text-[#102A56] w-24 text-base tracking-tighter">
-              @
-            </span>
+        <div className="flex flex-col w-full gap-1">
+          <div className="flex items-center bg-[#EFF1F5] rounded-lg px-[18px] py-6 h-[72px]">
+            <div className="">
+              <span className="text-[#B9C0D4] w-24 text-base tracking-tighter">
+                wager.strk/{" "}
+              </span>
+              <span className="text-[#102A56] w-24 text-base tracking-tighter">
+                @
+              </span>
+            </div>
+            <div className="flex flex-grow">
+              <Input
+                type="text"
+                value={username}
+                placeholder="username"
+                className="flex flex-grow text-[#102A56] py-8 bg-transparent transition-colors rounded-none text-base tracking-tighter outline-none border border-transparent px-0"
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  checkUsernameAvailability(e.target.value);
+                }}
+              />
+            </div>
           </div>
-          <div className="flex flex-grow">
-            <Input
-              type="text"
-              value={username}
-              placeholder="username"
-              className="flex flex-grow text-[#102A56] py-8 bg-transparent transition-colors rounded-none text-base tracking-tighter outline-none border border-transparent px-0"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
+          {username && (
+            <div className="text-right text-sm font-normal">
+              {isUsernameAvailable ? (
+                <span className="text-success">Username available</span>
+              ) : (
+                <span className="text-error">Username unavailable</span>
+              )}
+            </div>
+          )}
         </div>
 
         <Button
@@ -99,7 +124,7 @@ export default function SetupPage() {
         </Button>
         <Link
           className={cn(buttonVariants({ variant: "default" }))}
-          href="/dashboard"
+          href="/pin"
         >
           Demo Skip
         </Link>

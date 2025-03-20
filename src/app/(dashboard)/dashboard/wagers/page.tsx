@@ -14,7 +14,7 @@ export default function Wagers() {
   }, []);
 
   return (
-    <div className="w-full pt-10 pb-20 md:py-20 flex justify-center items-center">
+    <div className="w-full pt-5 pb-20 md:py-20 flex justify-center items-center">
       <Tabs defaultValue="active" className="w-[650px]">
         <TabsList className="flex justify-center">
           <TabsTrigger value="active">Active</TabsTrigger>
