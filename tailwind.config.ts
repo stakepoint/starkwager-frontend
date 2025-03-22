@@ -66,6 +66,12 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontFamily: {
+        schabo: "var(--font-schabo-condensed)",
+        geistSans: "var(--font-geist-sans)",
+        geistMono: "var(--font-geist-mono)",
+        generalSans: "var(--font-general-sans)",
+      },
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports
