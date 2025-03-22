@@ -55,6 +55,13 @@ const GeneralSans = localFont({
   display: "swap",
 });
 
+
+const Comedik = localFont({
+  src: "./fonts/Comedik.woff2",
+  variable: "--font-comedik",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Starkwager",
   description: "Welcome to Starkwager",
@@ -68,7 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${GeneralSans.variable} ${geistMono.variable} ${SchaboCondensed.variable} antialiased`}
+        className={`${geistSans.variable} ${GeneralSans.variable} ${geistMono.variable} ${SchaboCondensed.variable} ${Comedik.variable} antialiased`}
       >
         <Toaster />
         <ThemeProvider

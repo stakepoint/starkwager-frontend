@@ -5,33 +5,33 @@ import { useEffect, useRef, useState } from "react";
 
 const sectionImage = "/images/SecondSectionImage.svg";
 
-export default function LpSecondSection() {
+export default function SecondSection() {
   const elementRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const currentElement = elementRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.unobserve(entry.target); 
+          observer.unobserve(entry.target);
         }
       },
       {
-        root: null, 
-        rootMargin: "0px", 
-        threshold: 0.5, 
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.5,
       }
     );
 
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
+    if (currentElement) {
+      observer.observe(currentElement);
     }
 
- 
     return () => {
-      if (elementRef.current) {
-        observer.disconnect(); 
+      if (currentElement) {
+        observer.disconnect();
       }
     };
   }, []);
@@ -39,14 +39,13 @@ export default function LpSecondSection() {
   return (
     <section className="w-full flex flex-col items-center gap-20 justify-center py-2 px-2 ">
       <section className="flex flex-col md:flex-row items-center justify-center gap-2">
-        
         <div className="w-full max-w-[520px] ">
           <div className="flex items-center justify-center  mb-3 " >
-            <h1 className="text-[#EFF8FF] font-normal text-8xl font-schabo">
+            <h1 className="text-[#EFF8FF] font-normal text-[64px] leading-[60px] md:text-8xl font-schabo">
               MILLIONS OF <br /> WAGERER GET <br /> SHORTCHANGED
             </h1>
-            <h3 className="text-[#E0FE10] font-normal text-[32px] transform rotate-[-2deg]">
-              Every <br /> Single Day
+            <h3 className="text-[#E0FE10] text-lg leading-[30px] font-normal  md:text-[32px] ml-[-4%] mt-[-5%] transform rotate-[-2deg] whitespace-nowrap font-comedik">
+              Every <br /> <span className=" text-[28px] md:text-[40px] " >Single Day</span>
             </h3>
           </div>
 
@@ -57,7 +56,6 @@ export default function LpSecondSection() {
           </p>
         </div>
 
-        
         <div className="w-full max-w-[391.5px] flex flex-col justify-center items-start">
           <Image
             src={sectionImage}
@@ -67,7 +65,6 @@ export default function LpSecondSection() {
             className="object-cover w-[343px] h-[228px] md:w-[391.5px] md:h-[261px] "
           />
 
-          
           <div className="h-[145px] mt-3 ml-5 flex items-end justify-end">
             <svg
               ref={elementRef}
@@ -107,36 +104,42 @@ export default function LpSecondSection() {
         </div>
       </section>
 
-     
+      <section className="w-full min-h-[75vh] md:min-h-[80vh] relative  flex items-center justify-center  " >
+        <div className="absolute top-[6%] md:top-0 left-[40%] md:left-[34%] translate-x-[-50%] flex flex-col gap-5   " >
+          <h3 className="text-[#E0FE10] leading-[30px] font-normal max-w-[243.4px]  text-2xl md:text-[32px] transform rotate-[-2deg]   font-comedik">
+            Isn&rsquo;t Wagering just about taking risks?
+          </h3>
 
+          <div className="flex justify-start gap-4 items-end"  >
+            <span className="font-comedik text-[#6C737F] text-base font-normal  transform rotate-[-2deg]  " >
+              “Red <br />
+              card”
+            </span>
 
-
-
- 
-      <section className="w-full min-h-[50vh] relative  flex items-center justify-center " >
-
-
-        <div className="flex items-center justify-end text-[#EFF8FF]   gap-5  font-schabo font-normal text-[120px] " >
-          <h1>IT'S ABOUT</h1>
-          <div className=" max-w-[310px]  flex flex-col  " >
-            <h1  className="bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent text-[120px] leading-[120px] ">FAIRNESS</h1>
-            <h1 className="text-[120px] leading-[120px] ml-[4px] " >TRUST</h1>
-            <h1 className="bg-gradient-to-b  from-white via-[#16182B] via-70% to-[#16182B00] to-100%  bg-clip-text text-transparent text-[120px] leading-[120px]">
-  WINNING
-</h1>
-
+            <h3 className="text-[#E0FE10] leading-[30px] font-normal max-w-[243.4px]  text-2xl md:text-[32px] transform rotate-[-2deg]   font-comedik">
+              NO.WAY.
+            </h3>
           </div>
-
         </div>
-      
 
+        <div className="flex items-center justify-end text-[#EFF8FF]  gap-2 md:gap-5  font-schabo font-normal text-[56px] leading-[50px] md:text-[120px] " >
+          <h1>IT&rsquo;S ABOUT</h1>
+          <div className=" max-w-[310px]  flex flex-col  " >
+            <h1 className="bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent  text-[56px] md:text-[120px] md:leading-[120px] ">FAIRNESS</h1>
+            <h1 className=" text-[56px] md:text-[120px] md:leading-[120px] ml-[4px] " >TRUST</h1>
+            <h1 className="bg-gradient-to-b  from-white via-[#16182B] via-70% to-[#16182B00] to-100%  bg-clip-text text-transparent  text-[56px] md:text-[120px] md:leading-[120px]">
+              WINNING
+            </h1>
+          </div>
+        </div>
 
-
-      <div className="text-[#E0FE10] flex flex-col items-center justify-center right-0 bottom-[15%] font-normal text-2xl transform rotate-[-26deg] absolute ">
-      <span>AND THAT’S WHY WE</span> 
-      <span>LOVE ’EM</span>
-            </div>
-
+        <div className="text-[#E0FE10] font-comedik flex md:flex-col items-center justify-center right-[8%] md:right-[5%] bottom-[8%] md:bottom-[25%] font-normal text-xl md:text-2xl transform rotate-[-4deg] md:rotate-[-26deg] absolute ">
+          <span>AND THAT’S WHY WE</span>
+          <div className="flex items-center justify-center gap-1" >
+            <span> LOVE &rsquo;EM </span>
+            <Image src="/images/Smiley-In-Love--Streamline-Core-Remix.svg" alt="smiley-icon" height={26} width={26} />
+          </div>
+        </div>
       </section>
     </section>
   );

@@ -1,5 +1,3 @@
-
-import LpSecondSection from "@/components/Lp-second-section/LpSecondSection";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -7,9 +5,7 @@ import React from "react";
 
 export default function Home() {
   return (
-    <section className="  flex items-center justify-center flex-col gap-10  ">
-
-
+    <section className=" h-screen flex items-center justify-center ">
       <div className="grid gap-2">
         <h1 className="tracking-tight text-xl">Welcome to starkwager</h1>
         <Link
@@ -19,8 +15,6 @@ export default function Home() {
           Login to continue
         </Link>
       </div>
-   
-      <LpSecondSection/>
     </section>
   );
 }
