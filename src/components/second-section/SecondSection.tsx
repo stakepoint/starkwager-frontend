@@ -104,10 +104,11 @@ export default function SecondSection() {
         </div>
       </section>
 
-      <section className="w-full min-h-[75vh] md:min-h-[80vh] relative  flex items-center justify-center  " >
+      <section className="w-full min-h-[70vh] md:min-h-[80vh] relative  flex items-center justify-center  " >
         <div className="absolute top-[6%] md:top-0 left-[40%] md:left-[34%] translate-x-[-50%] flex flex-col gap-5   " >
           <h3 className="text-[#E0FE10] leading-[30px] font-normal max-w-[243.4px]  text-2xl md:text-[32px] transform rotate-[-2deg]   font-comedik">
-            Isn&rsquo;t Wagering just about taking risks?
+            <span className="relative  after:content-[''] after:absolute after:left-0 after:top-[50%] transform translate-x-[-50%] after:w-full after:h-[4px] after:bg-[#6C737F] after:rounded-full " >Isn&rsquo;t Wagering just </span><br/>
+            <span  className="relative  after:content-[''] after:absolute after:left-0 after:top-[50%] transform translate-x-[-50%] after:w-full after:h-[4px] after:bg-[#6C737F] after:rounded-full " >about taking risks?</span>
           </h3>
 
           <div className="flex justify-start gap-4 items-end"  >
@@ -122,7 +123,9 @@ export default function SecondSection() {
           </div>
         </div>
 
-        <div className="flex items-center justify-end text-[#EFF8FF]  gap-2 md:gap-5  font-schabo font-normal text-[56px] leading-[50px] md:text-[120px] " >
+        
+
+        <div className="flex z-10 items-center justify-end text-[#EFF8FF]  gap-2 md:gap-5  font-schabo font-normal text-[56px] leading-[50px] md:text-[120px] " >
           <h1>IT&rsquo;S ABOUT</h1>
           <div className=" max-w-[310px]  flex flex-col  " >
             <h1 className="bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent  text-[56px] md:text-[120px] md:leading-[120px] ">FAIRNESS</h1>
@@ -133,7 +136,7 @@ export default function SecondSection() {
           </div>
         </div>
 
-        <div className="text-[#E0FE10] font-comedik flex md:flex-col items-center justify-center right-[8%] md:right-[5%] bottom-[8%] md:bottom-[25%] font-normal text-xl md:text-2xl transform rotate-[-4deg] md:rotate-[-26deg] absolute ">
+        <div className="text-[#E0FE10] z-0 font-comedik flex md:flex-col items-center justify-center right-[8%] md:right-[5%] bottom-[25%] md:bottom-[25%] font-normal text-xl md:text-2xl transform rotate-[-4deg] md:rotate-[-26deg] absolute ">
           <span>AND THAT’S WHY WE</span>
           <div className="flex items-center justify-center gap-1" >
             <span> LOVE &rsquo;EM </span>
