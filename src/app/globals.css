@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "comedik";
+  src: url("/fonts/Comedik.otf");
+}
+@font-face {
+  font-family: "schabo";
+  src: url("/fonts/schabo.otf");
+}
+
 body {
   font-family: var(--font-general-sans), sans-serif;
 }
@@ -79,8 +88,6 @@ body {
   body {
     @apply bg-background text-foreground;
   }
-
-
 }
 
 @keyframes modalEnter {
@@ -97,4 +104,14 @@ body {
 
 .animate-modal-enter {
   animation: modalEnter 0.2s ease-out forwards;
+}
+
+.dashed-line {
+  width: 100%;
+  height: 2px;
+  background: repeating-linear-gradient(
+    to right,
+    #4d5761 0 8px,
+    transparent 8px 12px
+  );
 }

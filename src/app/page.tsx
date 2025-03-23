@@ -1,4 +1,5 @@
 import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
+import HowItWorks from "@/components/ui/HowItWorks";
 import React from "react";
 
 export default function Page() {
@@ -21,12 +22,7 @@ export default function Page() {
 
         {/* How It Works Section */}
         <section id="how-it-works" className="min-h-screen flex items-center">
-          <div>
-            <h2 className="text-4xl font-bold mb-6">HOW IT WORKS</h2>
-            <p className="text-xl">
-              Explanation of how StarkWager works goes here...
-            </p>
-          </div>
+          <HowItWorks />
         </section>
 
         {/* Contact Section */}
