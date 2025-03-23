@@ -26,7 +26,7 @@ const Step: React.FC<StepProps> = ({
       <div className="dashed-line w-full h-[2px] mb-[64px]"></div>
       <div className="flex gap-x-8 justify-between lg:justify-start items-center relative">
         <h5
-          className="font-comedik text-[24px] lg:text-[32px] text-[#E0FE10] -rotate-2 absolute -top-5 -left-5"
+          className="font-comedik text-[24px] lg:text-[32px] text-secondary -rotate-2 absolute -top-5 -left-5"
           style={{ textShadow: "-2px 2px 0px #0F101D" }}
         >
           step #{stepNumber}
@@ -36,7 +36,7 @@ const Step: React.FC<StepProps> = ({
         </h2>
         {buttonText && (
           <button
-            className="p-3 lg:p-4 bg-[#E0FE10] text-[#102A56] font-medium text-base lg:text-lg flex items-center gpa-x-2 lg:gap-x-3 rounded-2xl cursor-pointer shrink-0"
+            className="p-3 lg:p-4 bg-secondary text-blue-1 font-medium text-base lg:text-lg flex items-center gpa-x-2 lg:gap-x-3 rounded-2xl cursor-pointer shrink-0"
             onClick={() => setIsOpen((prev) => !prev)}
           >
             {buttonText}{" "}
@@ -76,10 +76,10 @@ export default function HowItWorks() {
       <Step stepNumber={1} title="Connect Your Wallet" buttonText="More info">
         <div>
           <div className="flex lg:flex-row flex-col-reverse gap-6 lg:gap-[61px] mb-10 lg:mb-[53px]">
-            <p className="max-w-[200px] lg:max-w-[353px] -rotate-2 text-[#E0FE10] text-2xl lg:text-[32px] font-comedik">
+            <p className="max-w-[200px] lg:max-w-[353px] -rotate-2 text-secondary text-2xl lg:text-[32px] font-comedik">
               How to start? We help you set up 3 things:
             </p>
-            <div className="flex gap-x-1 items-center font-comedik text-[40px] text-[#E0FE10]">
+            <div className="flex gap-x-1 items-center font-comedik text-[40px] text-secondary">
               <Wallet className="lg:w-16 lg:h-16  w-12 h-12" />
               <span className="rotate-[8deg] text-white">+</span>
               <HandCoins className="lg:w-16 lg:h-16  w-12 h-12" />
@@ -113,7 +113,7 @@ export default function HowItWorks() {
                 key={num}
                 className="flex lg:flex-row flex-col lg:items-center gap-6 lg:gap-10"
               >
-                <div className="flex items-end gap-x-[2px] text-[#E0FE10] font-comedik">
+                <div className="flex items-end gap-x-[2px] text-secondary font-comedik">
                   <span className="text-[40px] leading-[100%] tracking-[0%] align-middle">
                     {num}.
                   </span>
