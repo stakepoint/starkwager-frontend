@@ -2,15 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "comedik";
-  src: url("/fonts/Comedik.otf");
-}
-@font-face {
-  font-family: "schabo";
-  src: url("/fonts/schabo.otf");
-}
-
 body {
   font-family: var(--font-general-sans), sans-serif;
 }
