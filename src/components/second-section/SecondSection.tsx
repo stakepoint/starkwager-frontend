@@ -104,7 +104,7 @@ export default function SecondSection() {
         </div>
       </section>
 
-      <section className="w-full min-h-[70vh] md:min-h-[80vh] relative  flex items-center justify-center  " >
+      <section className="w-full h-[435px] md:h-[435px] relative  flex items-center justify-center   " >
         <div className="absolute top-[6%] md:top-0 left-[40%] md:left-[34%] translate-x-[-50%] flex flex-col gap-5   " >
           <h3 className="text-[#E0FE10] leading-[30px] font-normal max-w-[243.4px]  text-2xl md:text-[32px] transform rotate-[-2deg]   font-comedik">
             <span className="relative  after:content-[''] after:absolute after:left-0 after:top-[50%] transform translate-x-[-50%] after:w-full after:h-[4px] after:bg-[#6C737F] after:rounded-full " >Isn&rsquo;t Wagering just </span><br/>
@@ -123,20 +123,19 @@ export default function SecondSection() {
           </div>
         </div>
 
-        
-
-        <div className="flex z-10 items-center justify-end text-[#EFF8FF]  gap-2 md:gap-5  font-schabo font-normal text-[56px] leading-[50px] md:text-[120px] " >
-          <h1>IT&rsquo;S ABOUT</h1>
-          <div className=" max-w-[310px]  flex flex-col  " >
-            <h1 className="bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent  text-[56px] md:text-[120px] md:leading-[120px] ">FAIRNESS</h1>
-            <h1 className=" text-[56px] md:text-[120px] md:leading-[120px] ml-[4px] " >TRUST</h1>
-            <h1 className="bg-gradient-to-b  from-white via-[#16182B] via-70% to-[#16182B00] to-100%  bg-clip-text text-transparent  text-[56px] md:text-[120px] md:leading-[120px]">
-              WINNING
-            </h1>
-          </div>
+        <div className="text-changer font-schabo font-normal items-start pb-[10px] flex   gap-2 md:gap-5   box-content  overflow-hidden h-[60px] text-[56px]  md:h-[100px] md:text-[96px]  lg:h-[124px] lg:text-[120px] ">
+        <h1  className="intro-text mt-[-2px]  " >IT&rsquo;S ABOUT</h1>
+        <div className="roles-container relative overflow-hidden ">
+            <span className="role block h-full pl-[6px] bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent ">FAIRNESS</span>
+            <span className="role  block h-full pl-[6px] bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent ">TRUST</span>
+            <span className="role  block h-full pl-[6px] bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent    ">WINNING</span>
+            <span className="role  block h-full pl-[6px] bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent   ">TRUST</span>
+            <span className="role  block h-full pl-[6px] bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent  ">FAIRNESS</span>
         </div>
+    </div>
 
-        <div className="text-[#E0FE10] z-0 font-comedik flex md:flex-col items-center justify-center right-[8%] md:right-[5%] bottom-[25%] md:bottom-[25%] font-normal text-xl md:text-2xl transform rotate-[-4deg] md:rotate-[-26deg] absolute ">
+
+        <div className="text-[#E0FE10] z-0 font-comedik flex md:flex-col items-center justify-center right-[30%] md:right-[5%] translate-x-[-30%]  bottom-[25%] md:bottom-[25%] font-normal text-xl md:text-2xl transform rotate-[-4deg] md:rotate-[-26deg] absolute ">
           <span>AND THAT’S WHY WE</span>
           <div className="flex items-center justify-center gap-1" >
             <span> LOVE &rsquo;EM </span>
@@ -144,6 +143,9 @@ export default function SecondSection() {
           </div>
         </div>
       </section>
+
+
+
     </section>
   );
 }
