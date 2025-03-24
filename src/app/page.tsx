@@ -1,6 +1,7 @@
 import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
 import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
+import HowItWorks from '@/components/HowItWorks';
 
 export default function Page() {
   return (
@@ -30,6 +31,8 @@ export default function Page() {
             <p className="text-xl">Contact information and form goes here...</p>
           </div>
         </section>
+
+        <HowItWorks />
       </main>
     </div>
   );
