@@ -20,12 +20,12 @@ export default function Page() {
             </p>
           </div>
         </section>
+        <SecondSection />
 
         {/* How It Works Section */}
         <section id="how-it-works" className="min-h-screen flex items-center">
           <HowItWorks />
         </section>
-        <SecondSection />
 
         {/* Contact Section */}
         <section id="contact" className="min-h-screen flex items-center">
