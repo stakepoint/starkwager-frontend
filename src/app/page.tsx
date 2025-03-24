@@ -1,22 +1,36 @@
+import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
 import SecondSection from "@/components/second-section/SecondSection";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
 import React from "react";
 
-export default function Home() {
+export default function Page() {
   return (
-    <section className=" min-h-screen bg-black flex flex-col items-center justify-center ">
-      <div className="grid gap-2">
-        <h1 className="tracking-tight text-xl">Welcome to starkwager</h1>
-        <Link
-          className={cn(buttonVariants({ variant: "default" }))}
-          href="/auth"
-        >
-          Login to continue
-        </Link>
-      </div>
-      <SecondSection/>
-    </section>
+    <div className="flex min-h-screen bg-[#111322] text-white">
+      {/* Sidebar Navigation */}
+      <SidebarNavigation />
+
+      {/* Main Content with appropriate padding to account for sidebar */}
+      <main className="flex-1 md:ml-64 p-6">
+        {/* Intro Section */}
+        <section id="intro" className="min-h-screen flex items-center">
+          <div>
+            <h2 className="text-4xl font-bold mb-6">INTRO</h2>
+            <p className="text-xl">
+              Introduction content about StarkWager goes here...
+            </p>
+          </div>
+        </section>
+
+        {/* How It Works Section */}
+        <SecondSection />
+
+        {/* Contact Section */}
+        <section id="contact" className="min-h-screen flex items-center">
+          <div>
+            <h2 className="text-4xl font-bold mb-6">CONTACT</h2>
+            <p className="text-xl">Contact information and form goes here...</p>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }
