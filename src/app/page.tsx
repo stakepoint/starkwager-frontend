@@ -1,4 +1,6 @@
+import Impact from "@/components/landingpage/Impact";
 import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
+import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
 
 export default function Page() {
@@ -20,14 +22,11 @@ export default function Page() {
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="min-h-screen flex items-center">
-          <div>
-            <h2 className="text-4xl font-bold mb-6">HOW IT WORKS</h2>
-            <p className="text-xl">
-              Explanation of how StarkWager works goes here...
-            </p>
-          </div>
-        </section>
+        <SecondSection />
+
+        {/* Impact section  */}
+
+        <Impact />;
 
         {/* Contact Section */}
         <section id="contact" className="min-h-screen flex items-center">

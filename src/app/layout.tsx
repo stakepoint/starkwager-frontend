@@ -10,10 +10,17 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+});
+
+const SchaboCondensed = localFont({
+  src: "./fonts/SCHABO-Condensed.woff2",
+  variable: "--font-schabo-condensed",
+  display: "swap",
 });
 
 const GeneralSans = localFont({
@@ -26,7 +33,7 @@ const GeneralSans = localFont({
     {
       path: "./fonts/GeneralSans-Italic.woff2",
       weight: "400",
-      style: "Italic",
+      style: "italic",
     },
     {
       path: "./fonts/GeneralSans-Medium.woff2",
@@ -41,10 +48,10 @@ const GeneralSans = localFont({
     {
       path: "./fonts/GeneralSans-BoldItalic.woff2",
       weight: "700",
-      style: "Italic",
+      style: "italic",
     },
   ],
-  variable: "--font-general-sans", // Creates a CSS variable
+  variable: "--font-general-sans",
   display: "swap",
 });
 
@@ -64,7 +71,7 @@ const Comedik = localFont({
 
 export const metadata: Metadata = {
   title: "Starkwager",
-  description: "Welcome to starkwager",
+  description: "Welcome to Starkwager",
 };
 
 export default function RootLayout({
@@ -75,7 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${GeneralSans.variable} ${geistMono.variable}  ${Schabo.variable} ${Comedik.variable} antialiased `}
+        className={`${geistSans.variable} ${GeneralSans.variable} ${geistMono.variable} ${Schabo.variable} ${SchaboCondensed.variable} ${Comedik.variable} antialiased`}
       >
         <Toaster />
         <ThemeProvider
