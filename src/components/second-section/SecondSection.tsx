@@ -124,7 +124,7 @@ export default function SecondSection() {
         </div>
 
         <div className="text-changer font-schabo font-normal items-start pb-[10px] flex   gap-2 md:gap-5   box-content  overflow-hidden h-[60px] text-[56px]  md:h-[100px] md:text-[96px]  lg:h-[124px] lg:text-[120px] ">
-        <h1  className="intro-text mt-[-2px]  " >IT&rsquo;S ABOUT</h1>
+        <h1  className="intro-text mt-[-2px] text-[#fafafa]  " >IT&rsquo;S ABOUT</h1>
         <div className="roles-container relative overflow-hidden ">
             <span className="role block h-full pl-[6px] bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent ">FAIRNESS</span>
             <span className="role  block h-full pl-[6px] bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent ">TRUST</span>
