@@ -1,7 +1,7 @@
 import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
 import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
-import HowItWorks from '@/components/HowItWorks';
+import HowItWorks from '@/components/how-it-works/HowItWorks';
 
 export default function Page() {
   return (

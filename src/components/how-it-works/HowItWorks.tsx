@@ -8,13 +8,13 @@ export default function HowItWorks() {
       <section className="container mx-auto px-4 py-16 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
-            <p className="text-[18px] md:text-xl">
+            <p className="text-[18px] md:text-xl font-general-sans-medium">
               Our team saw a broken system and built StrkWgr, a <br /> decentralized wagering platform that eliminates <br />
               middlemen, ensures fair payouts, and makes betting fun <br /> again.
             </p>
             <Link 
               href="#how-it-works"
-              className="inline-flex items-center justify-center w-[167px] h-[55px] bg-[#E0FE10] text-black rounded-[16px] text-[18px] font-medium hover:bg-opacity-90 transition-all shadow-lg"
+              className="inline-flex items-center justify-center w-[167px] h-[55px] bg-[#E0FE10] text-black rounded-[16px] text-[18px] font-medium hover:bg-opacity-90 transition-all shadow-lg font-general-sans"
             >
               See how it works
             </Link>
@@ -27,8 +27,8 @@ export default function HowItWorks() {
                   height={32}
                 />
               </div>
-              <p className="text-sm text-[#EFF8FF] max-w-md">
-                <span className="font-bold">*Fun fact:</span> &ldquo;StrkWgr&rdquo; combines <strong>StarkNet</strong> (for <br />scalability) and <strong>Wager</strong> (for betting), making it the first <br />
+              <p className="text-[#EFF8FF] font-general-sans text-[16px]">
+                <span>*Fun fact:</span> &ldquo;StrkWgr&rdquo; combines <strong>StarkNet</strong> (for <br />scalability) and <strong>Wager</strong> (for betting), making it the first <br />
                 trustless betting platform of its kind.
               </p>
             </div>
@@ -37,8 +37,8 @@ export default function HowItWorks() {
             <Image
               src="/images/image.svg"
               alt="Friends celebrating"
-              width={240}
-              height={240}
+              width={340}
+              height={340}
               className="rounded-3xl shadow-lg"
             />
           </div>
@@ -62,29 +62,29 @@ export default function HowItWorks() {
               {
                 step: '1',
                 title: [
-                  <div key="1-1">CONNECT YOUR</div>,
-                  <div key="1-2">STARKNET WALLET</div>
+                  <div key="1-0" className="font-comedik text-[32px] text-[#6C737F]">STEP 1</div>,
+                  <div key="1-1" className="font-general-sans font-bold text-[16px] text-[#6C737F]">CONNECT YOUR</div>,
+                  <div key="1-2" className="font-general-sans font-bold text-[16px] text-[#6C737F]">STARKNET WALLET</div>
                 ],
                 icon: '/icons/Plugs.svg',
-                image: '/images/Step1.svg'
               },
               {
                 step: '2',
                 title: [
-                  <div key="2-1">PLACE OR JOIN A</div>,
-                  <div key="2-2">WAGER</div>
+                  <div key="2-0" className="font-comedik text-[32px] text-[#6C737F]">STEP 2</div>,
+                  <div key="2-1" className="font-general-sans font-bold text-[16px] text-[#6C737F]">PLACE OR JOIN A</div>,
+                  <div key="2-2" className="font-general-sans font-bold text-[16px] text-[#6C737F]">WAGER</div>
                 ],
                 icon: '/icons/GamblingStreamlineFlex.svg',
-                image: '/images/Step2.svg'
               },
               {
                 step: '3',
                 title: [
-                  <div key="3-1">CLAIM WINNINGS,</div>,
-                  <div key="3-2">INSTANTLY</div>
+                  <div key="3-0" className="font-comedik text-[32px] text-[#E0FE10]">STEP 3</div>,
+                  <div key="3-1" className="font-general-sans font-bold text-[16px] text-[#EFF8FF]">CLAIM WINNINGS,</div>,
+                  <div key="3-2" className="font-general-sans font-bold text-[16px] text-[#EFF8FF]">INSTANTLY</div>
                 ],
                 icon: '/icons/GamblingStreamlineFlex2.svg',
-                image: '/images/Step3.svg',
                 highlight: true
               }
             ].map((item, index) => (
@@ -92,16 +92,8 @@ export default function HowItWorks() {
                 <div className={`flex flex-col items-start gap-8 ${item || ''}`}>
                   <div>
                     <div className={`text-[32px] ${item.step === '3' ? 'text-[#E0FE10]' : 'text-[#6C737F]'} mb-2`}>
-                      <Image
-                        src={item.image}
-                        alt={item.title.join(' ')}
-                        width={120}
-                        height={32}
-                      />
-                    </div>
-                    <div>
                       {item.title.map((text, idx) => (
-                        <div key={idx} className={`text-[16px] font-bold ${item.step === '3' ? 'text-white' : 'text-[#6C737F]'}`}>{text}</div>
+                        <div key={idx} className={`${idx === 0 ? 'font-comedik' : 'font-general-sans'} text-[32px] ${item.step === '3' ? 'text-[#E0FE10]' : 'text-[#6C737F]'}`}>{text}</div>
                       ))}
                     </div>
                   </div>
@@ -110,8 +102,8 @@ export default function HowItWorks() {
                   <Image
                     src={item.icon}
                     alt={item.title.join(' ')}
-                    width={58}
-                    height={58}
+                    width={64}
+                    height={64}
                   />
                 </div>
               </div>
