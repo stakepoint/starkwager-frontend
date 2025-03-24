@@ -34,10 +34,6 @@ const config: Config = {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
-        // secondary: {
-        //   DEFAULT: "hsl(var(--secondary))",
-        //   foreground: "hsl(var(--secondary-foreground))",
-        // },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -70,9 +66,17 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontFamily: {
+        schabo: "var(--font-schabo-condensed)",
+        geistSans: "var(--font-geist-sans)",
+        geistMono: "var(--font-geist-mono)",
+        generalSans: "var(--font-general-sans)",
+        comedik: "var(--font-comedik)", 
+      },
     },
   },
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
+ 
   plugins: [require("tailwindcss-animate")],
 };
+
 export default config;
