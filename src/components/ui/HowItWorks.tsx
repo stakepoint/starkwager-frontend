@@ -156,6 +156,11 @@ export default function HowItWorks() {
         buttonText="More info"
         reverse={true}
       >
+        <img
+          src="/images/excitment.png"
+          className="w-[180px] lg:w-[240px]"
+          alt=""
+        />
         <div className="max-w-[520px] text-[#EFF8FF]">
           <p className="text-base lg:text-lg leading-[130%] font-medium -tracking-[2%] capitalize">
             Once the wager ends, the funds are automatically transferred to the
@@ -163,11 +168,6 @@ export default function HowItWorks() {
             StarkNet smart contracts.
           </p>
         </div>
-        <img
-          src="/images/excitment.png"
-          className="w-[180px] lg:w-[240px]"
-          alt=""
-        />
       </Step>
     </div>
   );
