@@ -65,10 +65,10 @@ const Impact = () => {
           <p className="text-2xl md:text-6xl font-bold">first wager?</p>
         </div>
         <div className="flex flex-col gap-5">
-          <p className="text-[#E0FE10] text-xl w-1/2 -rotate-2 font-comedik leading-tight">
+          <p className="text-[#E0FE10] text-xl w-1/2 -rotate-2 font-comedik leading-none">
             were open to contributors and players alike
           </p>
-          <p className="text-[#E0FE10] text-4xl font-comedik">lets connect</p>
+          <p className="text-[#E0FE10] text-4xl font-comedik">lets connect!</p>
         </div>
       </div>
     </div>
