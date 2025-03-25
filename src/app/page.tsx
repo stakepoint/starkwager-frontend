@@ -5,7 +5,7 @@ import HowItWorks from '@/components/how-it-works/HowItWorks';
 
 export default function Page() {
   return (
-    <div className="flex min-h-screen bg-[#111322] text-white">
+    <div className="flex min-h-screen bg-[#0E101B] text-white">
       {/* Sidebar Navigation */}
       <SidebarNavigation />
 

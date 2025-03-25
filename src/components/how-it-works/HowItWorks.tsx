@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function HowItWorks() {
   return (
-    <main className="min-h-screen bg-[#0D0E12] text-white">
+    <main className="min-h-screen text-white">
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
