@@ -41,20 +41,22 @@ const Impact = () => {
         StrkWager is here to make betting transparent, fun and trustless. No
         middleman, no hidden fees - just fair wagering for everyone.
       </p>
-      {/* <Image
+      <Image
         src="/images/right-arrow.png"
         width={100}
         height={150}
         alt="strkwager tldr"
         className="object-contain md:hidden absolute top-3/4 right-0 transform -translate-x-7 translate-y-16"
-      /> */}
-      <Image
-        src="/images/left-arrow.png"
-        width={100}
-        height={100}
-        alt="strkwager tldr"
-        className="object-contain hidden md:block border-1 border-white mt-0 pt-0 relative -bottom-20 -translate-x-2/3"
       />
+      <div className="absolute bottom-[27%] transform  left-[24%] hidden md:block  ">
+        <Image
+          src="/images/left-arrow.png"
+          width={100}
+          height={150}
+          alt="strkwager tldr"
+          className="object-contain "
+        />
+      </div>
       {/* eft-0 top-0 transform -translate-x-10 -translate-y-10 */}
       <div className="flex px-2 md:flex-row w-full gap-10 mr-10 py-5 text-left uppercase">
         <div className="max-w-5xl text-white font-schabo">
