@@ -36,7 +36,7 @@ const Impact = () => {
           className="w-full h-full object-cover md:object-contain object-center mb-10 rounded-md"
         />
       </div>
-      <p className="text-4xl uppercase text-[#E0FE10] -rotate-2 px-2  text-ellipsis max-w-sm font-comedik">
+      <p className="text-2xl sm:text-3xl md:text-4xl uppercase text-[#E0FE10] -rotate-2 px-2  text-ellipsis max-w-sm font-comedik">
         you&apos;ve made it this far, so here&apos;s the tl;dr:
       </p>
       <p className="flex flex-wrap w-3/4 font-medium text-wrap px-2">
