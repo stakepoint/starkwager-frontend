@@ -12,6 +12,11 @@ const config: Config = {
         "grey-1": "#4A5578",
         "grey-2": "#9DA4AE",
         "grey-3": "#7D89B0",
+        "grey-5": "#6C737F",
+        "grey-7": "#384250",
+        "grey-8": "#1F2A37",
+        "grey-9": "#111927",
+        "grey-10": "#111322",
         "body-bg": "#F9F9FB",
         "input-bg": "#EFF1F5",
         "blue-1": "#102A56",
@@ -67,11 +72,11 @@ const config: Config = {
         geistSans: "var(--font-geist-sans)",
         geistMono: "var(--font-geist-mono)",
         generalSans: "var(--font-general-sans)",
-        comedik: "var(--font-comedik)", 
+        comedik: "var(--font-comedik)",
       },
     },
   },
- 
+
   plugins: [require("tailwindcss-animate")],
 };
 

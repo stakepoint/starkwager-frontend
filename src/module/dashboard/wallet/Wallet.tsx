@@ -126,7 +126,7 @@ export default function Wallet() {
                   <p
                     className={cn(
                       "font-medium text-[#102A56] flex items-center gap-1 p-1 pr-2 bg-[#F9F9FB] rounded-full",
-                      { "text-[#17B26A]": !item.incoming }
+                      { "text-[#17B26A]": !item.incoming },
                     )}
                   >
                     <Image
@@ -142,13 +142,13 @@ export default function Wallet() {
             ))}
           </div>
         </section>
-        <Link
-          href="/dashboard/create-wager"
-          className="w-full max-w-[160px] mx-auto flex items-center justify-center gap-3 text-base font-medium bg-secondary rounded-2xl p-4 mt-10 shadow-xl md:hidden"
-        >
-          {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}
-          New Wager
-        </Link>
+        {/*<Link*/}
+        {/*  href="/dashboard/create-wager"*/}
+        {/*  className="w-full max-w-[160px] mx-auto flex items-center justify-center gap-3 text-base font-medium bg-secondary rounded-2xl p-4 mt-10 shadow-xl md:hidden"*/}
+        {/*>*/}
+        {/*  {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}*/}
+        {/*  New Wager*/}
+        {/*</Link>*/}
       </section>
     </>
   );

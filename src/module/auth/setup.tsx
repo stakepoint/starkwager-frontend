@@ -54,10 +54,10 @@ export default function SetupPage() {
     <div className="flex flex-col w-full pt-[5rem] items-center justify-center px-4 md:px-0">
       <div className="text-primary w-full max-w-md flex flex-col gap-6">
         <div className="">
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-blue-950">
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-blue-950 dark:text-white">
             SET UP YOUR PROFILE
           </h1>
-          <p className="mt-2 text-blue-1 tracking-tighter">
+          <p className="mt-2 text-blue-1 dark:text-white tracking-tighter">
             Choose your picture and a unique username other users can use to
             invite you to wagers
           </p>
@@ -71,7 +71,7 @@ export default function SetupPage() {
           {selectedAvatar ? (
             <div className="w-full h-full">{parse(selectedAvatar.svgCode)}</div>
           ) : (
-            <p className="text-4xl text-white font-medium">N</p>
+            <p className="text-4xl text-white dark:text-blue-950 font-medium">N</p>
           )}
           <div className="absolute bottom-0 right-0 rounded-full p-2 bg-white">
             <Camera size="16" className="text-blue-950" />
@@ -116,7 +116,7 @@ export default function SetupPage() {
           variant="default"
           disabled={!username}
           onClick={handleSubmit}
-          className="font-medium text-xl tracking-[-2%] h-14 rounded-2xl disabled:cursor-not-allowed disabled:opacity-[0.32]"
+          className="font-medium text-xl tracking-[-2%] h-14 rounded-2xl disabled:cursor-not-allowed disabled:opacity-[0.32] dark:bg-secondary"
         >
           Continue
         </Button>
@@ -133,25 +133,25 @@ export default function SetupPage() {
         <>
           <div className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm" />
 
-          <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:w-full w-[90%] max-w-[640px] bg-white rounded-3xl p-6 md:px-16 z-50 animate-modal-enter flex flex-col">
+          <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:w-full w-[90%] max-w-[640px] bg-white dark:bg-grey-8 rounded-3xl p-6 md:px-16 z-50 animate-modal-enter flex flex-col">
             <div className="relative text-center">
               <button
                 onClick={() => setIsModalOpen(false)}
                 className="p-2 hover:bg-gray-100 rounded-full transition-colors absolute top-4 right-0"
               >
-                <X size={20} className="text-gray-500" />
+                <X size={20} className="text-gray-500 dark:text-white" />
               </button>
-              <div className="flex flex-col justify-between items-center mb-6 mt-4">
-                <h2 className="text-2xl font-semibold text-blue-950">
+              <div className="flex flex-col justify-between items-center mb-4 mt-4">
+                <h2 className="text-2xl font-semibold text-blue-950 dark:text-white">
                   Change Avatar
                 </h2>
-                <p className="text-gray-600 text-center mt-3 mb-4 max-w-xs">
+                <p className="text-gray-600 text-center mt-3 mb-4 max-w-xs dark:text-white">
                   Select a new avatar from our list of specially curated avatars
                 </p>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-5 grid-cols-4 gap-4 max-h-[300px] overflow-y-auto mb-6">
+            <div className="grid md:grid-cols-5 grid-cols-4 gap-4 max-h-[300px] overflow-y-auto mb-6 p-2">
               {mockAvatars.map((avatar) => (
                 <button
                   key={avatar.id}

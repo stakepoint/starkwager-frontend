@@ -31,14 +31,8 @@ jobs:
         run: |
           echo "PNPM_HOME=$HOME/.local/share/pnpm" >> $GITHUB_ENV
           echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
-          echo "PNPM_HOME=$PNPM_HOME" >> $GITHUB_ENV
-          echo "$PNPM_HOME" >> $GITHUB_PATH
-          pnpm setup
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
+          # Explicitly set the SHELL environment variable
+          echo "SHELL=/bin/bash" >> $GITHUB_ENV
 
       - name: Install All Contributors CLI
         run: pnpm add -g all-contributors-cli

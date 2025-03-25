@@ -35,16 +35,16 @@ export default function CategoryDropdown({
       <DialogTrigger asChild>
         <button
           className="w-full h-18 px-4 bg-accent-100 rounded-md flex justify-between items-center 
-  text-blue-950 font-normal text-sm shadow-none border-none md:min-w-[320px] max-w-[380px]"
+  text-blue-950 font-normal text-sm shadow-none border-none md:min-w-[320px] max-w-[380px] dark:bg-grey-8 dark:text-white"
         >
           {selectedCategory ? selectedCategory : "Select Category"}
-          <ChevronDown className="h-6 w-6 text-blue-950" />
+          <ChevronDown className="h-6 w-6 text-blue-950 dark:text-white" />
         </button>
       </DialogTrigger>
 
-      <DialogContent className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto px-2 sm:px-4">
+      <DialogContent className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto px-2 sm:px-4 dark:bg-grey-8">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold flex items-center justify-center text-[#1E2875]">
+          <DialogTitle className="text-xl font-semibold flex items-center justify-center text-[#1E2875] dark:text-white">
             Select Category
           </DialogTitle>
         </DialogHeader>
@@ -53,7 +53,7 @@ export default function CategoryDropdown({
           {categories.map((category, index) => (
             <div key={category} className="w-full flex flex-col items-center">
               <button
-                className="py-4 text-lg text-center w-full flex justify-center items-center hover:bg-[#1E2875]/10 font-sans"
+                className="py-4 text-lg text-center w-full flex justify-center items-center hover:bg-[#1E2875]/10 dark:hover:bg-white/5 font-sans"
                 onClick={() => {
                   setSelectedCategory(category);
                   onSelect(category);
@@ -66,8 +66,8 @@ export default function CategoryDropdown({
                 <span
                   className={
                     selectedCategory === category
-                      ? "text-[#1E2875] font-bold"
-                      : "text-blue-950"
+                      ? "text-[#1E2875] dark:text-white font-bold"
+                      : "text-blue-950 dark:text-white"
                   }
                 >
                   {category}
@@ -91,6 +91,14 @@ export default function CategoryDropdown({
                     alt="Divider"
                     width={352}
                     height={16}
+                    className="dark:hidden"
+                  />
+                  <Image
+                    src="/images/DividerDark.svg"
+                    alt="Divider"
+                    width={352}
+                    height={16}
+                    className="dark:block hidden"
                   />
                 </div>
               )}

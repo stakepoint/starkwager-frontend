@@ -19,7 +19,9 @@ export function ModalView({
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent {...props}>{children}</DialogContent>
+        <DialogContent {...props} className="dark:bg-grey-8 border-transparent">
+          {children}
+        </DialogContent>
       </Dialog>
     );
   }
@@ -27,7 +29,7 @@ export function ModalView({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       {/* <DrawerTrigger>Open</DrawerTrigger> */}
-      <DrawerContent className="border-none max-h-[98%] ">
+      <DrawerContent className="border-none max-h-[98%] dark:bg-grey-8">
         <div className="overflow-auto">{children}</div>
       </DrawerContent>
     </Drawer>

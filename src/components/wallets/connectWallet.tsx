@@ -22,12 +22,12 @@ export default function ConnectWallet() {
   return (
     <div>
       {/* connect wallet */}
-      <section className="grid gap-1">
+      <section className="grid gap-2">
         {connectors.map((connector) => {
           return (
             <button
               type="button"
-              className="bg-white shadow-xl shadow-slate-50   border border-gray-50 rounded-xl p-3"
+              className="bg-white shadow-xl shadow-slate-50 dark:shadow-none   border border-gray-50 dark:border-grey-8 rounded-xl p-3 dark:bg-grey-8 "
               key={connector.id}
               onClick={() => {
                 if (
@@ -45,7 +45,7 @@ export default function ConnectWallet() {
                 connect({ connector });
               }}
             >
-              <div className="flex text-blue-950 font-medium items-center gap-1">
+              <div className="flex text-blue-950 dark:text-white font-medium items-center gap-2">
                 {/* @ts-expect-error lib not inferring types  */}
                 {getSvgById(connector.id, { className: "" })}
                 <p className="text-sm tracking-tight">{connector.name}</p>

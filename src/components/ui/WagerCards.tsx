@@ -56,25 +56,25 @@ const WagerCards: React.FC<WagerCardProps> = ({
 
   return (
     <div
-      className="w-full p-4 bg-white mt-3 rounded-lg cursor-pointer hover:shadow-sm transition"
+      className="w-full p-4 bg-white dark:bg-grey-8 border border-grey-7 mt-3 rounded-lg cursor-pointer hover:shadow-sm transition"
       onClick={handleCardClick}
     >
       {/* Status Indicator */}
       <div className="flex items-center justify-center gap-2 mb-2">
         <div className={`w-2 h-2 rounded-full ${getStatusColor()}`}></div>
-        <span className="text-gray-600 text-[13px] md:text-sm">
+        <span className="text-gray-600 dark:text-white text-[13px] md:text-sm">
           {getStatusText()}
         </span>
       </div>
 
       {/* Question */}
-      <h2 className="text-center text-blue-1 text-sm sm:text-base md:text-xl font-medium mb-3">
+      <h2 className="text-center text-blue-1 dark:text-white text-sm sm:text-base md:text-xl font-medium mb-3">
         {question}
       </h2>
 
       {/* Stake Amount */}
       <div className="flex justify-center mb-8">
-        <div className="bg-body-bg rounded-full px-2 py-2 flex items-center gap-2">
+        <div className="bg-body-bg dark:bg-grey-9 rounded-full px-2 py-2 flex items-center gap-2">
           <Image
             src="/images/StrkLogo.svg"
             alt="STRK"
@@ -82,7 +82,7 @@ const WagerCards: React.FC<WagerCardProps> = ({
             width={20}
             height={20}
           />
-          <span className="text-blue-1 font-medium text-sm">
+          <span className="text-blue-1 dark:text-white font-medium text-sm">
             {stakeAmount} Strk each
           </span>
         </div>
@@ -99,17 +99,17 @@ const WagerCards: React.FC<WagerCardProps> = ({
             height={56}
             className="w-8 h-8 md:w-20 md:h-20 rounded-lg mb-1 mx-auto"
           />
-          <span className="text-blue-1 font-medium text-[12px] md:text-sm">
+          <span className="text-blue-1 dark:text-white font-medium text-[12px] md:text-sm">
             {leftUser.username}
           </span>
         </div>
 
         {/* VS Text */}
         <div className="flex flex-col items-center">
-          <span className="text-gray-600 text-[12px] lg:text-sm">
+          <span className="text-gray-600 dark:text-white text-[12px] lg:text-sm">
             One-on-One
           </span>
-          <span className="text-blue-1 text-2xl md:text-3xl lg:text-4xl font-bold italic">
+          <span className="text-blue-1 dark:text-white text-2xl md:text-3xl lg:text-4xl font-bold italic">
             VS
           </span>
         </div>
@@ -123,7 +123,7 @@ const WagerCards: React.FC<WagerCardProps> = ({
             height={56}
             className="w-8 h-8 md:w-20 md:h-20 rounded-lg mb-1 mx-auto"
           />
-          <span className="text-blue-1 font-medium text-[12px] md:text-sm">
+          <span className="text-blue-1 dark:text-white font-medium text-[12px] md:text-sm">
             {rightUser.username}
           </span>
         </div>
