@@ -1,10 +1,12 @@
 import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
+import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
-import Hero from "@/components/landingpage/hero";
+import HowItWorks from '@/components/how-it-works/HowItWorks';
+import Hero from '@/components/landingpage/hero'
 
 export default function Page() {
   return (
-    <div className="flex min-h-screen bg-[#111322] text-white">
+    <div className="flex min-h-screen bg-[#0E101B] text-white">
       {/* Sidebar Navigation */}
       <SidebarNavigation />
 
@@ -18,14 +20,7 @@ export default function Page() {
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="min-h-screen flex items-center">
-          <div>
-            <h2 className="text-4xl font-bold mb-6">HOW IT WORKS</h2>
-            <p className="text-xl">
-              Explanation of how StarkWager works goes here...
-            </p>
-          </div>
-        </section>
+        <SecondSection />
 
         {/* Contact Section */}
         <section id="contact" className="min-h-screen flex items-center">
@@ -34,6 +29,8 @@ export default function Page() {
             <p className="text-xl">Contact information and form goes here...</p>
           </div>
         </section>
+
+        <HowItWorks />
       </main>
     </div>
   );

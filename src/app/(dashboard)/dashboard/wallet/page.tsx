@@ -24,7 +24,7 @@ export default function Wallets() {
                 <WithdrawFundsModal onClose={() => setIsWithdrawModalOpen(false)} />
             </ModalView>
 
-            <WalletDetail 
+            <WalletDetail
                 setIsFundModalOpen={setIsFundModalOpen}
                 setIsWithdrawModalOpen={setIsWithdrawModalOpen}
             />
