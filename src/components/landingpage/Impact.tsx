@@ -53,7 +53,7 @@ const Impact = () => {
         width={100}
         height={100}
         alt="strkwager tldr"
-        className="object-contain relative -bottom-2/3 -translate-x-2/3"
+        className="object-contain  relative -bottom-20 -translate-x-2/3"
       />
       {/* eft-0 top-0 transform -translate-x-10 -translate-y-10 */}
       <div className="flex px-2 md:flex-row w-full gap-10 mr-10 py-5 text-left uppercase">
