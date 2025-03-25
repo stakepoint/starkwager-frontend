@@ -38,7 +38,7 @@ const Impact = () => {
         you&apos;ve made it this far, so here&apos;s the tl;dr:
       </p>
       <p className="flex flex-wrap w-3/4 font-medium text-wrap px-2">
-        Strkwager is here to make betting transparent, fun and trustless. No
+        StrkWager is here to make betting transparent, fun and trustless. No
         middleman, no hidden fees - just fair wagering for everyone.
       </p>
       <Image
