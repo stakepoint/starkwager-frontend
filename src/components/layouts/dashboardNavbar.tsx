@@ -27,7 +27,7 @@ export default function DashboardNavbar() {
   return (
     <nav className="py-6 lg:flex ">
       <header className="flex w-full items-center justify-between ">
-        <h1 className="text-3xl font-bold lg:block whitespace-nowrap text-blue-950">
+        <h1 className="text-3xl font-bold lg:block whitespace-nowrap text-blue-950 dark:text-primary">
           {getPageTitle(pathname)}
         </h1>
         <div className="flex md:justify-between justify-end w-full lg:w-fit items-center gap-4">
@@ -54,7 +54,11 @@ export default function DashboardNavbar() {
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-blue-950">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-blue-950 dark:text-primary"
+              >
                 {theme === "light" ? (
                   <Sun className="h-5 w-5" />
                 ) : theme === "dark" ? (
@@ -80,7 +84,7 @@ export default function DashboardNavbar() {
             </DropdownMenuContent>
           </DropdownMenu>
           <Button
-            className="text-blue-950"
+            className="text-blue-950 dark:text-primary"
             variant="ghost"
             size="icon"
             onClick={toggleNotificationPanel}

@@ -23,20 +23,20 @@ export function WagerDetails({
   return (
     <div className="space-y-5">
       <div>
-        <h3 className="text-sm md:text-base font-medium text-grey-3">
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:[#6C737F]">
           Title of your Wager
         </h3>
-        <p className="mt-2 text-sm md:text-base font-medium text-blue-1">
+        <p className="mt-2 text-sm md:text-base font-medium text-blue-1 dark:text-primary">
           {title}
         </p>
       </div>
 
       <div>
-        <h3 className="text-sm md:text-base font-medium text-grey-3">
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-primary">
           Potential Winnings
         </h3>
         <div className="flex mt-2">
-          <span className="rounded-full bg-white px-3 py-1 text-lg font-medium text-blue-950 flex items-center gap-1">
+          <span className="rounded-full bg-white dark:bg-[#2A2C38] dark:text-primary px-3 py-1 text-lg font-medium text-blue-950 flex items-center gap-1">
             <div className="relative h-4 w-4 overflow-hidden rounded-xl">
               <Image
                 src="/images/StrkLogo.svg"
@@ -63,10 +63,10 @@ export function WagerDetails({
       </div>
 
       <div>
-        <h3 className="text-sm md:text-base font-medium text-grey-3">
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Terms or Wager Description
         </h3>
-        <div className="mt-2 space-y-4 text-sm md:text-base font-medium text-blue-950">
+        <div className="mt-2 space-y-4 text-sm md:text-base font-medium text-blue-950 dark:text-primary">
           {description.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
@@ -74,25 +74,25 @@ export function WagerDetails({
       </div>
 
       <div>
-        <h3 className="text-sm md:text-base font-medium text-grey-3">
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Category
         </h3>
         <div className="mt-2 flex flex-wrap gap-2">
-          <span className="inline-flex items-center rounded-full bg-white space-x-2 p-[6px] text-sm md:text-base font-medium text-gray-900 hover:bg-gray-200 transition-colors">
+          <span className="inline-flex items-center rounded-full dark:text-primary bg-white dark:bg-[#1F2A37] space-x-2 p-[6px] text-sm md:text-base font-medium text-gray-900 hover:bg-gray-200 transition-colors">
             {category}
           </span>
         </div>
       </div>
 
       <div>
-        <h3 className="text-sm md:text-base font-medium text-grey-3">
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Hashtags
         </h3>
         <div className="mt-2 flex flex-wrap gap-2">
           {hashtags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center rounded-full bg-white space-x-2 p-[6px] text-sm md:text-base font-medium text-gray-900 hover:bg-gray-200 transition-colors"
+              className="inline-flex items-center rounded-full bg-white dark:bg-[#1F2A37] dark:text-primary space-x-2 p-[6px] text-sm md:text-base font-medium text-gray-900 hover:bg-gray-200 transition-colors"
             >
               <span className="pr-1">
                 <Hash className="" />
