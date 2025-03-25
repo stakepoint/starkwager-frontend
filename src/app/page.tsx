@@ -1,4 +1,5 @@
 import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
+import HowItWorks from "@/components/ui/HowItWorks";
 import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
 import HowItWorks from '@/components/how-it-works/HowItWorks';
@@ -20,9 +21,12 @@ export default function Page() {
             </p>
           </div>
         </section>
+        <SecondSection />
 
         {/* How It Works Section */}
-        <SecondSection />
+        <section id="how-it-works" className="min-h-screen flex items-center">
+          <HowItWorks />
+        </section>
 
         {/* Contact Section */}
         <section id="contact" className="min-h-screen flex items-center">
