@@ -19,7 +19,7 @@ const Impact = () => {
             className="flex flex-col justify-between mr-10 text-left"
           >
             <span className="text-6xl font-bold font-schabo">{count}+</span>
-            <span className="flex flex-wrap text-ellipsis w-2/3 font-semibold  text-sm">
+            <span className="flex flex-wrap text-ellipsis w-2/3 font-semibold uppercase  text-sm">
               {text}
             </span>
           </div>
@@ -31,7 +31,7 @@ const Impact = () => {
           width={1000}
           height={200}
           alt="strkwager tldr"
-          className="w-full h-full object-cover md:object-contain object-center rounded-md"
+          className="w-full h-full object-cover md:object-contain object-center mb-10 rounded-md"
         />
       </div>
       <p className="text-4xl uppercase text-[#E0FE10] -rotate-2 px-2  text-ellipsis max-w-sm font-comedik">
