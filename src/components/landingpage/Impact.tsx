@@ -21,7 +21,7 @@ const Impact = () => {
             <span className="text-4xl sm:text-5xl md:text-6xl font-bold font-schabo">
               {count}+
             </span>
-            <span className="flex flex-wrap text-ellipsis w-2/3 font-semibold uppercase  text-sm">
+            <span className="flex flex-wrap text-ellipsis w-3/4 font-semibold uppercase  text-sm">
               {text}
             </span>
           </div>
