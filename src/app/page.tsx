@@ -25,8 +25,7 @@ export default function Page() {
         <SecondSection />
 
         {/* Impact section  */}
-
-        <Impact />;
+        <Impact />
 
         {/* Contact Section */}
         <section id="contact" className="min-h-screen flex items-center">
