@@ -2,7 +2,7 @@ import React from 'react';
 
 const Hero = () => {
   return (
-    <div className="bg-black text-white w-full h-screen relative overflow-hidden">
+    <div className="text-white w-full h-screen relative overflow-hidden">
       {/* Opening wager placed text */}
       <div className="absolute top-20 md:top-36 left-8 md:left-24 text-[#6C737F] font-semibold opacity-80 hidden md:block">
         <div className="text-lg md:text-xl">OPENING</div>
