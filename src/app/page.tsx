@@ -5,7 +5,7 @@ import React from "react";
 
 export default function Page() {
   return (
-    <div className="absolute flex min-h-screen bg-[#111322] text-white">
+    <div className="flex min-h-screen bg-[#111322] text-white">
       {/* Sidebar Navigation */}
       <SidebarNavigation />
 
