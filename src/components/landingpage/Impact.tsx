@@ -9,7 +9,7 @@ const countWithText = [
 const Impact = () => {
   return (
     <div className="flex flex-col max-w-3xl mx-auto gap-5 text-left ">
-      <p className=" text-[#E0FE10] text-2xl -rotate-2 px-2 font-comedik">
+      <p className=" text-[#E0FE10] text-xl sm:text-2xl -rotate-2 px-2 font-comedik">
         the impact so far;
       </p>
       <div className="flex flex-col md:flex-row justify gap-4 -between px-2 my-4">
@@ -18,7 +18,9 @@ const Impact = () => {
             key={text}
             className="flex flex-col justify-between mr-10 text-left"
           >
-            <span className="text-6xl font-bold font-schabo">{count}+</span>
+            <span className="text-4xl sm:text-5xl md:text-6xl font-bold font-schabo">
+              {count}+
+            </span>
             <span className="flex flex-wrap text-ellipsis w-2/3 font-semibold uppercase  text-sm">
               {text}
             </span>
