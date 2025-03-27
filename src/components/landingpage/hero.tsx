@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image"
 import { Button } from "../ui/button"
 
@@ -55,7 +56,8 @@ const Hero = () => {
 
       {/* Connect wallet button */}
       <div className="absolute max-sm:bottom-[1rem] max-sm:inset-x-0 max-sm:px-4 md:top-36 right-8 md:right-24">
-        <Button className="w-full bg-[#E0FE10] text-[#102A56] hover:bg-[#a8d500] font-bold py-3 px-6 md:px-8 md:py-3 flex items-center justify-center text-sm md:text-base max-sm:w-full rounded-md">
+        <Button className="w-full bg-[#E0FE10] text-[#102A56] hover:bg-[#a8d500] font-bold py-3 px-6 md:px-8 md:py-3 flex items-center justify-center text-sm md:text-base max-sm:w-full rounded-md"
+        onClick={() => console.log("Connect wallet clicked")}>
           Connect Wallet
           <Image src="/images/hero/Frame.png" alt="wallet" width={20} height={20} className="ml-2" />
         </Button>
