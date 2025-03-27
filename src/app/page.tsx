@@ -1,8 +1,13 @@
+// import { buttonVariants } from "@/components/ui/button";
+// import { cn } from "@/lib/utils";
+// import Link from "next/link";
+import Footer from "@/components/layouts/footer";
 import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
+import HowItWorks from "@/components/ui/HowItWorks";
 import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
-import HowItWorks from '@/components/how-it-works/HowItWorks';
 import Hero from '@/components/landingpage/hero'
+// import HowItWorks from '@/components/how-it-works/HowItWorks';
 
 export default function Page() {
   return (
@@ -11,16 +16,19 @@ export default function Page() {
       <SidebarNavigation />
 
       {/* Main Content with appropriate padding to account for sidebar */}
-      <main className="flex-1 md:ml-64 p-6">
+      <main className="flex-1 md:ml-64">
         {/* Intro Section */}
         <section id="intro" className="">
           <div>
             <Hero />
           </div>
         </section>
+        <SecondSection />
 
         {/* How It Works Section */}
-        <SecondSection />
+        <section id="how-it-works" className="min-h-screen flex items-center">
+          <HowItWorks />
+        </section>
 
         {/* Contact Section */}
         <section id="contact" className="min-h-screen flex items-center">
@@ -31,6 +39,9 @@ export default function Page() {
         </section>
 
         <HowItWorks />
+
+        {/* footer */}
+        <Footer />
       </main>
     </div>
   );
