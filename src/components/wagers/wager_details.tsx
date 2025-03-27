@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { Hash, Info } from 'lucide-react';
+import Image from "next/image";
+import { Hash, Info } from "lucide-react";
 
 interface WagerDetailsProps {
   title: string;
@@ -21,28 +21,28 @@ export function WagerDetails({
   category,
 }: WagerDetailsProps) {
   return (
-    <div className='space-y-5'>
+    <div className="space-y-5">
       <div>
-        <h3 className='text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]'>
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Title of your Wager
         </h3>
-        <p className='mt-2 text-sm md:text-base font-medium text-blue-1 dark:text-white'>
+        <p className="mt-2 text-sm md:text-base font-medium text-blue-1 dark:text-white">
           {title}
         </p>
       </div>
 
       <div>
-        <h3 className='text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]'>
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Potential Winnings
         </h3>
-        <div className='flex mt-2'>
-          <span className='rounded-full bg-white dark:bg-[#2A2C38] px-3 py-1 text-lg font-medium text-blue-950 dark:text-white flex items-center gap-1'>
-            <div className='relative h-4 w-4 overflow-hidden rounded-xl'>
+        <div className="flex mt-2">
+          <span className="rounded-full bg-white dark:bg-[#2A2C38] px-3 py-1 text-lg font-medium text-blue-950 dark:text-white flex items-center gap-1">
+            <div className="relative h-4 w-4 overflow-hidden rounded-xl">
               <Image
-                src='/images/StrkLogo.svg'
-                alt='StrkLogo'
+                src="/images/StrkLogo.svg"
+                alt="StrkLogo"
                 fill
-                className='object-cover'
+                className="object-cover"
               />
             </div>
             {potentialWinnings}
@@ -52,22 +52,22 @@ export function WagerDetails({
 
       {/* Platform fee */}
       <div>
-        <div className='flex items-center gap-2'>
-          <h3 className='text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]'>
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
             Platform Fee
           </h3>
         </div>
-        <span className='mt-1 text-xs md:text-base font-medium flex items-center gap-1'>
-          {platformFee}{' '}
-          <Info className='h-4 w-4 text-blue-950 dark:text-white' />
+        <span className="mt-1 text-xs md:text-base font-medium flex items-center gap-1">
+          {platformFee}{" "}
+          <Info className="h-4 w-4 text-blue-950 dark:text-white" />
         </span>
       </div>
 
       <div>
-        <h3 className='text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]'>
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Terms or Wager Description
         </h3>
-        <div className='mt-2 space-y-4 text-sm md:text-base font-medium text-blue-950 dark:text-white'>
+        <div className="mt-2 space-y-4 text-sm md:text-base font-medium text-blue-950 dark:text-white">
           {description.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
@@ -75,28 +75,28 @@ export function WagerDetails({
       </div>
 
       <div>
-        <h3 className='text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]'>
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Category
         </h3>
-        <div className='mt-2 flex flex-wrap gap-2'>
-          <span className='inline-flex items-center rounded-full bg-white dark:bg-dark-input-bg space-x-2 p-[6px] text-sm md:text-base font-medium text-gray-900 dark:text-white hover:bg-gray-200 transition-colors'>
+        <div className="mt-2 flex flex-wrap gap-2">
+          <span className="inline-flex items-center rounded-full bg-white dark:bg-dark-input-bg space-x-2 p-[6px] text-sm md:text-base font-medium text-gray-900 dark:text-white hover:bg-gray-200 transition-colors">
             {category}
           </span>
         </div>
       </div>
 
       <div>
-        <h3 className='text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]'>
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Hashtags
         </h3>
-        <div className='mt-2 flex flex-wrap gap-2'>
+        <div className="mt-2 flex flex-wrap gap-2">
           {hashtags.map((tag) => (
             <span
               key={tag}
-              className='inline-flex items-center rounded-full bg-white dark:bg-dark-input-bg space-x-2 p-[6px] text-sm md:text-base font-medium text-gray-900 dark:text-white hover:bg-gray-200 transition-colors'
+              className="inline-flex items-center rounded-full bg-white dark:bg-dark-input-bg space-x-2 p-[6px] text-sm md:text-base font-medium text-gray-900 dark:text-white hover:bg-gray-200 transition-colors"
             >
-              <span className='pr-1'>
-                <Hash className='' />
+              <span className="pr-1">
+                <Hash className="" />
               </span>
               {tag}
             </span>
