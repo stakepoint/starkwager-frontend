@@ -636,7 +636,9 @@ export const SVG_ICONS = {
 export const getSvgById = (id: keyof typeof SVG_ICONS, props: SvgProps) => {
   const icon = SVG_ICONS[id];
   if (!icon) {
-    throw new Error(`SVG icon with id "${id}" not found`);
+    // Comment out the error and return null or a default icon
+    // throw new Error(`SVG icon with id "${id}" not found`);
+    return SVG_ICONS.appLogo?.(props) || null; 
   }
   return icon({ className: props?.className }) || null;
 };

@@ -27,7 +27,7 @@ export default function ConnectWallet() {
           return (
             <button
               type="button"
-              className="bg-white shadow-xl shadow-slate-50   border border-gray-50 rounded-xl p-3"
+              className="bg-white dark:bg-[#1F2A37] dark:shadow-none shadow-xl shadow-slate-50 dark:border-none  border border-gray-50 rounded-xl p-3"
               key={connector.id}
               onClick={() => {
                 if (
@@ -45,7 +45,7 @@ export default function ConnectWallet() {
                 connect({ connector });
               }}
             >
-              <div className="flex text-blue-950 font-medium items-center gap-1">
+              <div className="flex dark:text-white text-blue-950 font-medium items-center gap-1">
                 {/* @ts-expect-error lib not inferring types  */}
                 {getSvgById(connector.id, { className: "" })}
                 <p className="text-sm tracking-tight">{connector.name}</p>

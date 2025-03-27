@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import multiavatar from "@multiavatar/multiavatar";
 import parse from "html-react-parser";
 
+
 // Generate 30 random avatars
 const mockAvatars = Array.from({ length: 30 }, (_, i) => {
   const randomString = Math.random().toString(36).substring(7);
@@ -52,12 +53,14 @@ export default function SetupPage() {
 
   return (
     <div className="flex flex-col w-full pt-[5rem] items-center justify-center px-4 md:px-0">
+   
+
       <div className="text-primary w-full max-w-md flex flex-col gap-6">
         <div className="">
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-blue-950">
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-blue-950 dark:text-white">
             SET UP YOUR PROFILE
           </h1>
-          <p className="mt-2 text-blue-1 tracking-tighter">
+          <p className="mt-2 text-blue-1 dark:text-white tracking-tighter">
             Choose your picture and a unique username other users can use to
             invite you to wagers
           </p>
@@ -79,12 +82,12 @@ export default function SetupPage() {
         </div>
 
         <div className="flex flex-col w-full gap-1">
-          <div className="flex items-center bg-[#EFF1F5] rounded-lg px-[18px] py-6 h-[72px]">
+          <div className="flex items-center bg-[#EFF1F5] dark:bg-[#1F2A37] rounded-lg px-[18px] py-6 h-[72px]">
             <div className="">
               <span className="text-[#B9C0D4] w-24 text-base tracking-tighter">
                 wager.strk/{" "}
               </span>
-              <span className="text-[#102A56] w-24 text-base tracking-tighter">
+              <span className="dark:text-white text-[#102A56] w-24 text-base tracking-tighter">
                 @
               </span>
             </div>
@@ -93,7 +96,7 @@ export default function SetupPage() {
                 type="text"
                 value={username}
                 placeholder="username"
-                className="flex flex-grow text-[#102A56] py-8 bg-transparent transition-colors rounded-none text-base tracking-tighter outline-none border border-transparent px-0"
+                className="flex flex-grow dark:text-white text-[#102A56] py-8 bg-transparent transition-colors rounded-none text-base tracking-tighter outline-none border border-transparent px-0 dark:placeholder-[#B9C0D4] placeholder-white"
                 onChange={(e) => {
                   setUsername(e.target.value);
                   checkUsernameAvailability(e.target.value);
@@ -116,7 +119,7 @@ export default function SetupPage() {
           variant="default"
           disabled={!username}
           onClick={handleSubmit}
-          className="font-medium text-xl tracking-[-2%] h-14 rounded-2xl disabled:cursor-not-allowed disabled:opacity-[0.32]"
+          className="font-medium dark:bg-primary text-xl tracking-[-2%] h-14 rounded-2xl disabled:cursor-not-allowed disabled:opacity-[0.32]"
         >
           Continue
         </Button>
@@ -131,21 +134,21 @@ export default function SetupPage() {
       {/* Avatar Selection Modal */}
       {isModalOpen && (
         <>
-          <div className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm" />
+          <div className="fixed inset-0  bg-black/40 z-40 backdrop-blur-sm" />
 
-          <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:w-full w-[90%] max-w-[640px] bg-white rounded-3xl p-6 md:px-16 z-50 animate-modal-enter flex flex-col">
+          <div className="fixed left-1/2 dark:bg-[#1F2A37] top-1/2 -translate-x-1/2 -translate-y-1/2 md:w-full w-[90%] max-w-[640px] bg-white rounded-3xl p-6 md:px-16 z-50 animate-modal-enter flex flex-col">
             <div className="relative text-center">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors absolute top-4 right-0"
+                className="p-2 hover:bg-gray-100 dark:bg-[#1F2A37] rounded-full transition-colors absolute top-4 right-0"
               >
-                <X size={20} className="text-gray-500" />
+                <X size={20} className="text-gray-500 dark:text-white" />
               </button>
               <div className="flex flex-col justify-between items-center mb-6 mt-4">
-                <h2 className="text-2xl font-semibold text-blue-950">
+                <h2 className="text-2xl font-semibold text-blue-950 dark:text-white">
                   Change Avatar
                 </h2>
-                <p className="text-gray-600 text-center mt-3 mb-4 max-w-xs">
+                <p className="text-gray-600 text-center mt-3 mb-4 max-w-xs dark:text-white">
                   Select a new avatar from our list of specially curated avatars
                 </p>
               </div>

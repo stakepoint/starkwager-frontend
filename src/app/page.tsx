@@ -1,8 +1,9 @@
+import HowItWorks from "@/components/how-it-works/HowItWorks";
 import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
-import HowItWorks from "@/components/ui/HowItWorks";
+
 import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
-import HowItWorks from '@/components/how-it-works/HowItWorks';
+
 
 export default function Page() {
   return (
