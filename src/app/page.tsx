@@ -1,3 +1,7 @@
+// import { buttonVariants } from "@/components/ui/button";
+// import { cn } from "@/lib/utils";
+// import Link from "next/link";
+import Footer from "@/components/layouts/footer";
 import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
 import HowItWorks from "@/components/ui/HowItWorks";
 import SecondSection from "@/components/second-section/SecondSection";
@@ -11,7 +15,7 @@ export default function Page() {
       <SidebarNavigation />
 
       {/* Main Content with appropriate padding to account for sidebar */}
-      <main className="flex-1 md:ml-64 p-6">
+      <main className="flex-1 md:ml-64">
         {/* Intro Section */}
         <section id="intro" className="min-h-screen flex items-center">
           <div>
@@ -37,6 +41,9 @@ export default function Page() {
         </section>
 
         <HowItWorks />
+
+        {/* footer */}
+        <Footer />
       </main>
     </div>
   );
