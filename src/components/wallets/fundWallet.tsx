@@ -47,21 +47,23 @@ const FundWalletModal: React.FC<FundWalletModalProps> = () => {
 
   return (
     <div>
-      <h3 className="text-center font-semibold text-xl md:text-2xl leading-[2.1] sm:leading-[1.75] text-headingBlue mt-2">
+      <h3 className="text-center font-semibold text-xl md:text-2xl leading-[2.1] sm:leading-[1.75] text-headingBlue dark:text-white mt-2">
         Fund Your Wallet
       </h3>
       <div className="flex flex-col w-full justify-center items-center">
         {walletBalance > 0 ? (
           <>
-            <p className="text-center max-w-[263px] md:max-w-full text-sm md:text-lg text-grey-1 tracking-[-0.36px] leading-[1.3] sm:leading-[1.3] mb-3 mt-2">
+            <p className="text-center max-w-[263px] md:max-w-full text-sm md:text-lg text-grey-1 dark:text-white tracking-[-0.36px] leading-[1.3] sm:leading-[1.3] mb-3 mt-2">
               Enter the amount you want to fund your wallet and create wagers.
             </p>
             <div className="mt-6 mb-8">
               <div className="flex items-center justify-center">
-                <span className="text-5xl text-grey-2 font-medium">$</span>
+                <span className="text-5xl text-grey-2 dark:text-white font-bold">
+                  $
+                </span>
                 <Input
                   ref={inputRef}
-                  className="border-none md:text-5xl text-5xl font-medium p-0 text-grey-2 h-[58px]"
+                  className="border-none md:text-5xl text-5xl font-bold p-0 text-grey-2 dark:text-white h-[58px]"
                   type="text"
                   placeholder="0.00"
                   value={inputValue}
@@ -83,10 +85,10 @@ const FundWalletModal: React.FC<FundWalletModalProps> = () => {
                 </span>
               </div>
             </div>
-            <div className="mt-4 flex justify-center w-full">
+            <div className="mt-4 flex justify-center w-full md:pb-0 pb-5">
               <Button
                 onClick={handleFundWallet}
-                className="w-full max-w-[352px] sm:max-w-full text-lg font-medium"
+                className="w-full max-w-[352px] sm:max-w-full text-lg font-medium dark:bg-secondary"
                 type="button"
               >
                 Fund
@@ -95,7 +97,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = () => {
           </>
         ) : (
           <>
-            <p className="text-center text-sm max-w-[263px] md:max-w-full  md:text-lg text-grey-1 tracking-[-0.36px] leading-[1.3] sm:leading-[1.3] mb-3 mt-2">
+            <p className="text-center text-sm max-w-[263px] md:max-w-full  md:text-lg text-grey-1 dark:text-white tracking-[-0.36px] leading-[1.3] sm:leading-[1.3] mb-3 mt-2">
               To be able to create wagers you need to fund your wallet with
               Strk.
             </p>
@@ -105,7 +107,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = () => {
             <div className="mt-4 flex justify-center w-full">
               <Button
                 onClick={showFundForm}
-                className="w-full max-w-[352px] sm:max-w-full text-lg font-medium"
+                className="w-full max-w-[352px] sm:max-w-full text-lg font-medium dark:bg-secondary"
                 type="button"
               >
                 Fund
@@ -118,11 +120,11 @@ const FundWalletModal: React.FC<FundWalletModalProps> = () => {
       {/* Error Modal (Now inside return block) */}
       {showErrorModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">
-          <div className="bg-white px-4 py-10 rounded-lg text-center w-96">
-            <h2 className="text-xl font-semibold text-headingBlue">
+          <div className="bg-white dark:bg-grey-9 px-4 py-10 rounded-lg text-center w-full h-full">
+            <h2 className="text-xl font-semibold text-headingBlue dark:text-white">
               Failed, Insufficient Funds
             </h2>
-            <p className="text-grey-1 text-sm mt-2">
+            <p className="text-grey-1 dark:text-white text-sm mt-2">
               You couldn’t fund your wallet due to <br /> insufficient funds.
             </p>
             <div className="flex justify-center my-4">
@@ -134,13 +136,13 @@ const FundWalletModal: React.FC<FundWalletModalProps> = () => {
               />
             </div>
             <button
-              className="w-full py-2 bg-[#F9F9FB] text-headingBlue rounded-md mt-2 hover:bg-[#e3e3e9]"
+              className="w-5/6 py-4 bg-[#F9F9FB] text-headingBlue rounded-md mt-2 hover:bg-[#e3e3e9]"
               onClick={() => setShowErrorModal(false)}
             >
               Back Home
             </button>
             <button
-              className="w-full py-2 bg-[#E0FE10] text-black font-semibold rounded-md mt-2 hover:bg-[#ddf738]"
+              className="w-5/6 py-4 bg-[#E0FE10] text-black font-semibold rounded-md mt-2 hover:bg-[#ddf738]"
               onClick={() => setShowErrorModal(false)}
             >
               Try Again
