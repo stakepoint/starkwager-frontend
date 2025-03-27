@@ -9,8 +9,8 @@ import { WithdrawIcon } from "@/svgs/withdrawIcon";
 import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { getSvgById } from "@/svgs";
+// import Link from "next/link";
+// import { getSvgById } from "@/svgs";
 
 const TRANSACTION_DATA = [
   {
@@ -126,7 +126,7 @@ export default function Wallet() {
                   <p
                     className={cn(
                       "font-medium text-[#102A56] flex items-center gap-1 p-1 pr-2 bg-[#F9F9FB] rounded-full",
-                      { "text-[#17B26A]": !item.incoming },
+                      { "text-[#17B26A]": !item.incoming }
                     )}
                   >
                     <Image
