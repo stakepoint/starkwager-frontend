@@ -1,16 +1,22 @@
-import Impact from "@/components/landingpage/Impact";
+// import { buttonVariants } from "@/components/ui/button";
+// import { cn } from "@/lib/utils";
+// import Link from "next/link";
+import Footer from "@/components/layouts/footer";
 import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
+import HowItWorks from "@/components/ui/HowItWorks";
 import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
+import Impact from "@/components/landingpage/Impact";
+// import HowItWorks from '@/components/how-it-works/HowItWorks';
 
 export default function Page() {
   return (
-    <div className="flex min-h-screen bg-[#111322] text-white">
+    <div className="flex min-h-screen bg-[#0E101B] text-white">
       {/* Sidebar Navigation */}
       <SidebarNavigation />
 
       {/* Main Content with appropriate padding to account for sidebar */}
-      <main className="flex-1 md:ml-64 p-6">
+      <main className="flex-1 md:ml-64">
         {/* Intro Section */}
         <section id="intro" className="min-h-screen flex items-center">
           <div>
@@ -20,12 +26,12 @@ export default function Page() {
             </p>
           </div>
         </section>
-
-        {/* How It Works Section */}
         <SecondSection />
 
-        {/* Impact section  */}
-        <Impact />
+        {/* How It Works Section */}
+        <section id="how-it-works" className="min-h-screen flex items-center">
+          <HowItWorks />
+        </section>
 
         {/* Contact Section */}
         <section id="contact" className="min-h-screen flex items-center">
@@ -34,6 +40,14 @@ export default function Page() {
             <p className="text-xl">Contact information and form goes here...</p>
           </div>
         </section>
+
+        <HowItWorks />
+
+        {/* Impact section  */}
+        <Impact />
+
+        {/* footer */}
+        <Footer />
       </main>
     </div>
   );
