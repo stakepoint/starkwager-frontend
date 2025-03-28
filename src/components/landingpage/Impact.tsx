@@ -8,7 +8,7 @@ const countWithText = [
 
 const Impact = () => {
   return (
-    <div className="flex flex-col mx-auto gap-5 text-left ">
+    <div>
       <div className=" flex flex-col max-w-3xl mx-auto gap-5 text-left">
         <p className=" text-[#E0FE10] text-xl sm:text-2xl -rotate-2 px-2 font-comedik">
           the impact so far;
@@ -54,7 +54,7 @@ const Impact = () => {
         alt="strkwager tldr"
         className="object-contain md:hidden absolute top-3/4 right-0 transform -translate-x-7 translate-y-16"
       /> */}
-        <div className="absolute bottom-[27%] transform  left-[24%] hidden md:block  ">
+        <div className="absolute  transform -translate-x-16 translate-y-32 hidden md:block  ">
           <Image
             src="/images/left-arrow.png"
             width={100}
