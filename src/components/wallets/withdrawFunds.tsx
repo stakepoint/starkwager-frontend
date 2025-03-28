@@ -32,20 +32,20 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({ onClose }) => {
     <div>
       {!withdrawState ? (
         <>
-          <h3 className="text-center font-medium text-xl md:text-2xl leading-[2.1] sm:leading-[1.75] text-headingBlue mt-2">
+          <h3 className="text-center font-medium text-xl md:text-2xl leading-[2.1] sm:leading-[1.75] text-headingBlue dark:text-white mt-2">
             Withdraw Your Funds
           </h3>
           <div className="flex flex-col w-full justify-center items-center">
-            <p className="text-center max-w-[263px] md:max-w-full text-sm md:text-lg text-grey-1 tracking-[-0.36px] leading-[1.3] sm:leading-[1.3] mb-3 mt-2">
+            <p className="text-center max-w-[263px] md:max-w-full text-sm md:text-lg text-grey-1 dark:text-white tracking-[-0.36px] leading-[1.3] sm:leading-[1.3] mb-3 mt-2">
               Enter the amount you want to withdraw to your wallet and cash out
               wagers.
             </p>
             <div className="mt-6 mb-8">
               <div className="flex items-center justify-center">
-                <span className="text-5xl text-grey-2 font-medium">$</span>
+                <span className="text-5xl text-grey-2 font-bold">$</span>
                 <Input
                   ref={inputRef}
-                  className="border-none md:text-5xl text-5xl font-medium p-0 text-grey-2 h-[58px]"
+                  className="border-none md:text-5xl text-5xl font-bold p-0 text-grey-2 h-[58px]"
                   type="text"
                   placeholder="0.00"
                   value={inputValue}
@@ -70,7 +70,7 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({ onClose }) => {
             <div className="mt-4 flex justify-center w-full">
               <Button
                 onClick={showSuccess}
-                className="w-full max-w-[352px] sm:max-w-full text-lg font-medium"
+                className="w-full max-w-[352px] sm:max-w-full text-lg font-medium dark:bg-secondary"
                 type="button"
               >
                 Withdraw
@@ -80,11 +80,11 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({ onClose }) => {
         </>
       ) : (
         <>
-          <h3 className="text-center font-medium text-xl md:text-2xl leading-[2.1] sm:leading-[1.75] text-headingBlue mt-2">
+          <h3 className="text-center font-medium text-xl md:text-2xl leading-[2.1] sm:leading-[1.75] text-headingBlue dark:text-white mt-2">
             Successfully Transferred
           </h3>
           <div className="flex flex-col w-full justify-center items-center">
-            <p className="text-center text-sm max-w-[263px] md:max-w-full md:text-lg text-grey-1 tracking-[-0.36px] leading-[1.3] sm:leading-[1.3] mb-3 mt-2">
+            <p className="text-center text-sm max-w-[263px] md:max-w-full md:text-lg text-grey-1 dark:text-white tracking-[-0.36px] leading-[1.3] sm:leading-[1.3] mb-3 mt-2">
               You&apos;ve successfully withdrawn from your wallet.
             </p>
             <div className="flex items-center justify-center mt-6 mb-8">
@@ -97,17 +97,17 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({ onClose }) => {
                 />
               </div>
             </div>
-            <div className="mt-4 flex flex-col gap-3 justify-center w-full">
+            <div className="mt-4 flex flex-col gap-3 justify-center w-full md:px-0 px-5">
               <Button
                 onClick={onClose}
-                className="w-full bg-body-bg max-w-[352px] sm:max-w-full text-lg/[130%] tracking-[-0.36px] font-medium"
+                className="w-full bg-body-bg max-w-full text-lg/[130%] tracking-[-0.36px] font-medium"
                 type="button"
               >
                 Back Home
               </Button>
               <Link
                 href="/dashboard/create-wager"
-                className="w-full text-lg/[130%] tracking-[-0.36px] flex justify-center font-medium bg-secondary rounded-2xl p-4"
+                className="w-full text-lg/[130%] tracking-[-0.36px] flex justify-center font-medium bg-secondary rounded-2xl p-4 dark:text-blue-1"
               >
                 New Wager
               </Link>
