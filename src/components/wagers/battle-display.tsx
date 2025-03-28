@@ -22,11 +22,13 @@ export function BattleDisplay({
   amount,
 }: BattleDisplayProps) {
   return (
-    <div className="mt-6 rounded-2xl bg-white dark:bg-[#1F2A37] py-6 shadow-sm">
+
+    <div className="mt-6 rounded-2xl bg-white dark:bg-dark-input-bg py-6 shadow-sm">
       {/* Stake amount badge */}
       <div className="flex items-center justify-center">
-        <span className="rounded-full bg-input-bg dark:text-primary dark:bg-dark-body-bg p-2 text-base font-medium text-blue-1 flex items-center gap-1">
-          <div className="relative h-4 w-4 overflow-hidden  rounded-xl">
+        <span className="rounded-full bg-input-bg dark:bg-[#111927] p-2 text-base font-medium text-blue-1 dark:text-white flex items-center gap-1">
+          <div className="relative h-4 w-4 overflow-hidden rounded-xl">
+
             <Image
               src="/images/StrkLogo.svg"
               alt="StrkLogo"
@@ -66,13 +68,11 @@ export function BattleDisplay({
         </div>
 
         {/* VS indicator */}
-        <div className="text-center text-blue-950">
-          <div className="text-xs md:text-sm mb-1 dark:text-primary">
-            One-on-One
-          </div>
-          <div className="text-2xl md:text-5xl font-bold dark:text-primary italic">
-            VS
-          </div>
+
+        <div className="text-center text-blue-950 dark:text-white">
+          <div className="text-xs md:text-sm mb-1">One-on-One</div>
+          <div className="text-2xl md:text-5xl font-bold italic">VS</div>
+
         </div>
 
         {/* Player 2 or Awaiting */}
@@ -87,7 +87,7 @@ export function BattleDisplay({
               />
             </div>
           )}
-          <div className="h-12 w-12 rounded-xl bg-gray-100 flex items-center justify-center">
+          <div className="h-12 w-12 rounded-xl bg-gray-100 dark:bg-[#111927] flex items-center justify-center">
             <div className="relative h-12 w-12 overflow-hidden rounded-xl">
               <Image
                 src={
