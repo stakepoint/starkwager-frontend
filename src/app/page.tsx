@@ -7,6 +7,7 @@ import HowItWorks from "@/components/ui/HowItWorks";
 import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
 import HowItWorksSection from "@/components/how-it-works/HowItWorksSection";
+import Impact from "@/components/landingpage/Impact";
 
 export default function Page() {
   return (
@@ -41,6 +42,9 @@ export default function Page() {
         </section>
 
         <HowItWorks />
+
+        {/* Impact section  */}
+        <Impact />
 
         {/* footer */}
         <Footer />

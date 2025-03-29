@@ -6,6 +6,15 @@ body {
   font-family: var(--font-general-sans), sans-serif;
 }
 
+.font-schabo {
+  font-family: var(--font-schabo);
+}
+
+.font-comedik {
+  font-family: var(--font-comedik);
+}
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
