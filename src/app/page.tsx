@@ -6,8 +6,8 @@ import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
 import HowItWorks from "@/components/ui/HowItWorks";
 import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
+import HowItWorksSection from "@/components/how-it-works/HowItWorksSection";
 import Impact from "@/components/landingpage/Impact";
-// import HowItWorks from '@/components/how-it-works/HowItWorks';
 
 export default function Page() {
   return (
@@ -30,7 +30,7 @@ export default function Page() {
 
         {/* How It Works Section */}
         <section id="how-it-works" className="min-h-screen flex items-center">
-          <HowItWorks />
+          <HowItWorksSection />
         </section>
 
         {/* Contact Section */}
