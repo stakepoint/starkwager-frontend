@@ -6,6 +6,7 @@ import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
 import HowItWorks from "@/components/ui/HowItWorks";
 import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
+import Impact from "@/components/landingpage/Impact";
 // import HowItWorks from '@/components/how-it-works/HowItWorks';
 
 export default function Page() {
@@ -41,6 +42,9 @@ export default function Page() {
         </section>
 
         <HowItWorks />
+
+        {/* Impact section  */}
+        <Impact />
 
         {/* footer */}
         <Footer />
