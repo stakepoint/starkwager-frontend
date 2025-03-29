@@ -8,6 +8,8 @@ import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
 import Hero from '@/components/landingpage/hero'
 // import HowItWorks from '@/components/how-it-works/HowItWorks';
+import HowItWorksSection from "@/components/how-it-works/HowItWorksSection";
+import Impact from "@/components/landingpage/Impact";
 
 export default function Page() {
   return (
@@ -27,7 +29,7 @@ export default function Page() {
 
         {/* How It Works Section */}
         <section id="how-it-works" className="min-h-screen flex items-center">
-          <HowItWorks />
+          <HowItWorksSection />
         </section>
 
         {/* Contact Section */}
@@ -39,6 +41,9 @@ export default function Page() {
         </section>
 
         <HowItWorks />
+
+        {/* Impact section  */}
+        <Impact />
 
         {/* footer */}
         <Footer />

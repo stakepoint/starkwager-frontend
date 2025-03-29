@@ -27,7 +27,9 @@ export default function DashboardNavbar() {
   return (
     <nav className="py-6 lg:flex ">
       <header className="flex w-full items-center justify-between ">
-        <h1 className="text-3xl font-bold lg:block whitespace-nowrap text-blue-950">
+
+        <h1 className="text-3xl font-bold lg:block whitespace-nowrap text-blue-950 dark:text-white">
+
           {getPageTitle(pathname)}
         </h1>
         <div className="flex md:justify-between justify-end w-full lg:w-fit items-center gap-4">
@@ -39,14 +41,14 @@ export default function DashboardNavbar() {
               alt="Avatar"
             />
 
-            <div className="flex items-center gap-2 bg-white p-1 px-2 rounded-[8px]">
-              <span className="text-sm text-blue-950 font-medium">
+            <div className="flex items-center gap-2 bg-white dark:bg-[#1F2A37]  p-1 px-2 rounded-[8px]">
+              <span className="text-sm text-blue-950 dark:text-white font-medium">
                 @noyi24_7
               </span>
               <Button
                 variant="ghost"
                 size="icon"
-                className="ml-1 text-blue-950 h-4 w-4"
+                className="ml-1 text-blue-950 dark:text-white h-4 w-4"
               >
                 <Copy className="h-4 w-4" />
               </Button>
@@ -54,7 +56,12 @@ export default function DashboardNavbar() {
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-blue-950">
+              <Button
+                variant="ghost"
+                size="icon"
+
+                className="text-blue-950 dark:text-white"
+              >
                 {theme === "light" ? (
                   <Sun className="h-5 w-5" />
                 ) : theme === "dark" ? (
@@ -64,7 +71,7 @@ export default function DashboardNavbar() {
                 )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="dark:bg-dark-body-bg">
               <DropdownMenuItem onClick={() => setTheme("light")}>
                 <Sun className="mr-2 h-4 w-4" />
                 Light
@@ -80,7 +87,9 @@ export default function DashboardNavbar() {
             </DropdownMenuContent>
           </DropdownMenu>
           <Button
-            className="text-blue-950"
+
+            className="text-blue-950 dark:text-white"
+
             variant="ghost"
             size="icon"
             onClick={toggleNotificationPanel}

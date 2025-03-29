@@ -6,6 +6,15 @@ body {
   font-family: var(--font-general-sans), sans-serif;
 }
 
+.font-schabo {
+  font-family: var(--font-schabo);
+}
+
+.font-comedik {
+  font-family: var(--font-comedik);
+}
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -49,8 +58,8 @@ body {
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    /* --primary: 0 0% 98%; */
+    /* --primary-foreground: 0 0% 9%; */
     --secondary: 0 0% 14.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 14.9%;

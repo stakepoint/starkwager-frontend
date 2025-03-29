@@ -2,7 +2,7 @@ import React from "react";
 
 function WagerCardSkeleton() {
   return (
-    <div className="w-full p-4 bg-white mt-3 rounded-lg animate-pulse">
+    <div className="w-full p-4 bg-white dark:bg-[#1F2A37] mt-3 rounded-lg animate-pulse">
       <div className="flex items-center justify-center gap-2 mb-2">
         <div className="w-2 h-2 rounded-full bg-gray-300"></div>
         <span className="text-gray-400 text-[13px] md:text-sm">Loading...</span>
