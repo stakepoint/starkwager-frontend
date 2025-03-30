@@ -23,7 +23,7 @@ export function WagerDetails({
   return (
     <div className="space-y-5">
       <div>
-        <h3 className="text-sm md:text-base font-medium text-grey-3">
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Title of your Wager
         </h3>
         <p className="mt-2 text-sm md:text-base font-medium text-blue-1 dark:text-white">
@@ -32,7 +32,7 @@ export function WagerDetails({
       </div>
 
       <div>
-        <h3 className="text-sm md:text-base font-medium text-grey-3">
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Potential Winnings
         </h3>
         <div className="flex mt-2">
@@ -53,7 +53,7 @@ export function WagerDetails({
       {/* Platform fee */}
       <div>
         <div className="flex items-center gap-2">
-          <h3 className="text-sm md:text-base font-medium text-grey-3">
+          <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
             Platform Fee
           </h3>
         </div>
@@ -64,7 +64,7 @@ export function WagerDetails({
       </div>
 
       <div>
-        <h3 className="text-sm md:text-base font-medium text-grey-3">
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Terms or Wager Description
         </h3>
         <div className="mt-2 space-y-4 text-sm md:text-base font-medium text-blue-950 dark:text-white">
@@ -75,7 +75,7 @@ export function WagerDetails({
       </div>
 
       <div>
-        <h3 className="text-sm md:text-base font-medium text-grey-3">
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Category
         </h3>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -86,7 +86,7 @@ export function WagerDetails({
       </div>
 
       <div>
-        <h3 className="text-sm md:text-base font-medium text-grey-3">
+        <h3 className="text-sm md:text-base font-medium text-grey-3 dark:text-[#6C737F]">
           Hashtags
         </h3>
         <div className="mt-2 flex flex-wrap gap-2">

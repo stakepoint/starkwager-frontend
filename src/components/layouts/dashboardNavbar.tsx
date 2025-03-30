@@ -56,7 +56,11 @@ export default function DashboardNavbar() {
           {/*Theme Changer*/}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-blue-950 dark:text-white">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-blue-950 dark:text-white"
+              >
                 {theme === "light" ? (
                   <Sun className="h-5 w-5" />
                 ) : theme === "dark" ? (
@@ -66,7 +70,10 @@ export default function DashboardNavbar() {
                 )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="dark:bg-white dark:text-grey-9">
+            <DropdownMenuContent
+              align="end"
+              className="dark:bg-white dark:text-grey-9"
+            >
               <DropdownMenuItem onClick={() => setTheme("light")}>
                 <Sun className="mr-2 h-4 w-4" />
                 Light

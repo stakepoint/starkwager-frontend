@@ -60,7 +60,7 @@ export function SidebarDesktop() {
           {sideLinks.map((item, idx) => (
             <Link
               className={cn(
-                `flex group fill-gray-500 text-gray-500 gap-2 flex-col items-center text-xs`,
+                `flex group fill-gray-500 text-gray-500 gap-2 flex-col items-center text-xs`
               )}
               href={item.url}
               key={idx}
@@ -69,14 +69,14 @@ export function SidebarDesktop() {
                 {item.icon(
                   cn(
                     "w-6",
-                    path === item.url ? "fill-secondary" : "fill-gray-500",
-                  ),
+                    path === item.url ? "fill-secondary" : "fill-gray-500"
+                  )
                 )}
               </div>
               <span
                 className={cn(
                   `group-hover:text-primary`,
-                  path === item.url && "text-secondary font-bold",
+                  path === item.url && "text-secondary font-bold"
                 )}
               >
                 {item.name}
@@ -106,14 +106,14 @@ export function SidebarMobile() {
                 {item.icon(
                   cn(
                     "w-6",
-                    path === item.url ? "fill-secondary" : "fill-gray-500",
-                  ),
+                    path === item.url ? "fill-secondary" : "fill-gray-500"
+                  )
                 )}
               </div>
               <span
                 className={cn(
                   `group-hover:text-primary`,
-                  path === item.url && "text-secondary font-bold",
+                  path === item.url && "text-secondary font-bold"
                 )}
               >
                 {item.name}

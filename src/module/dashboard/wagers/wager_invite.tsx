@@ -15,7 +15,7 @@ export default function WagerInvite() {
         <p className="text-[#4A5578] dark:text-grey-5 tracking-tight">
           Your wager has been created, send wager invite 🚀
         </p>
-        <div className="w-full h-[1px] bg-[#E2E5EB]  my-6 "></div>
+        <div className="w-full h-[1px] bg-[#E2E5EB] dark:bg-[#1F2A37]  my-6 "></div>
 
         <section className="grid gap-4">
           <div>
@@ -24,7 +24,7 @@ export default function WagerInvite() {
             </label>
             <Input
               id="title"
-              className=" h-14 rounded-[12px] border-none bg-accent-100 placeholder:text-[#B9C0D4] shadow-none focus:ring-0  mt-1 outline-none"
+              className=" h-14 rounded-[12px] border-none bg-accent-100 dark:bg-dark-input-bg placeholder:text-[#B9C0D4] shadow-none focus:ring-0  mt-1 outline-none"
               placeholder="wager.strk/"
             />
           </div>

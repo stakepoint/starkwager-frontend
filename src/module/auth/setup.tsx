@@ -71,7 +71,9 @@ export default function SetupPage() {
           {selectedAvatar ? (
             <div className="w-full h-full">{parse(selectedAvatar.svgCode)}</div>
           ) : (
-            <p className="text-4xl text-white dark:text-blue-950 font-medium">N</p>
+            <p className="text-4xl text-white dark:text-blue-950 font-medium">
+              N
+            </p>
           )}
           <div className="absolute bottom-0 right-0 rounded-full p-2 bg-white">
             <Camera size="16" className="text-blue-950" />
@@ -79,12 +81,12 @@ export default function SetupPage() {
         </div>
 
         <div className="flex flex-col w-full gap-1">
-          <div className="flex items-center bg-[#EFF1F5] rounded-lg px-[18px] py-6 h-[72px]">
+          <div className="flex items-center bg-[#EFF1F5] dark:bg-[#1F2A37] rounded-lg px-[18px] py-6 h-[72px]">
             <div className="">
               <span className="text-[#B9C0D4] w-24 text-base tracking-tighter">
                 wager.strk/{" "}
               </span>
-              <span className="text-[#102A56] w-24 text-base tracking-tighter">
+              <span className="dark:text-white text-[#102A56] w-24 text-base tracking-tighter">
                 @
               </span>
             </div>
@@ -93,7 +95,7 @@ export default function SetupPage() {
                 type="text"
                 value={username}
                 placeholder="username"
-                className="flex flex-grow text-[#102A56] py-8 bg-transparent transition-colors rounded-none text-base tracking-tighter outline-none border border-transparent px-0"
+                className="flex flex-grow dark:text-white text-[#102A56] py-8 bg-transparent transition-colors rounded-none text-base tracking-tighter outline-none border border-transparent px-0 dark:placeholder-[#B9C0D4] placeholder-white"
                 onChange={(e) => {
                   setUsername(e.target.value);
                   checkUsernameAvailability(e.target.value);
@@ -131,13 +133,13 @@ export default function SetupPage() {
       {/* Avatar Selection Modal */}
       {isModalOpen && (
         <>
-          <div className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm" />
+          <div className="fixed inset-0  bg-black/40 z-40 backdrop-blur-sm" />
 
           <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:w-full w-[90%] max-w-[640px] bg-white dark:bg-grey-8 rounded-3xl p-6 md:px-16 z-50 animate-modal-enter flex flex-col">
             <div className="relative text-center">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors absolute top-4 right-0"
+                className="p-2 hover:bg-gray-100 dark:bg-[#1F2A37] rounded-full transition-colors absolute top-4 right-0"
               >
                 <X size={20} className="text-gray-500 dark:text-white" />
               </button>

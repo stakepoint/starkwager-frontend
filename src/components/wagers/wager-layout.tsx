@@ -47,7 +47,7 @@ export function WagerLayout({
         return (
           <Button
             onClick={handleCancelClaim}
-            className="w-full max-w-[343px] mx-auto h-14 text-lg font-medium bg-white border border-[#E2E5EB] text-[#102A56] hover:bg-gray-50 transition-all duration-300"
+            className="w-full max-w-[343px] mx-auto h-14 text-lg font-medium bg-white border border-[#E2E5EB]  text-[#102A56] hover:bg-gray-50 transition-all duration-300"
           >
             Cancel Claim
           </Button>
