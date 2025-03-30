@@ -6,6 +6,8 @@ import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
 import HowItWorks from "@/components/ui/HowItWorks";
 import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
+import Hero from '@/components/landingpage/hero'
+// import HowItWorks from '@/components/how-it-works/HowItWorks';
 import HowItWorksSection from "@/components/how-it-works/HowItWorksSection";
 import Impact from "@/components/landingpage/Impact";
 
@@ -18,12 +20,9 @@ export default function Page() {
       {/* Main Content with appropriate padding to account for sidebar */}
       <main className="flex-1 md:ml-64">
         {/* Intro Section */}
-        <section id="intro" className="min-h-screen flex items-center">
+        <section id="intro" className="">
           <div>
-            <h2 className="text-4xl font-bold mb-6">INTRO</h2>
-            <p className="text-xl">
-              Introduction content about StarkWager goes here...
-            </p>
+            <Hero />
           </div>
         </section>
         <SecondSection />
