@@ -77,9 +77,9 @@ export default function DashboardHome() {
             <WagerTabOptions />
             <div
               onClick={() => setIsHashtagModalOpen(true)}
-              className="flex items-center gap-3 border-none bg-white rounded-sm p-2 cursor-pointer max-w-min"
+              className="flex items-center gap-3 border-none bg-white dark:bg-grey-8 rounded-sm p-2 cursor-pointer max-w-min"
             >
-              <p className="text-sm text-blue-1 min-w-max font-medium">
+              <p className="text-sm text-blue-1 dark:text-white min-w-max font-medium">
                 Filter by Hashtags
               </p>
               <SlidersHorizontal />
@@ -87,10 +87,10 @@ export default function DashboardHome() {
 
             <div className="mt-10">
               <div className="flex justify-between items-center">
-                <p className="text-center text-blue-1 text-base md:text-xl font-medium">
+                <p className="text-center text-blue-1 dark:text-white text-base md:text-xl font-medium">
                   Global Wagers
                 </p>
-                <p className="text-gray-600 text-[12px] lg:text-sm cursor-pointer">
+                <p className="text-gray-600 dark:text-grey-5 text-[12px] lg:text-sm cursor-pointer">
                   View All
                 </p>
               </div>
@@ -117,7 +117,7 @@ export default function DashboardHome() {
         <div className="pt-5 lg:hidden">
           <Button
             onClick={handleCreateWager}
-            className="w-fit mx-auto flex items-center text-base font-medium"
+            className="w-fit mx-auto flex items-center text-base font-medium dark:bg-secondary"
           >
             {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}
             New Wager

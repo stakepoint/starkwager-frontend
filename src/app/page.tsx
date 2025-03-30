@@ -1,13 +1,9 @@
-// import { buttonVariants } from "@/components/ui/button";
-// import { cn } from "@/lib/utils";
-// import Link from "next/link";
 import Footer from "@/components/layouts/footer";
 import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
 
 import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
-import Hero from '@/components/landingpage/hero'
-// import HowItWorks from '@/components/how-it-works/HowItWorks';
+import Hero from "@/components/landingpage/hero";
 import HowItWorksSection from "@/components/how-it-works/HowItWorksSection";
 import Impact from "@/components/landingpage/Impact";
 
@@ -31,16 +27,6 @@ export default function Page() {
         <section id="how-it-works" className="min-h-screen flex items-center">
           <HowItWorksSection />
         </section>
-
-        {/* Contact Section */}
-        <section id="contact" className="min-h-screen flex items-center">
-          <div>
-            <h2 className="text-4xl font-bold mb-6">CONTACT</h2>
-            <p className="text-xl">Contact information and form goes here...</p>
-          </div>
-        </section>
-
-        <HowItWorks />
 
         {/* Impact section  */}
         <Impact />

@@ -42,17 +42,14 @@ export function SidebarDesktop() {
   const path = usePathname();
 
   return (
-    <aside
-      className=" hidden sticky top-0  w-[13rem] px-5 py-4  lg:flex flex-col
-     items-center h-screen overflow-y-auto dark:border dark:border-r dark:border-[#30374F] bg-gray-900 dark:bg-dark-body-bg"
-    >
+    <aside className=" hidden sticky top-0  w-[13rem] px-5 py-4  lg:flex flex-col items-center h-screen overflow-y-auto  bg-gray-900 dark:bg-grey-10 dark:border-r">
       <div className="w-full flex gap-8 flex-col items-center">
         <Link href="/dashboard">
           {getSvgById("appLogo", { className: "w-28" })}
         </Link>
         <Link
           href="/dashboard/create-wager"
-          className="w-full flex items-center justify-center gap-3 dark:text-[#102A56] text-base font-medium bg-secondary rounded-2xl p-4"
+          className="w-full flex items-center justify-center gap-3 text-base font-medium bg-secondary rounded-2xl p-4 dark:text-grey-9"
         >
           {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}
           New Wager
@@ -96,7 +93,7 @@ export function SidebarMobile() {
   const path = usePathname();
 
   return (
-    <aside className="md:hidden left-0  z-10 fixed bottom-0 w-full  py-3 flex flex-col items-center   bg-gray-900">
+    <aside className="md:hidden left-0  z-10 fixed bottom-0 w-full  py-3 flex flex-col items-center   bg-gray-900 dark:bg-grey-10 dark:border-t">
       <div className="w-full">
         <div className="text-white flex justify-between w-full items-center gap-4">
           {sideLinks.map((item, idx) => (

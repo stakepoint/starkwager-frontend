@@ -9,8 +9,8 @@ import { WithdrawIcon } from "@/svgs/withdrawIcon";
 import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { getSvgById } from "@/svgs";
+// import Link from "next/link";
+// import { getSvgById } from "@/svgs";
 
 const TRANSACTION_DATA = [
   {
@@ -142,13 +142,13 @@ export default function Wallet() {
             ))}
           </div>
         </section>
-        <Link
-          href="/dashboard/create-wager"
-          className="w-full max-w-[160px] mx-auto flex items-center justify-center gap-3 text-base font-medium bg-secondary rounded-2xl p-4 mt-10 shadow-xl md:hidden"
-        >
-          {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}
-          New Wager
-        </Link>
+        {/*<Link*/}
+        {/*  href="/dashboard/create-wager"*/}
+        {/*  className="w-full max-w-[160px] mx-auto flex items-center justify-center gap-3 text-base font-medium bg-secondary rounded-2xl p-4 mt-10 shadow-xl md:hidden"*/}
+        {/*>*/}
+        {/*  {getSvgById("shake_fill_icon", { className: "fill-blue-950 w-5" })}*/}
+        {/*  New Wager*/}
+        {/*</Link>*/}
       </section>
     </>
   );
