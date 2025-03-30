@@ -28,14 +28,6 @@ export default function Page() {
           <HowItWorksSection />
         </section>
 
-        {/* Contact Section */}
-        <section id="contact" className="min-h-screen flex items-center">
-          <div>
-            <h2 className="text-4xl font-bold mb-6">CONTACT</h2>
-            <p className="text-xl">Contact information and form goes here...</p>
-          </div>
-        </section>
-
         {/* Impact section  */}
         <Impact />
 
