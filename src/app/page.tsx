@@ -3,7 +3,7 @@
 // import Link from "next/link";
 import Footer from "@/components/layouts/footer";
 import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
-import HowItWorks from "@/components/ui/HowItWorks";
+
 import SecondSection from "@/components/second-section/SecondSection";
 import React from "react";
 import Hero from '@/components/landingpage/hero'
