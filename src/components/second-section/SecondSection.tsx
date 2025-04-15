@@ -8,6 +8,7 @@ const sectionImage = "/images/SecondSectionImage.svg";
 export default function SecondSection() {
   const elementRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const centeredRefs = useRef([]);
 
   useEffect(() => {
     const currentElement = elementRef.current;
@@ -35,6 +36,39 @@ export default function SecondSection() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    const observers = centeredRefs.current
+      .filter((ref) => ref)
+      .map((ref) => {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              ref.classList.add("text-red-700");
+            } else {
+              ref.classList.remove("text-red-700");
+            }
+          },
+          {
+            root: null,
+            rootMargin: "0px",
+            threshold: 1,
+          }
+        );
+        observer.observe(ref);
+        return observer;
+      });
+
+    return () => {
+      observers.forEach((observer, i) => {
+        if (observer && centeredRefs.current[i]) {
+          observer.unobserve(centeredRefs.current[i]);
+          observer.disconnect();
+        }
+      });
+    };
+  }, []);
+
 
   return (
     <section className="w-full flex flex-col items-center gap-20 justify-center py-2 px-2 ">
@@ -123,14 +157,14 @@ export default function SecondSection() {
           </div>
         </div>
 
-        <div className="text-changer font-schabo font-normal items-center flex pb-[10px]    gap-2 md:gap-5   box-content  overflow-hidden  h-[60px] text-[56px]  md:h-[100px] md:text-[96px]  lg:h-[300px] bg-red-500 lg:text-[120px] leading-[150px] ">
+        <div className="text-changer font-schabo font-normal items-center flex pb-[10px]    gap-2 md:gap-5   box-content overflow-hidden   h-[100px] text-[56px] leading-[70px]  md:h-[90px] md:text-[96px]  lg:h-[300px]  lg:text-[120px] md:leading-[150px] ">
         <h1  className="intro-text mt-[-2px] text-[#fafafa]  " >IT&rsquo;S ABOUT</h1>
-        <div className="roles-container relative overflow-hidden self-center  bg-green-300 flex flex-col gap-0   ">
-            <span className="role h-full pl-[6px] ">FAIRNESS</span>
-            <span className="role   h-full pl-[6px]  ">TRUST</span>
-            <span className="role   h-full pl-[6px]     ">WINNING</span>
-            <span className="role h-full pl-[6px]   ">TRUST</span>
-            <span className="role   h-full pl-[6px]   ">FAIRNESS</span>
+        <div className="roles-container relative overflow-hidden   flex flex-col   ">
+          {
+            ["FAIRNESS", "TRUST", "WINNING", "TRUST", "FAIRNESS",  "WINNING", "TRUST", "FAIRNESS", "WINNING", "TRUST", "FAIRNESS"    ].map((word, index)  => (
+              <span key={index}  ref={(el) => (centeredRefs.current[5] = el)}  className={`role   h-full pl-[6px]  `}> {word} </span>
+            ))
+          }
         </div>
     </div>
 
