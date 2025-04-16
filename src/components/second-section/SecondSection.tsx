@@ -1,14 +1,22 @@
+
+
+
+
+
+
 "use client";
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useInView } from 'react-intersection-observer';
 
 const sectionImage = "/images/SecondSectionImage.svg";
 
 export default function SecondSection() {
   const elementRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const centeredRefs = useRef([]);
+
+
 
   useEffect(() => {
     const currentElement = elementRef.current;
@@ -37,37 +45,6 @@ export default function SecondSection() {
     };
   }, []);
 
-  useEffect(() => {
-    const observers = centeredRefs.current
-      .filter((ref) => ref)
-      .map((ref) => {
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              ref.classList.add("text-red-700");
-            } else {
-              ref.classList.remove("text-red-700");
-            }
-          },
-          {
-            root: null,
-            rootMargin: "0px",
-            threshold: 1,
-          }
-        );
-        observer.observe(ref);
-        return observer;
-      });
-
-    return () => {
-      observers.forEach((observer, i) => {
-        if (observer && centeredRefs.current[i]) {
-          observer.unobserve(centeredRefs.current[i]);
-          observer.disconnect();
-        }
-      });
-    };
-  }, []);
 
 
   return (
@@ -161,9 +138,18 @@ export default function SecondSection() {
         <h1  className="intro-text mt-[-2px] text-[#fafafa]  " >IT&rsquo;S ABOUT</h1>
         <div className="roles-container relative overflow-hidden   flex flex-col   ">
           {
-            ["FAIRNESS", "TRUST", "WINNING", "TRUST", "FAIRNESS",  "WINNING", "TRUST", "FAIRNESS", "WINNING", "TRUST", "FAIRNESS"    ].map((word, index)  => (
-              <span key={index}  ref={(el) => (centeredRefs.current[5] = el)}  className={`role   h-full pl-[6px]  `}> {word} </span>
-            ))
+            ["FAIRNESS", "TRUST", "WINNING", "TRUST", "FAIRNESS",  "WINNING", "TRUST", "FAIRNESS", "WINNING", "TRUST", "FAIRNESS"    ].map((word, index)  => {
+              const { ref, inView } = useInView({ threshold: 1 });
+              return (
+                <span
+                ref={ref}
+                key={index}
+                className={`role h-full pl-[6px] transition-all duration-500 ${inView ? 'text-white' : 'bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent '}`}
+              >
+                {word}
+              </span>
+              )
+            })
           }
         </div>
     </div>
@@ -177,6 +163,8 @@ export default function SecondSection() {
           </div>
         </div>
       </section>
+
+
 
 
 
