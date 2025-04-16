@@ -18,6 +18,11 @@ export default function SecondSection() {
 
 
 
+  const roles = [
+    "FAIRNESS", "TRUST", "WINNING", "TRUST", "FAIRNESS",
+    "WINNING", "TRUST", "FAIRNESS", "WINNING", "TRUST", "FAIRNESS"
+  ];
+
   useEffect(() => {
     const currentElement = elementRef.current;
     const observer = new IntersectionObserver(
@@ -118,8 +123,8 @@ export default function SecondSection() {
       <section className="w-full h-[435px] md:h-[435px] relative  flex items-center justify-center   " >
         <div className="absolute top-[6%] md:top-0 left-[40%] md:left-[34%] translate-x-[-50%] flex flex-col gap-5   " >
           <h3 className="text-[#E0FE10] leading-[30px] font-normal max-w-[243.4px]  text-2xl md:text-[32px] transform rotate-[-2deg]   font-comedik">
-            <span className="relative  after:content-[''] after:absolute after:left-0 after:top-[50%] transform translate-x-[-50%] after:w-full after:h-[4px] after:bg-[#6C737F] after:rounded-full " >Isn&rsquo;t Wagering just </span><br/>
-            <span  className="relative  after:content-[''] after:absolute after:left-0 after:top-[50%] transform translate-x-[-50%] after:w-full after:h-[4px] after:bg-[#6C737F] after:rounded-full " >about taking risks?</span>
+            <span className="relative  after:content-[''] after:absolute after:left-0 after:top-[50%] transform translate-x-[-50%] after:w-full after:h-[4px] after:bg-[#6C737F] after:rounded-full " >Isn&rsquo;t Wagering just </span><br />
+            <span className="relative  after:content-[''] after:absolute after:left-0 after:top-[50%] transform translate-x-[-50%] after:w-full after:h-[4px] after:bg-[#6C737F] after:rounded-full " >about taking risks?</span>
           </h3>
 
           <div className="flex justify-start gap-4 items-end"  >
@@ -135,24 +140,32 @@ export default function SecondSection() {
         </div>
 
         <div className="text-changer font-schabo font-normal items-center flex pb-[10px]    gap-2 md:gap-5   box-content overflow-hidden   h-[100px] text-[56px] leading-[70px]  md:h-[90px] md:text-[96px]  lg:h-[300px]  lg:text-[120px] md:leading-[150px] ">
-        <h1  className="intro-text mt-[-2px] text-[#fafafa]  " >IT&rsquo;S ABOUT</h1>
-        <div className="roles-container relative overflow-hidden   flex flex-col   ">
-          {
-            ["FAIRNESS", "TRUST", "WINNING", "TRUST", "FAIRNESS",  "WINNING", "TRUST", "FAIRNESS", "WINNING", "TRUST", "FAIRNESS"    ].map((word, index)  => {
-              const { ref, inView } = useInView({ threshold: 1 });
+          <h1 className="intro-text mt-[-2px] text-[#fafafa]  " >IT&rsquo;S ABOUT</h1>
+          <div className="roles-container relative overflow-hidden   flex flex-col   ">
+
+
+            {roles.map((word, index) => {
+              const { ref, inView } = useInView({
+                triggerOnce: false,
+                threshold: 1,
+              });
+
               return (
                 <span
-                ref={ref}
-                key={index}
-                className={`role h-full pl-[6px] transition-all duration-500 ${inView ? 'text-white' : 'bg-gradient-to-t  from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent '}`}
-              >
-                {word}
-              </span>
-              )
-            })
-          }
+                  ref={ref}
+                  key={index}
+                  className={`role h-full pl-[6px] transition-all duration-500 ${inView
+                      ? "text-white"
+                      : "bg-gradient-to-t from-white via-[#16182B] via-80% to-[#16182B00] to-90% bg-clip-text text-transparent"
+                    }`}
+                >
+                  {word}
+                </span>
+              );
+            })}
+
+          </div>
         </div>
-    </div>
 
 
         <div className="text-[#E0FE10] z-0 font-comedik flex md:flex-col items-center justify-center right-[30%] md:right-[5%] translate-x-[-30%]  bottom-[25%] md:bottom-[25%] font-normal text-xl md:text-2xl transform rotate-[-4deg] md:rotate-[-26deg] absolute ">
