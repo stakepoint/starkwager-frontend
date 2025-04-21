@@ -1,0 +1,72 @@
+import { useDisconnect, useAccount } from "@starknet-react/core";
+import { Button } from "./button";
+import { useState } from "react";
+import { ConnectWallet } from "./modals/ConnectWallet";
+import Image from "next/image";
+import { Copy } from "lucide-react";
+
+const WalletBar: React.FC = () => {
+  const [isConnecting, setIsConnecting] = useState(false);
+  //   const { disconnect } = useDisconnect();
+  const { address } = useAccount();
+
+  return (
+    <>
+      <ConnectWallet
+        open={isConnecting}
+        onOpenChange={() => setIsConnecting((prev) => !prev)}
+      />
+      <div className="flex flex-col items-center space-y-4">
+        {!address ? (
+          <div className="flex flex-wrap justify-center gap-2">
+            <Button
+              onClick={() => setIsConnecting(true)}
+              className="bg-[#E0FE10] max-sm:w-[343px] text-[#102A56] hover:bg-[#a8d500] font-bold py-3 px-6 md:px-8 md:py-3 flex items-center justify-center text-sm md:text-base rounded-md"
+            >
+              Connect Wallet
+              <Image
+                src="/images/hero/Frame.png"
+                alt="wallet"
+                width={20}
+                height={20}
+                className="ml-2"
+              />
+            </Button>
+          </div>
+        ) : (
+          <div className="flex items-center space-2">
+            <div className="md:flex hidden items-center gap-2">
+              <Image
+                width={64}
+                height={64}
+                src="/images/avatar.svg"
+                alt="Avatar"
+              />
+
+              <div className="flex items-center gap-2 bg-white dark:bg-grey-8 p-1 px-2 rounded-[8px]">
+                <span className="text-sm text-blue-950 dark:text-white font-medium">
+                  @noyi24_7
+                </span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="ml-1 text-blue-950 dark:text-white h-4 w-4"
+                >
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+            {/* <button
+              onClick={() => disconnect()}
+              className="bg-[#E0FE10] max-sm:w-[343px] text-[#102A56] hover:bg-[#a8d500] font-bold py-3 px-6 md:px-8 md:py-3 flex items-center justify-center text-sm md:text-base rounded-md"
+            >
+              Disconnect
+            </button> */}
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default WalletBar;

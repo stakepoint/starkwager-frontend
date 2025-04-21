@@ -1,7 +1,7 @@
 "use client";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import StarknetProvider from "./starknetProvider";
+import { StarknetProvider } from "@/components/starknet-provider";
 
 const queryClient = new QueryClient();
 
