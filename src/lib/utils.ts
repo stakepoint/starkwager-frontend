@@ -25,3 +25,7 @@ export const getPageTitle = (path: string) => {
       return "HOME";
   }
 };
+
+export const addressShortner = (address: string) => {
+  return `${address.slice(0, 5)}...${address.slice(-5)}`;
+};
