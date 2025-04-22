@@ -8,7 +8,7 @@ import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 export default function UserBar() {
   const { address } = useAccount();
-  const { data, isLoading } = useStarkName({
+  const { data } = useStarkName({
     address,
   });
   const { isCopied, copy } = useCopyToClipboard();
