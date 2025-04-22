@@ -13,7 +13,7 @@ const Hero = () => {
 
       {/* Connect wallet button */}
       <div className="absolute bottom-0 md:top-10 right-8 md:right-24 z-10 max-sm:mb-4">
-        <WalletBar />
+        <WalletBar isWeb={true} />
       </div>
 
       {/* Main Content */}

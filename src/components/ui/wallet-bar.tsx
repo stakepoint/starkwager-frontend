@@ -5,7 +5,7 @@ import { ConnectWallet } from "./modals/ConnectWallet";
 import Image from "next/image";
 import UserBar from "./user-bar";
 
-const WalletBar: React.FC = () => {
+const WalletBar = ({ isWeb }: { isWeb: boolean }) => {
   const [isConnecting, setIsConnecting] = useState(false);
   const { address } = useAccount();
 
@@ -33,7 +33,7 @@ const WalletBar: React.FC = () => {
             </Button>
           </div>
         ) : (
-          <UserBar />
+          <UserBar variation={isWeb ? "web" : "app"} />
         )}
       </div>
     </>

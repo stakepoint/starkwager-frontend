@@ -31,7 +31,7 @@ export default function DashboardNavbar() {
           {getPageTitle(pathname)}
         </h1>
         <div className="flex md:justify-between justify-end w-full lg:w-fit items-center gap-4">
-          <WalletBar />
+          <WalletBar isWeb={false} />
           {/*Theme Changer*/}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
