@@ -7,7 +7,9 @@ interface WagerDoesntExistModalProps {
   onClose: () => void;
 }
 
-const WagerDoesntExistModal: React.FC<WagerDoesntExistModalProps> = ({ onClose }) => {
+const WagerDoesntExistModal: React.FC<WagerDoesntExistModalProps> = ({
+  onClose,
+}) => {
   const router = useRouter();
 
   const handleBackHome = () => {
@@ -18,16 +20,17 @@ const WagerDoesntExistModal: React.FC<WagerDoesntExistModalProps> = ({ onClose }
   return (
     <div className="flex flex-col items-center">
       <h3 className="text-[#102A56] text-xl font-semibold leading-normal">
-      Wager Doesn{"'"}t Exist
-        </h3>
-      
+        Wager Doesn{"'"}t Exist
+      </h3>
+
       <p className="text-[#4A5578] text-sm mt-2 text-center max-w-[280px]">
-        The link to this wager does not exist or has already been joined by someone else
+        The link to this wager does not exist or has already been joined by
+        someone else
       </p>
 
       <div className="my-8">
         <Image
-          src="/images/Warning.png"
+          src="/images/warning.svg"
           alt="Wager not found"
           width={103}
           height={74}
