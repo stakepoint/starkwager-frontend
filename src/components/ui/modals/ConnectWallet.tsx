@@ -23,7 +23,7 @@ export function ConnectWallet({ open, onOpenChange }: HashtagSelectorProps) {
     if (isSuccess || isError) {
       onOpenChange();
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError, onOpenChange]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

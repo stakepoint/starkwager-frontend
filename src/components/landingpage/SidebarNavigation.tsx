@@ -5,11 +5,10 @@ import { FC, useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Wallet, X, Menu } from "lucide-react";
+import { X, Menu } from "lucide-react";
 import { getSvgById } from "@/svgs";
 import { LandingArrow } from "@/svgs/landingArrow";
 import { useAccount } from "@starknet-react/core";
-import UserBar from "../ui/user-bar";
 import { useRouter } from "next/navigation";
 import WalletBar from "../ui/wallet-bar";
 
