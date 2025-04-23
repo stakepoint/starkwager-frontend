@@ -1,9 +1,10 @@
+"use client";
 import { addressShortner } from "@/lib/utils";
 import { useAccount, useDisconnect, useStarkName } from "@starknet-react/core";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./button";
-import { Check, Copy, LogOut } from "lucide-react";
+import { Check, ChevronRight, Copy, LogOut } from "lucide-react";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   DropdownMenu,
@@ -14,14 +15,17 @@ import {
 
 export default function UserBar({
   variation = "app",
+  className,
 }: {
   variation?: "web" | "app";
+  className?: string;
 }) {
   const isWeb = variation === "web";
   const { address } = useAccount();
   const { disconnect } = useDisconnect();
   const { data } = useStarkName({ address });
   const { isCopied, copy } = useCopyToClipboard();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleCopyClick = () => {
     if (address) copy(address);
@@ -31,24 +35,22 @@ export default function UserBar({
 
   const UserContent = (
     <div
-      className={`md:flex hidden items-center gap-2 ${
-        !isWeb ? "flex-row" : "flex-row-reverse"
-      }`}
+      className={`flex items-center gap-3 ${
+        isWeb && "p-3 border border-[#384250] rounded-3xl"
+      } ${className}`}
     >
       <Image
         width={14}
         height={14}
-        className={`${isWeb ? "w-12 h-12" : "w-[64px] h-[64px]"}`}
+        className="w-12 h-12"
         src="/images/avatar.svg"
         alt="Avatar"
       />
 
       <div
         className={`flex items-center gap-2 text-sm md:text-base font-medium ${
-          !isWeb
-            ? " bg-white dark:bg-grey-8 p-1 px-2 rounded-[8px]"
-            : "bg-[#E0FE10] max-sm:w-[343px] text-[#102A56] hover:bg-[#a8d500] font-bold py-3 px-6 md:px-10 md:py-3 justify-center  rounded-md"
-        }`}
+          isWeb ? "bg-grey-8" : "bg-white dark:bg-grey-8"
+        } p-1 px-2 rounded-[8px]`}
       >
         <span>{data || addressShortner(address)}</span>
         {!isWeb && (
@@ -56,7 +58,9 @@ export default function UserBar({
             variant="ghost"
             size="icon"
             onClick={handleCopyClick}
-            className="ml-1 text-blue-950 dark:text-white h-4 w-4"
+            className={`ml-1 ${
+              isWeb ? "text-white" : "text-blue-950 dark:text-white"
+            } h-4 w-4`}
           >
             {isCopied ? (
               <Check className="h-4 w-4" />
@@ -66,15 +70,23 @@ export default function UserBar({
           </Button>
         )}
       </div>
+
+      {isWeb && (
+        <ChevronRight
+          className={`transition-transform duration-300 ${
+            menuOpen ? "rotate-90" : ""
+          }`}
+        />
+      )}
     </div>
   );
 
   return isWeb ? (
-    <DropdownMenu>
+    <DropdownMenu onOpenChange={(open) => setMenuOpen(open)}>
       <DropdownMenuTrigger asChild>{UserContent}</DropdownMenuTrigger>
       <DropdownMenuContent
         align="center"
-        className="bg-[#1F2A37] text-white p-6 w-[240px] flex flex-col gap-y-2 font-medium"
+        className="bg-[#1F2A37] text-white p-6 w-[240px] flex flex-col gap-y-2 font-medium border-none"
       >
         <DropdownMenuItem
           onSelect={(e) => {

@@ -9,6 +9,9 @@ import { Wallet, X, Menu } from "lucide-react";
 import { getSvgById } from "@/svgs";
 import { LandingArrow } from "@/svgs/landingArrow";
 import { useAccount } from "@starknet-react/core";
+import UserBar from "../ui/user-bar";
+import { useRouter } from "next/navigation";
+import WalletBar from "../ui/wallet-bar";
 
 interface SidebarNavigationProps {
   className?: string;
@@ -26,6 +29,7 @@ const navItems: NavItem[] = [
 ];
 
 const SidebarNavigation: FC<SidebarNavigationProps> = ({ className }) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const { address } = useAccount();
@@ -181,19 +185,22 @@ const SidebarNavigation: FC<SidebarNavigationProps> = ({ className }) => {
         </nav>
 
         {/* Connect Wallet button - moved up with less bottom margin */}
-        {!address && (
-          <div className="p-4 mt-4">
-            <Button
-              className="w-full bg-[#E0FE10] text-[#102A56] hover:bg-[#a8d500] font-bold py-3 rounded-md"
-              onClick={() => console.log("Connect wallet clicked")}
-            >
-              Connect Wallet <Wallet className="ml-2 h-5 w-5" color="#102A56" />
-            </Button>
-            <p className="text-center text-sm mt-2 text-[#EFF8FF]">
-              and start making wagers
-            </p>
+        <div className="p-4 mt-4">
+          <div className="flex gap-y-[64px] flex-col">
+            <WalletBar isWeb={true} userBarclass="bg-[#111927] border-none" />
+            {address && (
+              <Button
+                onClick={() => router.push("/dashboard")}
+                className="bg-[#E0FE10] text-[#102A56] hover:bg-[#a8d500] font-medium py-3 px-6 md:px-8 md:py-3 text-sm md:text-base rounded-md w-full"
+              >
+                Launch App
+              </Button>
+            )}
           </div>
-        )}
+          <p className="text-center text-sm mt-2 text-[#EFF8FF]">
+            and start making wagers
+          </p>
+        </div>
 
         {/* Copyright - moved up */}
         <div className="p-4  text-xs text-[#6C737F] font-[400] mt-4">

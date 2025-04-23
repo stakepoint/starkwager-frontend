@@ -1,8 +1,24 @@
 "use client";
 import Image from "next/image";
 import WalletBar from "../ui/wallet-bar";
+import ConnectWalletBtn from "../ui/connect-wallet-btn";
+import { useEffect, useState } from "react";
 
 const Hero = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <div className="text-white w-full relative overflow-hidden min-h-[700px] md:min-h-[900px]">
       {/* Opening wager placed text */}
@@ -13,7 +29,7 @@ const Hero = () => {
 
       {/* Connect wallet button */}
       <div className="absolute bottom-0 md:top-10 right-8 md:right-24 z-10 max-sm:mb-4">
-        <WalletBar isWeb={true} />
+        {isMobile ? <ConnectWalletBtn /> : <WalletBar isWeb={true} />}
       </div>
 
       {/* Main Content */}
