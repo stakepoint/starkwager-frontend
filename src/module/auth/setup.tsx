@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Camera, X } from "lucide-react";
@@ -8,6 +8,9 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import multiavatar from "@multiavatar/multiavatar";
 import parse from "html-react-parser";
+import { userService } from "@/services/api";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 // Generate 30 random avatars
 const mockAvatars = Array.from({ length: 30 }, (_, i) => {
@@ -27,27 +30,64 @@ interface Avatar {
 
 export default function SetupPage() {
   const [username, setUsername] = useState("");
-  const [isUsernameAvailable, setIsUsernameAvailable] = useState<
-    boolean | null
-  >(null);
+  const [isUsernameValid, setIsUsernameValid] = useState<boolean | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState<Avatar | null>(null);
   const [tempSelectedAvatar, setTempSelectedAvatar] = useState<Avatar | null>(
     null
   );
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = () => {
-    const payload = {
-      username,
-      avatarString: selectedAvatar?.string,
-    };
-    console.log("Submitting payload:", payload);
-  };
+  const router = useRouter();
 
-  const checkUsernameAvailability = (username: string) => {
-    setTimeout(() => {
-      setIsUsernameAvailable(username.length > 3);
-    }, 500);
+  // Check username validity based on length, characters, etc.
+  useEffect(() => {
+    if (username.length === 0) {
+      setIsUsernameValid(null);
+      return;
+    }
+
+    // Simple validation: username must be at least 3 characters and only contain alphanumeric characters
+    const isValid = username.length >= 3 && /^[a-z0-9_]+$/i.test(username);
+    setIsUsernameValid(isValid);
+  }, [username]);
+
+  const handleSubmit = async () => {
+    if (!username || !selectedAvatar || !isUsernameValid) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const mockAddress = "0x123456789abcdee";
+
+      const user = await userService.createUser({
+        address: mockAddress,
+        username,
+        picture: selectedAvatar.svgCode,
+      });
+
+      console.log("User created successfully:", user);
+      toast.success("User created successfully");
+      router.push("/dashboard");
+    } catch (err: any) {
+      // Handle username already exists error
+      const errorMessage = err?.message || String(err);
+      if (
+        errorMessage.toLowerCase().includes("username") ||
+        errorMessage.toLowerCase().includes("exists")
+      ) {
+        setError("This username is already taken. Please try another one.");
+        toast.error("This username is already taken. Please try another one.");
+      } else {
+        setError(err instanceof Error ? err.message : "Failed to create user");
+      }
+      console.error("Error creating user:", err);
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -96,32 +136,35 @@ export default function SetupPage() {
                 value={username}
                 placeholder="username"
                 className="flex flex-grow dark:text-white text-[#102A56] py-8 bg-transparent transition-colors rounded-none text-base tracking-tighter outline-none border border-transparent px-0 dark:placeholder-[#B9C0D4] placeholder-white"
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                  checkUsernameAvailability(e.target.value);
-                }}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
           </div>
           {username && (
             <div className="text-right text-sm font-normal">
-              {isUsernameAvailable ? (
-                <span className="text-success">Username available</span>
-              ) : (
-                <span className="text-error">Username unavailable</span>
-              )}
+              {isUsernameValid === true ? (
+                <span className="text-success">Username format is valid</span>
+              ) : isUsernameValid === false ? (
+                <span className="text-error">
+                  Username must be at least 3 characters and contain only
+                  letters, numbers, and underscores
+                </span>
+              ) : null}
             </div>
           )}
         </div>
 
         <Button
           variant="default"
-          disabled={!username}
+          disabled={
+            !username || isLoading || !isUsernameValid || !selectedAvatar
+          }
           onClick={handleSubmit}
           className="font-medium text-xl tracking-[-2%] h-14 rounded-2xl disabled:cursor-not-allowed disabled:opacity-[0.32] dark:bg-secondary"
         >
-          Continue
+          {isLoading ? "Loading..." : "Continue"}
         </Button>
+        {error && <p className="text-error text-sm mt-2">{error}</p>}
         <Link
           className={cn(buttonVariants({ variant: "default" }))}
           href="/dashboard"
