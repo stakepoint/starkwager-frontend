@@ -1,8 +1,24 @@
-"use client"
-import Image from "next/image"
-import { Button } from "../ui/button"
+"use client";
+import Image from "next/image";
+import WalletBar from "../ui/wallet-bar";
+import ConnectWalletBtn from "../ui/connect-wallet-btn";
+import { useEffect, useState } from "react";
 
 const Hero = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <div className="text-white w-full relative overflow-hidden min-h-[700px] md:min-h-[900px]">
       {/* Opening wager placed text */}
@@ -13,13 +29,7 @@ const Hero = () => {
 
       {/* Connect wallet button */}
       <div className="absolute bottom-0 md:top-10 right-8 md:right-24 z-10 max-sm:mb-4">
-        <Button
-          className="bg-[#E0FE10] max-sm:w-[343px] text-[#102A56] hover:bg-[#a8d500] font-bold py-3 px-6 md:px-8 md:py-3 flex items-center justify-center text-sm md:text-base rounded-md"
-          onClick={() => console.log("Connect wallet clicked")}
-        >
-          Connect Wallet
-          <Image src="/images/hero/Frame.png" alt="wallet" width={20} height={20} className="ml-2" />
-        </Button>
+        {isMobile ? <ConnectWalletBtn /> : <WalletBar isWeb={true} />}
       </div>
 
       {/* Main Content */}
@@ -68,24 +78,34 @@ const Hero = () => {
         <div className="text-[#6C737F] transform rotate-90 whitespace-nowrap flex flex-col text-sm md:text-base max-sm:hidden font-generalSans absolute">
           Scroll to see more...
         </div>
-
-        </div>
-        {/* Arrow */}
-        <div className="absolute top-[30rem] right-[6rem] max-sm:top-[27rem] max-sm:right-[3rem]">
-          <Image
-            src="/images/hero/Arrow_04.png"
-            alt="arrow"
-            width={192}
-            height={192}
-            className="size-[4rem] md:size-[8rem] lg:size-[12rem]"
-          />
-
       </div>
-        {/* Dice graphics */}
-        <div className="absolute bottom-8 hidden md:block md:bottom-16 lg:bottom-24 right-8 md:right-[2rem] gap-4 md:gap-8">
-          <Image src="/images/hero/Group 1.png" alt="dice1" width={64} height={64} className="w-12 md:w-16 lg:w-20" />
-          <Image src="/images/hero/Group 2.png" alt="dice2" width={64} height={64} className="w-12 md:w-16 lg:w-20" />
-        </div>
+      {/* Arrow */}
+      <div className="absolute top-[30rem] right-[6rem] max-sm:top-[27rem] max-sm:right-[3rem]">
+        <Image
+          src="/images/hero/Arrow_04.png"
+          alt="arrow"
+          width={192}
+          height={192}
+          className="size-[4rem] md:size-[8rem] lg:size-[12rem]"
+        />
+      </div>
+      {/* Dice graphics */}
+      <div className="absolute bottom-8 hidden md:block md:bottom-16 lg:bottom-24 right-8 md:right-[2rem] gap-4 md:gap-8">
+        <Image
+          src="/images/hero/Group 1.png"
+          alt="dice1"
+          width={64}
+          height={64}
+          className="w-12 md:w-16 lg:w-20"
+        />
+        <Image
+          src="/images/hero/Group 2.png"
+          alt="dice2"
+          width={64}
+          height={64}
+          className="w-12 md:w-16 lg:w-20"
+        />
+      </div>
 
       {/* mobile view */}
       <Image
@@ -102,11 +122,8 @@ const Hero = () => {
         height={64}
         className="w-16 md:w-auto absolute top-[5rem] right-[1rem] md:hidden"
       />
-      </div>
-  )
-}
+    </div>
+  );
+};
 
-export default Hero
-
-
-
+export default Hero;
