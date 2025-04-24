@@ -1,39 +1,38 @@
-import { apiClient } from "./client";
 import { API_ENDPOINTS } from "./config";
-import {
-  ApiResponse,
-  CreateUserRequest,
-  CreateUserResponse,
-  User,
-} from "./types";
+import axiosClient from "./axiosClient";
 
-/**
- * User API service
- * Contains methods for interacting with user-related endpoints
- */
+interface CreateUserParams {
+  address: string;
+  username: string;
+  picture?: string;
+}
+
+interface User {
+  id: string;
+  username: string;
+  address: string;
+  email: string | null;
+  picture: string | null;
+  isVerified: boolean;
+  roles: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface AuthResponse {
+  message: string;
+  tokens: {
+    accessToken: string;
+    refreshToken: string;
+  };
+  user?: User;
+}
+
+const createUser = async (params: CreateUserParams): Promise<AuthResponse> => {
+  const response = await axiosClient.post(API_ENDPOINTS.AUTH.CREATE, params);
+  return response.data;
+};
+
 export const userService = {
-  /**
-   * Create a new user
-   * If the username already exists, the API will throw an error
-   *
-   * @param userData - User data including address, username, and picture
-   * @returns Promise with the created user data
-   */
-  async createUser(userData: CreateUserRequest): Promise<User> {
-    const response = await apiClient.post<CreateUserResponse>(
-      API_ENDPOINTS.AUTH.CREATE,
-      userData
-    );
-
-    if (response.error) {
-      // The API will return an error if the username already exists
-      throw new Error(response.error.message);
-    }
-
-    if (!response.data?.user) {
-      throw new Error("User creation failed");
-    }
-
-    return response.data.user;
-  },
+  createUser,
 };

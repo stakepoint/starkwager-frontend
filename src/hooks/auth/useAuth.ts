@@ -26,6 +26,13 @@ export interface AuthState {
   tokens: AuthTokens | null;
 }
 
+// API response types
+interface LoginResponse {
+  message: string;
+  user?: AuthUser;
+  tokens: AuthTokens;
+}
+
 // Local storage keys
 const AUTH_TOKENS_KEY = "auth_tokens";
 const AUTH_USER_KEY = "auth_user";
@@ -92,20 +99,20 @@ export function useAuth() {
   });
 
   // Login mutation
-  const loginMutation = useMutation({
+  const loginMutation = useMutation<LoginResponse, Error, any>({
     mutationFn: userService.createUser,
     onSuccess: (data) => {
       const newAuthState = {
         isAuthenticated: true,
         tokens: data.tokens,
-        user: data.user,
+        user: data.user || getStoredUser(),
       };
 
       // Update query cache
       queryClient.setQueryData(["auth"], newAuthState);
 
       // Store in localStorage
-      setStoredAuth(data.tokens, data.user);
+      setStoredAuth(data.tokens, data.user || getStoredUser());
     },
   });
 

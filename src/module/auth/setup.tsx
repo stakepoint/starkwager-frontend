@@ -8,9 +8,9 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import multiavatar from "@multiavatar/multiavatar";
 import parse from "html-react-parser";
-import { userService } from "@/services/api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 // Generate 30 random avatars
 const mockAvatars = Array.from({ length: 30 }, (_, i) => {
@@ -36,10 +36,10 @@ export default function SetupPage() {
   const [tempSelectedAvatar, setTempSelectedAvatar] = useState<Avatar | null>(
     null
   );
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
+  const { login, isLoading } = useAuth();
 
   // Check username validity based on length, characters, etc.
   useEffect(() => {
@@ -56,24 +56,27 @@ export default function SetupPage() {
   const handleSubmit = async () => {
     if (!username || !selectedAvatar || !isUsernameValid) return;
 
-    setIsLoading(true);
     setError(null);
 
     try {
-      const mockAddress = "0x123456789abcdee";
+      const mockAddress = "0x123456789abcdefbff";
 
-      const user = await userService.createUser({
+      const response = await login({
         address: mockAddress,
         username,
         picture: selectedAvatar.svgCode,
       });
 
-      console.log("User created successfully:", user);
-      toast.success("User created successfully");
+      if (response.message?.includes("Registered")) {
+        toast.success("User created successfully");
+      } else {
+        toast.success("Logged in successfully");
+      }
+
       router.push("/dashboard");
     } catch (err: any) {
-      // Handle username already exists error
-      const errorMessage = err?.message || String(err);
+      console.log(err.response.data.message);
+      const errorMessage = err?.response.data.message || String(err);
       if (
         errorMessage.toLowerCase().includes("username") ||
         errorMessage.toLowerCase().includes("exists")
@@ -82,11 +85,11 @@ export default function SetupPage() {
         toast.error("This username is already taken. Please try another one.");
       } else {
         setError(err instanceof Error ? err.message : "Failed to create user");
+        toast.error(
+          err instanceof Error ? err.message : "Failed to create user"
+        );
       }
       console.error("Error creating user:", err);
-      console.log(err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -164,7 +167,6 @@ export default function SetupPage() {
         >
           {isLoading ? "Loading..." : "Continue"}
         </Button>
-        {error && <p className="text-error text-sm mt-2">{error}</p>}
         <Link
           className={cn(buttonVariants({ variant: "default" }))}
           href="/dashboard"
