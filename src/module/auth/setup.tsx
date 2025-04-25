@@ -82,6 +82,7 @@ export default function SetupPage() {
         errorMessage.toLowerCase().includes("exists")
       ) {
         setError("This username is already taken. Please try another one.");
+        console.error(error)
         toast.error("This username is already taken. Please try another one.");
       } else {
         setError(err instanceof Error ? err.message : "Failed to create user");

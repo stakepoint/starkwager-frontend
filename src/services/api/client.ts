@@ -126,6 +126,7 @@ async function processResponse<T>(response: Response): Promise<ApiResponse<T>> {
     }
   } catch (error) {
     // Handle non-JSON responses or network errors
+    console.error("Error parsing response:", error);
     return {
       error: {
         message: response.ok
