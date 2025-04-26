@@ -32,7 +32,7 @@ export default function Wallets() {
             return Number(newBalance.toFixed(2)); // Ensure we have 2 decimal places
         });
         
-        // Close the modal after a short delay to allow the user to see the success message
+        // Close the modal after a short delay to allow the user to see the success 
         setTimeout(() => {
             setIsFundModalOpen(false);
         }, 3000);
