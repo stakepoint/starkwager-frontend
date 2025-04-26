@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Copy, Plus } from "lucide-react";
 import { WithdrawIcon } from "@/svgs/withdrawIcon";
@@ -56,8 +56,6 @@ export default function WalletDetails({
   const {
     readData: balanceData,
     dataRefetch: refetchBalance,
-    readIsLoading: isBalanceLoading,
-    readIsError: isBalanceError
   } = useContractFetch(
     walletBalanceAbi,
     "get_wallet_balance",
@@ -102,11 +100,11 @@ export default function WalletDetails({
   }, [address, refetchBalance]);
 
   // Manual refresh after a withdrawal or deposit
-  const refreshBalance = () => {
+  const refreshBalance = useCallback(() => {
     if (address) {
       refetchBalance();
     }
-  };
+  }, [address, refetchBalance]);
 
   // Refresh balance when walletBalance prop changes (e.g., after withdraw/deposit)
   useEffect(() => {
@@ -115,7 +113,7 @@ export default function WalletDetails({
       previousBalanceRef.current = walletBalance;
       refreshBalance();
     }
-  }, [walletBalance, displayedBalance, isFirstLoad]);
+  }, [walletBalance, displayedBalance, isFirstLoad, refreshBalance]);
 
   // For demo purposes, if we don't have a real address, we use a placeholder
   const displayAddress = address ? addressShortner(address) : "0x336674474...";

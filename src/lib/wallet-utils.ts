@@ -16,8 +16,8 @@ export const toU256 = (amount: number): { low: string; high: string } => {
     const u256Value = uint256.bnToUint256(amountBigInt);
     
     return {
-      low: u256Value.low,
-      high: u256Value.high
+      low: String(u256Value.low),
+      high: String(u256Value.high)
     };
   } catch (error) {
     console.error("Error converting to u256:", error);

@@ -19,11 +19,26 @@ export default function DashboardHome() {
   const [isFundModalOpen, setIsFundModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [isHashtagModalOpen, setIsHashtagModalOpen] = useState(false);
+  const [walletBalance, setWalletBalance] = useState(1000); // Default wallet balance
 
   const router = useRouter();
 
   const handleCreateWager = () => {
     router.push("/dashboard/create-wager");
+  };
+
+  // Handle successful withdrawal by updating the balance immediately
+  const handleSuccessfulWithdraw = (amount: number) => {
+    // Update the balance immediately for a better UX
+    setWalletBalance(prevBalance => {
+      const newBalance = Math.max(0, prevBalance - amount);
+      return Number(newBalance.toFixed(2)); // Ensure we have 2 decimal places
+    });
+    
+    // Close the modal after a short delay to allow the user to see the success message
+    setTimeout(() => {
+      setIsWithdrawModalOpen(false);
+    }, 3000);
   };
 
   const wagerCards = [
@@ -57,7 +72,11 @@ export default function DashboardHome() {
         setOpen={setIsWithdrawModalOpen}
         className="max-w-[400px] p-6 rounded-2xl"
       >
-        <WithdrawFundsModal onClose={() => setIsWithdrawModalOpen(false)} />
+        <WithdrawFundsModal 
+          onClose={() => setIsWithdrawModalOpen(false)}
+          walletBalance={walletBalance}
+          onSuccessfulWithdraw={handleSuccessfulWithdraw}
+        />
       </ModalView>
       <ModalView
         open={isHashtagModalOpen}
@@ -71,6 +90,8 @@ export default function DashboardHome() {
         <WalletDetail
           setIsFundModalOpen={setIsFundModalOpen}
           setIsWithdrawModalOpen={setIsWithdrawModalOpen}
+          walletBalance={walletBalance}
+          setWalletBalance={setWalletBalance}
         />
         {wagerCards.length > 0 ? (
           <div className="space-y-4">

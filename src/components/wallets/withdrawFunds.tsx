@@ -9,7 +9,6 @@ import { toast } from "sonner";
 import { 
   toU256, 
   validateWithdrawalAmount, 
-  formatTransactionResult, 
   handleContractError 
 } from "@/lib/wallet-utils";
 

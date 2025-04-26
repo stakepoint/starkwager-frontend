@@ -24,13 +24,31 @@ export default function Wallets() {
         }, 3000);
     }, []);
 
+    // Handle successful funding by updating the balance immediately
+    const handleSuccessfulFund = useCallback((amount: number) => {
+        // Update the balance immediately for a better UX
+        setWalletBalance(prevBalance => {
+            const newBalance = prevBalance + amount;
+            return Number(newBalance.toFixed(2)); // Ensure we have 2 decimal places
+        });
+        
+        // Close the modal after a short delay to allow the user to see the success message
+        setTimeout(() => {
+            setIsFundModalOpen(false);
+        }, 3000);
+    }, []);
+
     return (
         <div className="w-full">
             <ModalView
                 open={isFundModalOpen}
                 setOpen={setIsFundModalOpen}
                 className="max-w-[400px] p-6 rounded-2xl">
-                <FundWalletModal onClose={() => setIsFundModalOpen(false)} />
+                <FundWalletModal 
+                    onClose={() => setIsFundModalOpen(false)} 
+                    walletBalance={walletBalance}
+                    onSuccessfulFund={handleSuccessfulFund}
+                />
             </ModalView>
             <ModalView
                 open={isWithdrawModalOpen}
