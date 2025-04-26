@@ -36,11 +36,14 @@ interface WithdrawFundsModalProps {
   onClose: () => void;
   // In a real app, you would pass the user's balance as a prop or fetch it
   walletBalance?: number;
+  // Optional callback to refresh the balance after withdrawal
+  onSuccessfulWithdraw?: (amount: number) => void;
 }
 
 const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({ 
   onClose,
-    walletBalance = 1000 // Default value for demo, in real app you'd pass this or fetch it
+  walletBalance = 1000, // Default value for demo, in real app you'd pass this or fetch it
+  onSuccessfulWithdraw
 }) => {
   const [withdrawState, setWithdrawState] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -51,6 +54,7 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({
   const [showConfirmation, setShowConfirmation] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { address } = useAccount();
+  const withdrawAmountRef = useRef<number>(0);
 
   // Convert amount to u256 format for contract interaction
   const getAmountInU256 = () => {
@@ -96,6 +100,9 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({
       return;
     }
 
+    // Store the amount being withdrawn
+    withdrawAmountRef.current = parseFloat(inputValue);
+
     // Show confirmation dialog
     setShowConfirmation(true);
   };
@@ -127,11 +134,17 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({
       setWithdrawState(true);
       setIsProcessing(false);
       toast.success("Withdrawal successful!");
+      
+      // Update the wallet balance in the parent component
+      if (onSuccessfulWithdraw && withdrawAmountRef.current > 0) {
+        // Call the callback with the withdrawal amount
+        onSuccessfulWithdraw(withdrawAmountRef.current);
+      }
     } else if (waitIsError && waitError) {
       handleContractError(waitError);
       setIsProcessing(false);
     }
-  }, [waitStatus, waitIsError, waitError]);
+  }, [waitStatus, waitIsError, waitError, onSuccessfulWithdraw]);
 
   useEffect(() => {
     if (!withdrawState && inputRef.current) {
@@ -151,6 +164,14 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({
     }
   };
 
+  // Helper function to calculate max withdrawal amount
+  const handleMaxClick = () => {
+    if (walletBalance > 0) {
+      setInputValue(walletBalance.toString());
+      setInputWidth(Math.max(100, walletBalance.toString().length * 30));
+    }
+  };
+
   return (
     <div>
       {!withdrawState ? (
@@ -165,8 +186,15 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({
             </p>
             
             {/* Balance indicator */}
-            <div className="text-sm text-grey-1 dark:text-white mt-1">
-              Available balance: ${walletBalance.toFixed(2)} ({walletBalance.toFixed(2)} Strk)
+            <div className="text-sm text-grey-1 dark:text-white mt-1 flex items-center justify-between w-full max-w-[263px] md:max-w-[352px]">
+              <span>Available balance: ${walletBalance.toFixed(2)}</span>
+              <button 
+                onClick={handleMaxClick}
+                className="text-blue-500 text-xs font-medium"
+                type="button"
+              >
+                MAX
+              </button>
             </div>
             
             <div className="mt-6 mb-8">

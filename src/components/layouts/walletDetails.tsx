@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Copy, Plus } from "lucide-react";
 import { WithdrawIcon } from "@/svgs/withdrawIcon";
@@ -48,12 +48,16 @@ export default function WalletDetails({
   walletBalance = 1000 // Default value for demo
 }: WalletDetailsProps) {
   const { address } = useAccount();
+  const [displayedBalance, setDisplayedBalance] = useState(walletBalance);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const previousBalanceRef = useRef(walletBalance);
   
   // Fetch wallet balance from contract
   const {
     readData: balanceData,
     dataRefetch: refetchBalance,
-    readIsLoading: isBalanceLoading
+    readIsLoading: isBalanceLoading,
+    readIsError: isBalanceError
   } = useContractFetch(
     walletBalanceAbi,
     "get_wallet_balance",
@@ -61,7 +65,7 @@ export default function WalletDetails({
     address ? [address] : []
   );
 
-  // Update the wallet balance when data is fetched
+  // Update the wallet balance when data is fetched, but maintain the previous displayed value until new data is available
   useEffect(() => {
     if (balanceData && Array.isArray(balanceData) && balanceData.length > 0) {
       // Assuming the balance is returned as the first element in the array
@@ -69,10 +73,22 @@ export default function WalletDetails({
       const u256Balance = balanceData[0];
       if (u256Balance && typeof u256Balance === 'object') {
         const decimalBalance = fromU256(u256Balance);
+        
+        // Update the parent component's state
         setWalletBalance(decimalBalance);
+        
+        // Only update the displayed balance if this isn't the initial load or if there's a change
+        if (!isFirstLoad || Math.abs(decimalBalance - previousBalanceRef.current) > 0.001) {
+          setDisplayedBalance(decimalBalance);
+          previousBalanceRef.current = decimalBalance;
+        }
+        
+        if (isFirstLoad) {
+          setIsFirstLoad(false);
+        }
       }
     }
-  }, [balanceData, setWalletBalance]);
+  }, [balanceData, setWalletBalance, isFirstLoad]);
 
   // Refresh balance every 30 seconds
   useEffect(() => {
@@ -84,6 +100,22 @@ export default function WalletDetails({
 
     return () => clearInterval(intervalId);
   }, [address, refetchBalance]);
+
+  // Manual refresh after a withdrawal or deposit
+  const refreshBalance = () => {
+    if (address) {
+      refetchBalance();
+    }
+  };
+
+  // Refresh balance when walletBalance prop changes (e.g., after withdraw/deposit)
+  useEffect(() => {
+    if (!isFirstLoad && Math.abs(walletBalance - displayedBalance) > 0.001) {
+      setDisplayedBalance(walletBalance);
+      previousBalanceRef.current = walletBalance;
+      refreshBalance();
+    }
+  }, [walletBalance, displayedBalance, isFirstLoad]);
 
   // For demo purposes, if we don't have a real address, we use a placeholder
   const displayAddress = address ? addressShortner(address) : "0x336674474...";
@@ -112,10 +144,10 @@ export default function WalletDetails({
         <section className="flex flex-col gap-5 lg:gap-0 lg:flex-row justify-between">
           <div className="pt-2 lg:pt-0 lg:gap-3 items-center flex justify-between lg:grid">
             <h1 className="lg:text-[3.5rem] text-2xl tracking-tight lg:leading-10 text-blue-950 dark:text-white font-semibold">
-              {isBalanceLoading ? "Loading..." : `$${walletBalance.toFixed(2)}`}
+              ${displayedBalance.toFixed(2)}
             </h1>
             <p className="text-blue-950 dark:text-white">
-              {isBalanceLoading ? "..." : `${walletBalance.toFixed(2)} Strk`}
+              {displayedBalance.toFixed(2)} Strk
             </p>
           </div>
 
@@ -124,7 +156,10 @@ export default function WalletDetails({
               <Button
                 className="rounded-sm bg-body-bg dark:bg-grey-7 text-blue-950 dark:text-white h-12 w-12"
                 size="icon"
-                onClick={() => setIsFundModalOpen(true)}
+                onClick={() => {
+                  setIsFundModalOpen(true);
+                  refreshBalance();
+                }}
               >
                 <Plus />
               </Button>
@@ -135,8 +170,11 @@ export default function WalletDetails({
               <Button
                 className="rounded-sm bg-body-bg dark:bg-grey-7 text-blue-950 dark: h-12 w-12"
                 size="icon"
-                onClick={() => setIsWithdrawModalOpen(true)}
-                disabled={walletBalance <= 0}
+                onClick={() => {
+                  setIsWithdrawModalOpen(true);
+                  refreshBalance();
+                }}
+                disabled={displayedBalance <= 0}
               >
                 <span className="dark:hidden">
                   <WithdrawIcon />
