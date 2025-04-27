@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { useAccount } from '@starknet-react/core';
 import { useContractFetch } from '@/lib/blockchain-utils';
 import { CONTRACT_ABI } from '@/constants/contract';
@@ -14,7 +14,7 @@ interface WalletContextType {
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
-export function WalletProvider({ children }: { children: React.ReactNode }) {
+export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
   const { address } = useAccount();
   const [balance, setBalance] = useState<string>('0');
   const [error, setError] = useState<Error | null>(null);
@@ -46,20 +46,17 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     }
   }, [readIsError, readError]);
 
-  const refreshBalance = () => {
-    dataRefetch();
-  };
+  const refreshBalance = useCallback(() => {
+    if (address) {
+      dataRefetch();
+    }
+  }, [address, dataRefetch]);
 
   // Auto-refresh balance every 30 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (address) {
-        refreshBalance();
-      }
-    }, 30000);
-
+    const interval = setInterval(refreshBalance, 30000);
     return () => clearInterval(interval);
-  }, [address]);
+  }, [refreshBalance]);
 
   return (
     <WalletContext.Provider
