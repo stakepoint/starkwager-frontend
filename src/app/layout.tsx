@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import "./globals.css";
 import Providers from "./providers";
 import { ThemeProvider } from "@/components/layouts/themeProvider";
+import { WalletProvider } from "@/contexts/WalletContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -91,7 +92,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Providers>{children}</Providers>
+          <Providers>
+            <WalletProvider>
+              {children}
+            </WalletProvider>
+          </Providers>
         </ThemeProvider>
       </body>
     </html>
