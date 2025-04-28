@@ -34,7 +34,7 @@ export default function CategoryDropdown({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <button
-          className="w-full h-18 px-4 bg-accent-100 rounded-md flex justify-between items-center 
+          className="w-full h-[72px] px-4 bg-accent-100 rounded-md flex justify-between items-center 
   text-blue-950 font-normal text-sm shadow-none border-none md:min-w-[320px] max-w-[380px] dark:bg-grey-8 dark:text-white"
         >
           {selectedCategory ? selectedCategory : "Select Category"}

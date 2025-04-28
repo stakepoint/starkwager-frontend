@@ -11,6 +11,7 @@
     "contributors:generate": "all-contributors generate"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
     "@multiavatar/multiavatar": "^1.0.7",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.5",
@@ -30,12 +31,14 @@
     "next-themes": "^0.4.6",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.56.1",
     "react-intersection-observer": "^9.16.0",
     "sonner": "^1.7.2",
     "starknet": "^6.24.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^1.1.2"
+    "vaul": "^1.1.2",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.62.16",
