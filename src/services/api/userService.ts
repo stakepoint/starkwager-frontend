@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from "./config";
 import axiosClient from "./axiosClient";
-import { apiClient } from "./client";
+// import { apiClient } from "./client";
 
 interface CreateUserParams {
   address: string;
