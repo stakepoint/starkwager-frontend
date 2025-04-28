@@ -11,6 +11,8 @@ import parse from "html-react-parser";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { useAccount } from "@starknet-react/core";
+import { userService } from "@/services/api";
 
 // Generate 30 random avatars
 const mockAvatars = Array.from({ length: 30 }, (_, i) => {
@@ -37,9 +39,9 @@ export default function SetupPage() {
     null
   );
   const [error, setError] = useState<string | null>(null);
-
+  const { address } = useAccount();
   const router = useRouter();
-  const { login, isLoading } = useAuth();
+  const { login, tokens, isLoading } = useAuth();
 
   // Check username validity based on length, characters, etc.
   useEffect(() => {
@@ -49,48 +51,69 @@ export default function SetupPage() {
     }
 
     // Simple validation: username must be at least 3 characters and only contain alphanumeric characters
-    const isValid = username.length >= 3 && /^[a-z0-9_]+$/i.test(username);
+    const isValid = username.length >= 4 && /^[a-z0-9_]+$/i.test(username);
     setIsUsernameValid(isValid);
   }, [username]);
 
   const handleSubmit = async () => {
     if (!username || !selectedAvatar || !isUsernameValid) return;
-
+    console.log("Submitting form...");
     setError(null);
 
     try {
-      const mockAddress = "0x123456789abcdefbff";
+      if (!tokens?.accessToken) {
+        // If no token exists, use login flow first
+        const response = await login({
+          address: address,
+          username,
+          picture: JSON.stringify(selectedAvatar.svgCode),
+        });
 
-      const response = await login({
-        address: mockAddress,
-        username,
-        picture: selectedAvatar.svgCode,
-      });
+        if (response.message?.includes("Registered")) {
+          toast.success("User created successfully");
+        } else {
+          toast.success("Logged in successfully");
+        }
 
-      if (response.message?.includes("Registered")) {
-        toast.success("User created successfully");
-      } else {
-        toast.success("Logged in successfully");
+        // Store user profile data in localStorage
+        if (response.user) {
+          localStorage.setItem("userProfile", JSON.stringify(response.user));
+        }
+
+        router.push("/dashboard");
+        return;
       }
 
+      // If token exists, update the user profile
+      const updatedUser = await userService.updateUser({
+        username,
+        picture: JSON.stringify(selectedAvatar.svgCode),
+      });
+
+      // Store updated user profile in localStorage
+      if (updatedUser) {
+        localStorage.setItem("userProfile", JSON.stringify(updatedUser));
+      }
+
+      toast.success("Profile updated successfully");
       router.push("/dashboard");
     } catch (err: any) {
-      console.log(err.response.data.message);
-      const errorMessage = err?.response.data.message || String(err);
+      console.log(err.message || err);
+      const errorMessage = err?.message || String(err);
       if (
         errorMessage.toLowerCase().includes("username") ||
         errorMessage.toLowerCase().includes("exists")
       ) {
         setError("This username is already taken. Please try another one.");
-        console.error(error)
+        console.error(error);
         toast.error("This username is already taken. Please try another one.");
       } else {
-        setError(err instanceof Error ? err.message : "Failed to create user");
+        setError(err instanceof Error ? err.message : "Failed to update user");
         toast.error(
-          err instanceof Error ? err.message : "Failed to create user"
+          err instanceof Error ? err.message : "Failed to update user"
         );
       }
-      console.error("Error creating user:", err);
+      console.error("Error updating user:", err);
     }
   };
 

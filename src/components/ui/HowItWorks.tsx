@@ -3,6 +3,7 @@ import Chevron from "@/svgs/Chevron";
 import HandCoins from "@/svgs/HandCoins";
 import ShieldCheck from "@/svgs/ShieldCheck";
 import Wallet from "@/svgs/Wallet";
+import Image from "next/image";
 import React, { useState } from "react";
 
 type StepProps = {
@@ -142,10 +143,12 @@ export default function HowItWorks() {
             intermediaries. No delays. Just instant, trustless transactions.
           </p>
         </div>
-        <img
+        <Image
           src="/images/padlock.png"
-          className="w-[76px] lg:w-[90px]"
+          className="w-[76px] lg:w-[90px] h-auto"
           alt=""
+          width={20}
+          height={20}
         />
       </Step>
 
@@ -156,10 +159,12 @@ export default function HowItWorks() {
         buttonText="More info"
         reverse={true}
       >
-        <img
+        <Image
           src="/images/excitment.png"
-          className="w-[180px] lg:w-[240px]"
+          className="w-[180px] lg:w-[240px] h-auto"
           alt=""
+          width={20}
+          height={20}
         />
         <div className="max-w-[520px] text-[#EFF8FF]">
           <p className="text-base lg:text-lg leading-[130%] font-medium -tracking-[2%] capitalize">

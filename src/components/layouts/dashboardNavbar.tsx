@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Bell, Copy, Moon, Sun, Monitor } from "lucide-react";
+import { Bell, Moon, Sun, Monitor } from "lucide-react";
 import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import { getPageTitle } from "@/lib/utils";
 import NotificationPanel from "@/components/layouts/notificationPanel";
-import Image from "next/image";
 import { useTheme } from "next-themes";
 import {
   DropdownMenu,
@@ -14,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdownMenu";
+import WalletBar from "../ui/wallet-bar";
 
 export default function DashboardNavbar() {
   const pathname = usePathname();
@@ -31,28 +31,9 @@ export default function DashboardNavbar() {
           {getPageTitle(pathname)}
         </h1>
         <div className="flex md:justify-between justify-end w-full lg:w-fit items-center gap-4">
-          <div className="md:flex hidden items-center gap-2">
-            <Image
-              width={64}
-              height={64}
-              src="/images/avatar.svg"
-              alt="Avatar"
-            />
-
-            <div className="flex items-center gap-2 bg-white dark:bg-grey-8 p-1 px-2 rounded-[8px]">
-              <span className="text-sm text-blue-950 dark:text-white font-medium">
-                @noyi24_7
-              </span>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="ml-1 text-blue-950 dark:text-white h-4 w-4"
-              >
-                <Copy className="h-4 w-4" />
-              </Button>
-            </div>
+          <div className="hidden md:flex">
+            <WalletBar isWeb={false} />
           </div>
-
           {/*Theme Changer*/}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

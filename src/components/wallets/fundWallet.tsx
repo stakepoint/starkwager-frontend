@@ -129,7 +129,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = () => {
             </p>
             <div className="flex justify-center my-4">
               <Image
-                src="/images/Warning.png"
+                src="/images/warning.svg"
                 alt="Error Icon"
                 width={75}
                 height={75}

@@ -1,8 +1,14 @@
 import { API_ENDPOINTS } from "./config";
 import axiosClient from "./axiosClient";
+import { apiClient } from "./client";
 
 interface CreateUserParams {
   address: string;
+  username: string;
+  picture?: string;
+}
+
+interface UpdateUserParams {
   username: string;
   picture?: string;
 }
@@ -33,6 +39,12 @@ const createUser = async (params: CreateUserParams): Promise<AuthResponse> => {
   return response.data;
 };
 
+const updateUser = async (params: UpdateUserParams): Promise<User> => {
+  const response = await axiosClient.patch(API_ENDPOINTS.USERS.UPDATE, params);
+  return response.data;
+};
+
 export const userService = {
   createUser,
+  updateUser,
 };
