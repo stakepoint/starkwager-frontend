@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Camera, X } from "lucide-react";
@@ -8,6 +8,11 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import multiavatar from "@multiavatar/multiavatar";
 import parse from "html-react-parser";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/auth/useAuth";
+import { useAccount } from "@starknet-react/core";
+import { userService } from "@/services/api";
 
 // Generate 30 random avatars
 const mockAvatars = Array.from({ length: 30 }, (_, i) => {
@@ -27,27 +32,89 @@ interface Avatar {
 
 export default function SetupPage() {
   const [username, setUsername] = useState("");
-  const [isUsernameAvailable, setIsUsernameAvailable] = useState<
-    boolean | null
-  >(null);
+  const [isUsernameValid, setIsUsernameValid] = useState<boolean | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState<Avatar | null>(null);
   const [tempSelectedAvatar, setTempSelectedAvatar] = useState<Avatar | null>(
     null
   );
+  const [error, setError] = useState<string | null>(null);
+  const { address } = useAccount();
+  const router = useRouter();
+  const { login, tokens, isLoading } = useAuth();
 
-  const handleSubmit = () => {
-    const payload = {
-      username,
-      avatarString: selectedAvatar?.string,
-    };
-    console.log("Submitting payload:", payload);
-  };
+  // Check username validity based on length, characters, etc.
+  useEffect(() => {
+    if (username.length === 0) {
+      setIsUsernameValid(null);
+      return;
+    }
 
-  const checkUsernameAvailability = (username: string) => {
-    setTimeout(() => {
-      setIsUsernameAvailable(username.length > 3);
-    }, 500);
+    // Simple validation: username must be at least 3 characters and only contain alphanumeric characters
+    const isValid = username.length >= 4 && /^[a-z0-9_]+$/i.test(username);
+    setIsUsernameValid(isValid);
+  }, [username]);
+
+  const handleSubmit = async () => {
+    if (!username || !selectedAvatar || !isUsernameValid) return;
+    console.log("Submitting form...");
+    setError(null);
+
+    try {
+      if (!tokens?.accessToken) {
+        // If no token exists, use login flow first
+        const response = await login({
+          address: address,
+          username,
+          picture: JSON.stringify(selectedAvatar.svgCode),
+        });
+
+        if (response.message?.includes("Registered")) {
+          toast.success("User created successfully");
+        } else {
+          toast.success("Logged in successfully");
+        }
+
+        // Store user profile data in localStorage
+        if (response.user) {
+          localStorage.setItem("userProfile", JSON.stringify(response.user));
+        }
+
+        router.push("/dashboard");
+        return;
+      }
+
+      // If token exists, update the user profile
+      const updatedUser = await userService.updateUser({
+        username,
+        picture: JSON.stringify(selectedAvatar.svgCode),
+      });
+
+      // Store updated user profile in localStorage
+      if (updatedUser) {
+        localStorage.setItem("userProfile", JSON.stringify(updatedUser));
+      }
+
+      toast.success("Profile updated successfully");
+      router.push("/dashboard");
+    } catch (err: any) {
+      console.log(err.message || err);
+      const errorMessage = err?.message || String(err);
+      if (
+        errorMessage.toLowerCase().includes("username") ||
+        errorMessage.toLowerCase().includes("exists")
+      ) {
+        setError("This username is already taken. Please try another one.");
+        console.error(error);
+        toast.error("This username is already taken. Please try another one.");
+      } else {
+        setError(err instanceof Error ? err.message : "Failed to update user");
+        toast.error(
+          err instanceof Error ? err.message : "Failed to update user"
+        );
+      }
+      console.error("Error updating user:", err);
+    }
   };
 
   return (
@@ -96,31 +163,33 @@ export default function SetupPage() {
                 value={username}
                 placeholder="username"
                 className="flex flex-grow dark:text-white text-[#102A56] py-8 bg-transparent transition-colors rounded-none text-base tracking-tighter outline-none border border-transparent px-0 dark:placeholder-[#B9C0D4] placeholder-white"
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                  checkUsernameAvailability(e.target.value);
-                }}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
           </div>
           {username && (
             <div className="text-right text-sm font-normal">
-              {isUsernameAvailable ? (
-                <span className="text-success">Username available</span>
-              ) : (
-                <span className="text-error">Username unavailable</span>
-              )}
+              {isUsernameValid === true ? (
+                <span className="text-success">Username format is valid</span>
+              ) : isUsernameValid === false ? (
+                <span className="text-error">
+                  Username must be at least 3 characters and contain only
+                  letters, numbers, and underscores
+                </span>
+              ) : null}
             </div>
           )}
         </div>
 
         <Button
           variant="default"
-          disabled={!username}
+          disabled={
+            !username || isLoading || !isUsernameValid || !selectedAvatar
+          }
           onClick={handleSubmit}
           className="font-medium text-xl tracking-[-2%] h-14 rounded-2xl disabled:cursor-not-allowed disabled:opacity-[0.32] dark:bg-secondary"
         >
-          Continue
+          {isLoading ? "Loading..." : "Continue"}
         </Button>
         <Link
           className={cn(buttonVariants({ variant: "default" }))}
