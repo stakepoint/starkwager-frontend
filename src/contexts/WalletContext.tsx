@@ -29,22 +29,21 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
     CONTRACT_ABI,
     'get_balance',
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
-    address ? [address] : []
+    address ? [address] : undefined
   );
 
   useEffect(() => {
     if (readData) {
-      // Convert u256 to string with proper formatting
       const balanceStr = readData.toString();
       setBalance(balanceStr);
     }
-  }, [readData]);
+  }, [readData, address, readIsError, readError]);
 
   useEffect(() => {
     if (readIsError && readError) {
       setError(readError as Error);
     }
-  }, [readIsError, readError]);
+  }, [readIsError, readError, address]);
 
   const refreshBalance = useCallback(() => {
     if (address) {
