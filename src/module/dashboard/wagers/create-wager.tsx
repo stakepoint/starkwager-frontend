@@ -10,7 +10,11 @@ import CategoryDropdown from "@/components/ui/CategoryDropdown";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-// import { useCreateWager } from "@/hooks/wager/useWager";
+import {
+  useCreateWagerContext,
+  WagerDataState,
+} from "@/contextApi/createWager.context";
+import { useRouter } from "next/navigation";
 
 // Assuming userBalance is available in the component scope (i.e from the starknet provider)
 // Replace 50.00 with the actual balance variable
@@ -44,7 +48,8 @@ type WagerFormData = z.infer<typeof wagerSchema>;
 export default function CreateWager() {
   const [openHashtagSelector, setOpenHashtagSelector] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const {
     register,
@@ -64,54 +69,38 @@ export default function CreateWager() {
     },
   });
 
-  // const { createWager } = useCreateWager();
+  const { setWagerData } = useCreateWagerContext();
 
   const title = watch("title");
   const terms = watch("terms");
   const selectedTags = watch("hashtags");
 
   const onSubmit: SubmitHandler<WagerFormData> = async (data) => {
-    console.log(data);
-
-    setIsSubmitting(true);
-    setError(null);
-
     try {
-      // const result = await createWager({
-      //   category: data.category,
-      //   title: data.title,
-      //   terms: data.terms,
-      //   stake: data.stake.toString(),
-      //   mode: "0",
-      //   claim: "0",
-      //   resolutionTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      // });
+      setIsSubmitting(true);
+      const result: WagerDataState = {
+        category: data.category,
+        hashtags: data.hashtags,
+        title: data.title,
+        terms: data.terms,
+        stake: data.stake,
+        mode: "HeadToHead",
+        claim: "Yes",
+        resolutionTime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+      };
 
-      // console.log("Transaction result:", result);
-
-      setIsSubmitting(false);
-      // TODO: Add success feedback (e.g., toast notification)
-      // TODO: Consider resetting the form: reset();
+      setWagerData(result);
+      router.push(`/dashboard/create-wager/${result.title}`);
+      console.log("Wager data saved to context:", result);
     } catch (error) {
-      setIsSubmitting(false);
-      const message =
-        error instanceof Error ? error.message : "An unexpected error occurred";
-      setError(message);
       console.error("Submission Error:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div className="w-full max-w-xl py-[4rem] mx-auto ">
-      {error && (
-        <div
-          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
-          role="alert"
-        >
-          <strong className="font-bold">Error:</strong>
-          <span className="block sm:inline"> {error}</span>
-        </div>
-      )}
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div className="flex gap-3">
           <div>
@@ -243,7 +232,14 @@ export default function CreateWager() {
             className="w-full max-w-[384px] text-lg font-medium tracking-[-0.36px]"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Submitting..." : "Continue"}
+            {isSubmitting ? (
+              <div className="flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-1"></div>
+                <span>Processing...</span>
+              </div>
+            ) : (
+              "Continue"
+            )}
           </Button>
         </div>
       </form>
