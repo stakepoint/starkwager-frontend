@@ -29,3 +29,21 @@ export const getPageTitle = (path: string) => {
 export const addressShortner = (address: string) => {
   return `${address.slice(0, 7)}...${address.slice(-3)}`;
 };
+
+export function formatBalance(balance: string): string {
+  try {
+    // Convert the balance string to a number
+    const balanceNum = parseFloat(balance);
+    
+    // Check if the number is valid
+    if (isNaN(balanceNum)) {
+      return '0.00';
+    }
+    
+    // Format the number with 2 decimal places
+    return balanceNum.toFixed(2);
+  } catch (error) {
+    console.error('Error formatting balance:', error);
+    return '0.00';
+  }
+}
