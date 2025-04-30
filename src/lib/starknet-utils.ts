@@ -45,6 +45,11 @@ export const convertToByteArray = (str: string): string[] => {
 };
 
 export const convertToU256 = (num: number | string): bigint => {
+  // Explicit check for empty string input
+  if (num === "") {
+    throw new Error(`Invalid number for U256 conversion: `);
+  }
+
   try {
     // Ensure input is a string for uint256.bnToUint256
     const numStr = typeof num === "number" ? num.toString() : num;
@@ -52,7 +57,7 @@ export const convertToU256 = (num: number | string): bigint => {
     // StarkNet uses felt for amounts, typically representing the smallest unit (like Wei)
     // If the input 'stake' is already in the smallest unit (e.g., Wei), remove the multiplication
     const amountInWei = BigInt(numStr) * BigInt(10 ** 18); // Adjust 10**18 if using a different denomination
-    return amountInWei; // starknet.js v6 uses bigint directly for u256
+    return amountInWei;
   } catch (error) {
     console.error("Error converting to U256:", error);
     throw new Error(`Invalid number for U256 conversion: ${num}`);
