@@ -58,7 +58,7 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
         const balanceStr = formatUint256ToString(readData);
         setBalance(balanceStr);
         setError(null); 
-      } catch (err) {
+      } catch {
         setError(new Error('Failed to format balance'));
       }
     }
