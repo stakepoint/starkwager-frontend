@@ -2,13 +2,14 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Copy, Plus } from "lucide-react";
+import { Copy, Plus, RefreshCw } from "lucide-react";
 import { WithdrawIcon } from "@/svgs/withdrawIcon";
 import { WithdrawIconLight } from "@/svgs/withdrawIconLight";
+import { useWallet } from "@/contexts/WalletContext";
 import { useAccount } from "@starknet-react/core";
+import { formatBalance, addressShortner } from "@/lib/utils";
 import { useContractFetch } from "@/lib/blockchain-utils";
 import { fromU256 } from "@/lib/wallet-utils";
-import { addressShortner } from "@/lib/utils";
 
 // Simple wallet balance ABI
 const walletBalanceAbi = [
@@ -48,6 +49,7 @@ export default function WalletDetails({
   walletBalance = 1000 // Default value for demo
 }: WalletDetailsProps) {
   const { address } = useAccount();
+  const { balance, isLoading, error, refreshBalance: contextRefreshBalance } = useWallet();
   const [displayedBalance, setDisplayedBalance] = useState(walletBalance);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const previousBalanceRef = useRef(walletBalance);
@@ -92,19 +94,22 @@ export default function WalletDetails({
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (address) {
-        refetchBalance();
+        refreshBalance();
       }
     }, 30000);
 
     return () => clearInterval(intervalId);
   }, [address, refetchBalance]);
 
-  // Manual refresh after a withdrawal or deposit
+  // Combine refresh functions from both implementations
   const refreshBalance = useCallback(() => {
     if (address) {
       refetchBalance();
+      if (contextRefreshBalance) {
+        contextRefreshBalance();
+      }
     }
-  }, [address, refetchBalance]);
+  }, [address, refetchBalance, contextRefreshBalance]);
 
   // Refresh balance when walletBalance prop changes (e.g., after withdraw/deposit)
   useEffect(() => {
@@ -115,16 +120,29 @@ export default function WalletDetails({
     }
   }, [walletBalance, displayedBalance, isFirstLoad, refreshBalance]);
 
-  // For demo purposes, if we don't have a real address, we use a placeholder
-  const displayAddress = address ? addressShortner(address) : "0x336674474...";
+  // For display purposes, prioritize context values if available, otherwise use contract values
+  const displayAddress = address ? addressShortner(address) : "Not Connected";
+  const displayBalance = isLoading ? displayedBalance : (balance !== undefined ? balance : displayedBalance);
+  const formattedBalance = formatBalance(displayBalance);
 
   return (
     <div>
       <div className="grid pb-10 lg:gap-6 pt-5 lg:pt-[4rem]">
         <div className="flex justify-between items-center">
-          <h2 className="text-grey-3 dark:text-gey-5 tracking-tight">
-            Wallet balance
-          </h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-grey-3 dark:text-gey-5 tracking-tight">
+              Wallet balance
+            </h2>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={refreshBalance}
+              className="text-blue-950 dark:text-white"
+              data-testid="refresh-button"
+            >
+              <RefreshCw className="h-4 w-4" />
+            </Button>
+          </div>
           <div className="flex items-center gap-2 bg-white dark:bg-grey-8 p-1 px-2 rounded-[8px]">
             <span className="text-sm text-blue-950 dark:text-white font-medium">
               {displayAddress}
@@ -133,58 +151,68 @@ export default function WalletDetails({
               variant="ghost"
               size="icon"
               className="ml-1 text-blue-950 dark:text-white h-4 w-4"
+              onClick={() => {
+                if (address) {
+                  navigator.clipboard.writeText(address);
+                }
+              }}
             >
               <Copy className="h-4 w-4" />
             </Button>
           </div>
         </div>
 
-        <section className="flex flex-col gap-5 lg:gap-0 lg:flex-row justify-between">
-          <div className="pt-2 lg:pt-0 lg:gap-3 items-center flex justify-between lg:grid">
+        <div className="pt-2 lg:pt-0 lg:gap-3 items-center">
+          {isLoading ? (
+            <div className="animate-pulse" data-testid="loading-skeleton">
+              <div className="h-8 w-32 bg-gray-200 rounded"></div>
+            </div>
+          ) : error ? (
+            <div className="text-red-500">Error loading balance</div>
+          ) : (
             <h1 className="lg:text-[3.5rem] text-2xl tracking-tight lg:leading-10 text-blue-950 dark:text-white font-semibold">
-              ${displayedBalance.toFixed(2)}
+              {formattedBalance} STRK
             </h1>
-            <p className="text-blue-950 dark:text-white">
-              {displayedBalance.toFixed(2)} Strk
-            </p>
+          )}
+        </div>
+
+        <div className="flex h-fit gap-2">
+          <div className="bg-white dark:bg-grey-8 w-full text-blue-950 dark:text-white flex items-center lg:px-1.5 lg:pr-6 gap-2 lg:w-fit p-1.5 rounded-sm">
+            <Button
+              className="rounded-sm bg-body-bg dark:bg-grey-7 text-blue-950 dark:text-white h-12 w-12"
+              size="icon"
+              onClick={() => {
+                setIsFundModalOpen(true);
+                refreshBalance();
+              }}
+              data-testid="add-money-button"
+            >
+              <Plus />
+            </Button>
+            <span className="text-sm">Add Money</span>
           </div>
 
-          <div className="flex h-fit gap-2">
-            <div className="bg-white dark:bg-grey-8 w-full text-blue-950 dark:text-white flex items-center lg:px-1.5 lg:pr-6 gap-2 lg:w-fit p-1.5 rounded-sm">
-              <Button
-                className="rounded-sm bg-body-bg dark:bg-grey-7 text-blue-950 dark:text-white h-12 w-12"
-                size="icon"
-                onClick={() => {
-                  setIsFundModalOpen(true);
-                  refreshBalance();
-                }}
-              >
-                <Plus />
-              </Button>
-              <span className="text-sm">Add Money</span>
-            </div>
-
-            <div className="bg-white dark:bg-grey-8 w-full flex text-blue-950 dark:text-white items-center lg:px-1.5 lg:pr-6 gap-2 lg:w-fit p-1.5 rounded-sm">
-              <Button
-                className="rounded-sm bg-body-bg dark:bg-grey-7 text-blue-950 dark: h-12 w-12"
-                size="icon"
-                onClick={() => {
-                  setIsWithdrawModalOpen(true);
-                  refreshBalance();
-                }}
-                disabled={displayedBalance <= 0}
-              >
-                <span className="dark:hidden">
-                  <WithdrawIcon />
-                </span>
-                <span className="dark:block hidden">
-                  <WithdrawIconLight />
-                </span>
-              </Button>
-              <span className="text-sm">Withdraw</span>
-            </div>
+          <div className="bg-white dark:bg-grey-8 w-full flex text-blue-950 dark:text-white items-center lg:px-1.5 lg:pr-6 gap-2 lg:w-fit p-1.5 rounded-sm">
+            <Button
+              className="rounded-sm bg-body-bg dark:bg-grey-7 text-blue-950 dark:text-white h-12 w-12"
+              size="icon"
+              onClick={() => {
+                setIsWithdrawModalOpen(true);
+                refreshBalance();
+              }}
+              data-testid="withdraw-button"
+              disabled={displayBalance <= 0}
+            >
+              <span className="dark:hidden">
+                <WithdrawIcon />
+              </span>
+              <span className="dark:block hidden">
+                <WithdrawIconLight />
+              </span>
+            </Button>
+            <span className="text-sm">Withdraw</span>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );
