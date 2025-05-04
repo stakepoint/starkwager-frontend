@@ -58,7 +58,7 @@ export const useCreateWager = () => {
           errorMessage = "Please connect your wallet";
           break;
         default:
-          errorMessage;
+          errorMessage = "An unknown error occurred";
       }
 
       toast.error(errorMessage, {
