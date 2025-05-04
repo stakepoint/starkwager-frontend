@@ -1,3 +1,5 @@
+import { byteArray, type ByteArray, uint256 } from "starknet";
+
 export enum ContractCategory {
   SPORTS = 0,
   ESPORTS = 1,
@@ -30,34 +32,36 @@ export const convertToContractCategory = (category: string): number => {
   throw new Error(`Invalid category: ${category}`);
 };
 
-// Function to split a string into chunks of max 31 characters
-export const convertToByteArray = (str: string): string[] => {
-  const CHUNK_SIZE = 31;
-  const chunks: string[] = [];
-  if (str === null || str === undefined) {
-    return chunks; // Return empty array
+// Function to convert a string to byte array using starknet's byteArray utility
+export const convertToByteArray = (str: string): ByteArray => {
+  if (!str) {
+    return byteArray.byteArrayFromString("");
   }
-  for (let i = 0; i < str.length; i += CHUNK_SIZE) {
-    chunks.push(str.substring(i, i + CHUNK_SIZE));
-  }
-  // Return the flat array of strings
-  return chunks;
+
+  return byteArray.byteArrayFromString(str);
 };
 
-export const convertToU256 = (num: number | string): bigint => {
-  // Explicit check for empty string input
+type U256Value = { low: bigint; high: bigint };
+
+export const convertToU256 = (num: number | string): U256Value => {
   if (num === "") {
-    throw new Error(`Invalid number for U256 conversion: `);
+    throw new Error(`Invalid number for U256 conversion: empty string`);
   }
 
   try {
-    // Ensure input is a string for uint256.bnToUint256
     const numStr = typeof num === "number" ? num.toString() : num;
-    // Convert Ether to Wei (assuming input stake is in Ether)
-    // StarkNet uses felt for amounts, typically representing the smallest unit (like Wei)
-    // If the input 'stake' is already in the smallest unit (e.g., Wei), remove the multiplication
-    const amountInWei = BigInt(numStr) * BigInt(10 ** 18); // Adjust 10**18 if using a different denomination
-    return amountInWei;
+
+    // Assuming the input 'num' is in Ether, convert to Wei (smallest unit)
+    // Adjust 10**18 if your input number represents a different denomination
+    const amountInWei = BigInt(numStr) * BigInt(10 ** 18);
+
+    // Convert the BigInt amount (in Wei) to the u256 struture { low, high }
+    const u256Amount = uint256.bnToUint256(amountInWei);
+
+    return {
+      low: BigInt(u256Amount.low),
+      high: BigInt(u256Amount.high),
+    };
   } catch (error) {
     console.error("Error converting to U256:", error);
     throw new Error(`Invalid number for U256 conversion: ${num}`);

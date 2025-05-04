@@ -1,6 +1,6 @@
 "use client";
 import { CreateWagerProvider } from "@/contextApi/createWager.context";
-
+import { Toaster } from "sonner";
 export default function CreateWagerLayout({
   children,
 }: {
@@ -8,6 +8,7 @@ export default function CreateWagerLayout({
 }) {
   return (
     <div>
+      <Toaster />
       <CreateWagerProvider>{children}</CreateWagerProvider>
     </div>
   );

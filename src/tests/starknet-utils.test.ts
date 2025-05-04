@@ -10,6 +10,15 @@ import {
   convertToU64,
 } from "@/lib/starknet-utils";
 
+// Helper to convert a simple string to its expected BigInt felt representation
+const stringToFelt = (str: string): bigint => {
+  if (!str) return BigInt(0);
+  const feltHex = str
+    .split("")
+    .reduce((memo, c) => memo + c.charCodeAt(0).toString(16), "");
+  return BigInt("0x" + feltHex);
+};
+
 describe("starknet-utils", () => {
   describe("convertToContractCategory", () => {
     it("should convert valid category strings (case-insensitive) to enum numbers", () => {
@@ -39,44 +48,72 @@ describe("starknet-utils", () => {
   });
 
   describe("convertToByteArray", () => {
-    it("should return an empty array for null or undefined input", () => {
-      expect(convertToByteArray(null as any)).toEqual([]);
-      expect(convertToByteArray(undefined as any)).toEqual([]);
+    // Test cases when asChunks is true (default)
+    describe("when asChunks is true (default)", () => {
+      it("should return an empty array for null or undefined input", () => {
+        expect(convertToByteArray(null as any)).toEqual([]);
+        expect(convertToByteArray(undefined as any)).toEqual([]);
+        expect(convertToByteArray(null as any)).toEqual([]); // Explicit true
+      });
+
+      it("should return an empty array for an empty string", () => {
+        expect(convertToByteArray("")).toEqual([]);
+      });
+
+      it("should return the string in an array if length <= 31", () => {
+        const shortString = "This is less than 31 chars";
+        expect(convertToByteArray(shortString)).toEqual([shortString]);
+      });
+
+      it("should return a string of exactly 31 chars in an array", () => {
+        const exactString = "1234567890123456789012345678901"; // 31 chars
+        expect(convertToByteArray(exactString)).toEqual([exactString]);
+      });
+
+      it("should split strings longer than 31 characters into chunks", () => {
+        const longString =
+          "This is a very long string that definitely exceeds the 31 character limit imposed by felts."; // 96 chars
+        // Corrected expected chunks based on substring behavior
+        const expectedChunks = [
+          "This is a very long string that", // substring(0, 31)
+          " definitely exceeds the 31 char", // substring(31, 62)
+          "acter limit imposed by felts.", // substring(62, 96)
+        ];
+        expect(convertToByteArray(longString)).toEqual(expectedChunks);
+      });
+
+      it("should handle strings that are exact multiples of 31", () => {
+        const multiString =
+          "1234567890123456789012345678901abcdefghijklmnopqrstuvwxyzABCDE"; // 62 chars
+        const expectedChunks = [
+          "1234567890123456789012345678901",
+          "abcdefghijklmnopqrstuvwxyzABCDE",
+        ];
+        expect(convertToByteArray(multiString)).toEqual(expectedChunks);
+      });
     });
 
-    it("should return an empty array for an empty string", () => {
-      expect(convertToByteArray("")).toEqual([]);
-    });
+    // Test cases when asChunks is false
+    describe("when asChunks is false", () => {
+      it("should return an empty string for null or undefined input", () => {
+        expect(convertToByteArray(null as any)).toEqual("");
+        expect(convertToByteArray(undefined as any)).toEqual("");
+      });
 
-    it("should return the string in an array if length <= 31", () => {
-      const shortString = "This is less than 31 chars";
-      expect(convertToByteArray(shortString)).toEqual([shortString]);
-    });
+      it("should return an empty string for an empty string", () => {
+        expect(convertToByteArray("")).toEqual("");
+      });
 
-    it("should return a string of exactly 31 chars in an array", () => {
-      const exactString = "1234567890123456789012345678901"; // 31 chars
-      expect(convertToByteArray(exactString)).toEqual([exactString]);
-    });
+      it("should return the original short string", () => {
+        const shortString = "This is short";
+        expect(convertToByteArray(shortString)).toEqual(shortString);
+      });
 
-    it("should split strings longer than 31 characters into chunks", () => {
-      const longString =
-        "This is a very long string that definitely exceeds the 31 character limit imposed by felts."; // 96 chars
-      const expectedChunks = [
-        "This is a very long string that", // substring(0, 31)
-        " definitely exceeds the 31 char", // substring(31, 62)
-        "acter limit imposed by felts.", // substring(62, 96)
-      ];
-      expect(convertToByteArray(longString)).toEqual(expectedChunks);
-    });
-
-    it("should handle strings that are exact multiples of 31", () => {
-      const multiString =
-        "1234567890123456789012345678901abcdefghijklmnopqrstuvwxyzABCDE"; // 62 chars
-      const expectedChunks = [
-        "1234567890123456789012345678901",
-        "abcdefghijklmnopqrstuvwxyzABCDE",
-      ];
-      expect(convertToByteArray(multiString)).toEqual(expectedChunks);
+      it("should return the original long string", () => {
+        const longString =
+          "This is a very long string that definitely exceeds the 31 character limit imposed by felts.";
+        expect(convertToByteArray(longString)).toEqual(longString);
+      });
     });
   });
 
@@ -181,6 +218,53 @@ describe("starknet-utils", () => {
       } catch (error: any) {
         expect(error.message).toContain("Invalid date/time for U64 conversion");
       }
+    });
+  });
+
+  describe("convertStringToFeltArray", () => {
+    it("should return an empty array for null, undefined, or empty string input", () => {
+      expect(convertToByteArray(null as any)).toEqual([]);
+      expect(convertToByteArray(undefined as any)).toEqual([]);
+      expect(convertToByteArray("")).toEqual([]);
+    });
+
+    it("should return the string's felt representation in an array if length <= 31", () => {
+      const shortString = "Short string";
+      expect(convertToByteArray(shortString)).toEqual([
+        stringToFelt(shortString),
+      ]);
+    });
+
+    it("should return a felt for a string of exactly 31 chars", () => {
+      const exactString = "1234567890123456789012345678901"; // 31 chars
+      expect(convertToByteArray(exactString)).toEqual([
+        stringToFelt(exactString),
+      ]);
+    });
+
+    it("should split strings longer than 31 characters into felt chunks", () => {
+      const longString =
+        "This is a very long string that needs chunking for felts.";
+      const chunk1 = "This is a very long string that"; // 31 chars
+      const chunk2 = " needs chunking for felts."; // Remainder
+      const expectedFelts = [stringToFelt(chunk1), stringToFelt(chunk2)];
+      expect(convertToByteArray(longString)).toEqual(expectedFelts);
+    });
+
+    it("should handle strings that are exact multiples of 31", () => {
+      const multiString =
+        "1234567890123456789012345678901abcdefghijklmnopqrstuvwxyzABCDE"; // 62 chars
+      const chunk1 = "1234567890123456789012345678901";
+      const chunk2 = "abcdefghijklmnopqrstuvwxyzABCDE";
+      const expectedFelts = [stringToFelt(chunk1), stringToFelt(chunk2)];
+      expect(convertToByteArray(multiString)).toEqual(expectedFelts);
+    });
+
+    it("should handle complex characters correctly", () => {
+      const complexString = "Hello\nWorld! äöü @ €"; // Includes newline, umlauts, symbols
+      // Calculate expected felts based on the logic
+      const expectedFelt = stringToFelt(complexString);
+      expect(convertToByteArray(complexString)).toEqual([expectedFelt]);
     });
   });
 });

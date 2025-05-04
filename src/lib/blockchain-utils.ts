@@ -41,7 +41,7 @@ export function useContractWriteUtility(
   const { contract } = useContract({ abi, address: contract_address });
 
   const {
-    send,
+    sendAsync,
     data: writeData,
     isPending: writeIsPending,
   } = useSendTransaction({});
@@ -68,9 +68,9 @@ export function useContractWriteUtility(
         throw new Error("Contract not ready or invalid arguments provided.");
       }
       const calls = [contract.populate(functionName, callArgs)];
-      return send(calls);
+      return sendAsync(calls);
     },
-    [contract, functionName, send]
+    [contract, functionName, sendAsync]
   );
 
   return {

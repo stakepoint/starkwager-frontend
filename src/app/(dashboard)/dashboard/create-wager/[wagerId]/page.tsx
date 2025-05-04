@@ -9,14 +9,16 @@ function CreateWagerSummaryPage() {
   const params = useParams();
   const wagerId = params.wagerId as string;
 
-  const { wagerData } = useCreateWagerContext();
+  const { wagerData, clearWagerData } = useCreateWagerContext();
 
   useEffect(() => {
     console.log("create wager summary page mounted");
   }, []);
 
   if (!wagerData || !wagerId || wagerId !== wagerData?.title) {
+    clearWagerData();
     router.push("/dashboard/create-wager");
+
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
