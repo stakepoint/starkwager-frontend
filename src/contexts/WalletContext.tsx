@@ -14,11 +14,30 @@ interface WalletContextType {
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
+/**
+ * @param uint256Value 
+ * @returns 
+ */
+function formatUint256ToString(uint256Value: any): string {
+  try {
+    if (Array.isArray(uint256Value)) {
+      const [low, high] = uint256Value;
+      const fullValue = (BigInt(high) << BigInt(128)) + BigInt(low);
+      return (Number(fullValue) / 1e18).toFixed(2);
+    }
+    return (Number(uint256Value) / 1e18).toFixed(2);
+  } catch (error) {
+    console.error('Error formatting uint256:', error);
+    return '0.00';
+  }
+}
+
 export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
   const { address } = useAccount();
   const [balance, setBalance] = useState<string>('0');
   const [error, setError] = useState<Error | null>(null);
 
+  // Get the user's in-app wallet balance
   const {
     readData,
     dataRefetch,
@@ -29,33 +48,45 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
     CONTRACT_ABI,
     'get_balance',
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
-    address ? [address] : undefined
+    address ? [address] : undefined 
   );
 
+  // Update balance when data changes
   useEffect(() => {
     if (readData) {
-      const balanceStr = readData.toString();
-      setBalance(balanceStr);
+      try {
+        const balanceStr = formatUint256ToString(readData);
+        setBalance(balanceStr);
+        setError(null); 
+      } catch {
+        setError(new Error('Failed to format balance'));
+      }
     }
-  }, [readData, address, readIsError, readError]);
+  }, [readData]);
 
+  // Handle errors
   useEffect(() => {
     if (readIsError && readError) {
       setError(readError as Error);
+    } else if (!readIsError) {
+      setError(null); 
     }
-  }, [readIsError, readError, address]);
+  }, [readIsError, readError]);
 
+  // Manual refresh function
   const refreshBalance = useCallback(() => {
     if (address) {
       dataRefetch();
     }
   }, [address, dataRefetch]);
 
-  // Auto-refresh balance every 30 seconds
+  // Auto-refresh balance every 10 seconds if we have an address
   useEffect(() => {
-    const interval = setInterval(refreshBalance, 30000);
+    if (!address) return;
+
+    const interval = setInterval(refreshBalance, 10000);
     return () => clearInterval(interval);
-  }, [refreshBalance]);
+  }, [refreshBalance, address]);
 
   return (
     <WalletContext.Provider

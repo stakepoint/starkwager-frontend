@@ -130,7 +130,7 @@ export default function WalletDetails({
       <div className="grid pb-10 lg:gap-6 pt-5 lg:pt-[4rem]">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <h2 className="text-grey-3 dark:text-gey-5 tracking-tight">
+            <h2 className="text-grey-3 dark:text-grey-5 tracking-tight">
               Wallet balance
             </h2>
             <Button
@@ -139,8 +139,9 @@ export default function WalletDetails({
               onClick={refreshBalance}
               className="text-blue-950 dark:text-white"
               data-testid="refresh-button"
+              disabled={!address || isLoading}
             >
-              <RefreshCw className="h-4 w-4" />
+              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
             </Button>
           </div>
           <div className="flex items-center gap-2 bg-white dark:bg-grey-8 p-1 px-2 rounded-[8px]">
@@ -156,6 +157,7 @@ export default function WalletDetails({
                   navigator.clipboard.writeText(address);
                 }
               }}
+              disabled={!address}
             >
               <Copy className="h-4 w-4" />
             </Button>
@@ -163,16 +165,35 @@ export default function WalletDetails({
         </div>
 
         <div className="pt-2 lg:pt-0 lg:gap-3 items-center">
-          {isLoading ? (
+          {!address ? (
+            <div className="text-grey-3 dark:text-grey-5">
+              Connect wallet to view balance
+            </div>
+          ) : isLoading ? (
             <div className="animate-pulse" data-testid="loading-skeleton">
-              <div className="h-8 w-32 bg-gray-200 rounded"></div>
+              <div className="h-8 w-32 bg-gray-200 dark:bg-grey-8 rounded"></div>
             </div>
           ) : error ? (
-            <div className="text-red-500">Error loading balance</div>
+            <div className="text-red-500 flex items-center gap-2">
+              Error loading balance
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={refreshBalance}
+                className="text-red-500"
+              >
+                Retry
+              </Button>
+            </div>
           ) : (
-            <h1 className="lg:text-[3.5rem] text-2xl tracking-tight lg:leading-10 text-blue-950 dark:text-white font-semibold">
-              {formattedBalance} STRK
-            </h1>
+            <div className="flex flex-col gap-1">
+              <h1 className="lg:text-[3.5rem] text-2xl tracking-tight lg:leading-10 text-blue-950 dark:text-white font-semibold">
+                {formattedBalance} STRK
+              </h1>
+              <p className="text-grey-3 dark:text-grey-5 text-sm">
+                Available Balance
+              </p>
+            </div>
           )}
         </div>
 
@@ -186,6 +207,7 @@ export default function WalletDetails({
                 refreshBalance();
               }}
               data-testid="add-money-button"
+              disabled={!address}
             >
               <Plus />
             </Button>
