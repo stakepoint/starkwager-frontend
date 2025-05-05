@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { ModalView } from "@/components/ui/modals";
 import ClaimDisclaimerModal from "@/components/wagers/claim-disclaimer-modal";
 import DisagreementModal from "./disagreement-modal";
+import { useCreateWager } from "@/hooks/wager/useWager";
 
 interface WagerLayoutProps {
   children: ReactNode;
@@ -23,6 +24,8 @@ export function WagerLayout({
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
   const [hasClaimed, setHasClaimed] = useState(false);
   const [isDisagreementOpen, setIsDisagreementOpen] = useState(false);
+
+  const { createWager, writeIsPending } = useCreateWager();
 
   const handleClaimClick = () => {
     setIsDisclaimerOpen(true);
@@ -67,10 +70,19 @@ export function WagerLayout({
     if (showCreateButton) {
       return (
         <Button
+          onClick={() => createWager()}
           size={"lg"}
           className="w-full max-w-[343px] mx-auto h-14 text-lg font-medium tracking-[-0.36px] dark:bg-secondary"
+          disabled={writeIsPending}
         >
-          Create Wager
+          {writeIsPending ? (
+            <div className="flex items-center gap-2">
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-1"></div>
+              <span>Processing...</span>
+            </div>
+          ) : (
+            "Create Wager"
+          )}
         </Button>
       );
     }

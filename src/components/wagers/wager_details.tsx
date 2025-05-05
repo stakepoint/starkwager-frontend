@@ -10,6 +10,7 @@ interface WagerDetailsProps {
   description: string[];
   hashtags: string[];
   category: string;
+  stake?: number; // probably would
 }
 
 export function WagerDetails({
@@ -68,9 +69,13 @@ export function WagerDetails({
           Terms or Wager Description
         </h3>
         <div className="mt-2 space-y-4 text-sm md:text-base font-medium text-blue-950 dark:text-white">
-          {description.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
+          {Array.isArray(description) ? (
+            description.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))
+          ) : (
+            <p>{description}</p>
+          )}
         </div>
       </div>
 
