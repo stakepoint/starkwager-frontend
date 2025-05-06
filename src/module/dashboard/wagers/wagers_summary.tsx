@@ -36,7 +36,12 @@ const wagerDetails = {
   },
 };
 
-export default function WagerSummary() {
+// ? change the type for wagerData to actual type later (and should not be optional too)
+export default function WagerSummary({
+  wagerData = wagerDetails,
+}: {
+  wagerData?: any;
+}) {
   const searchParams = useSearchParams();
   const state = searchParams.get("state") || "pending";
 
@@ -60,7 +65,7 @@ export default function WagerSummary() {
               avatar: "/images/avatar.svg",
             }}
             isPending
-            amount="5 STRK each"
+            amount={`${wagerData.stake} STRK each`}
           />
         );
       case "won":
@@ -106,7 +111,7 @@ export default function WagerSummary() {
               username: "@@babykeem",
               avatar: "/images/player2.svg",
             }}
-            amount="5 STRK each"
+            amount={`${wagerData.stake} STRK each`}
           />
         );
     }
@@ -119,7 +124,16 @@ export default function WagerSummary() {
       isClaimedByOpponent={isClaimedByOpponent}
     >
       {renderBattleDisplay()}
-      <WagerDetails {...wagerDetails} />
+      <WagerDetails
+        {...wagerData}
+        potentialWinnings={
+          wagerData.stake
+            ? `${wagerData.stake * 2} STRK`
+            : wagerDetails.potentialWinnings
+        }
+        platformFee={wagerDetails.platformFee}
+        description={wagerData.terms || wagerDetails.description}
+      />
     </WagerLayout>
   );
 }

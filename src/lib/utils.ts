@@ -30,18 +30,24 @@ export const addressShortner = (address: string) => {
   return `${address.slice(0, 7)}...${address.slice(-3)}`;
 };
 
-export function formatBalance(balance: string): string {
+export function formatBalance(balance: string | number) {
   try {
+    let balanceNum: number;
     // Convert the balance string to a number
-    const balanceNum = parseFloat(balance);
-    
-    // Check if the number is valid
-    if (isNaN(balanceNum)) {
-      return '0.00';
+    if (typeof balance === 'string') {
+      balanceNum = parseFloat(balance);
+      
+      // Check if the number is valid
+      if (isNaN(balanceNum)) {
+        return '0.00';
+      }
+      
+      // Format the number with 2 decimal places
+      return balanceNum.toFixed(2);
+    } else if (typeof balance === 'number') {
+      // If it's already a number, format it directly
+      return balance.toFixed(2);
     }
-    
-    // Format the number with 2 decimal places
-    return balanceNum.toFixed(2);
   } catch (error) {
     console.error('Error formatting balance:', error);
     return '0.00';

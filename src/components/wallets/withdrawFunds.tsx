@@ -78,9 +78,9 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({
     waitStatus
   } = useContractWriteUtility(
     "withdraw_from_wallet",
-    amountParam ? [amountParam] : [],
     withdrawAbi,
-    CONTRACT_ADDRESS
+    CONTRACT_ADDRESS,
+    amountParam ? [amountParam] : [],
   );
 
   // Show confirmation dialog before withdrawal
@@ -112,7 +112,7 @@ const WithdrawFundsModal: React.FC<WithdrawFundsModalProps> = ({
       setIsProcessing(true);
       // Log the amount for debugging
       console.log("Processing withdrawal with amount:", amountParam);
-      await writeAsync();
+      await writeAsync(amountParam ? [amountParam] : []);
       
       // The transaction hash will be available in writeData.transaction_hash
       if (writeData?.transaction_hash) {

@@ -35,13 +35,13 @@ export function useContractFetch(
 // Utility function to perform contract write operations
 export function useContractWriteUtility(
   functionName: string,
-  args: any[],
   abi: any,
-  contract_address: `0x${string}`
+  contract_address: `0x${string}`,
+  args: any[] = []
 ) {
   const { contract } = useContract({ abi, address: contract_address });
 
-  const calls = useMemo(() => {
+  useMemo(() => {
     if (
       !contract ||
       !args ||
@@ -63,10 +63,10 @@ export function useContractWriteUtility(
   }, [contract, functionName, args]);
 
   const {
-    send: writeAsync,
+    sendAsync,
     data: writeData,
     isPending: writeIsPending,
-  } = useSendTransaction({ calls });
+  } = useSendTransaction({});
 
   const {
     isLoading: waitIsLoading,
@@ -79,6 +79,22 @@ export function useContractWriteUtility(
     watch: true,
   });
 
+  const writeAsync = useCallback(
+    async (callArgs: any[]) => {
+      if (
+        !contract ||
+        !callArgs ||
+        callArgs.some((arg) => arg === undefined || arg === null)
+      ) {
+        console.error("Contract not ready or invalid arguments provided.");
+        throw new Error("Contract not ready or invalid arguments provided.");
+      }
+      const calls = [contract.populate(functionName, callArgs)];
+      return sendAsync(calls);
+    },
+    [contract, functionName, sendAsync]
+  );
+
   return {
     writeAsync,
     writeData,
@@ -88,7 +104,6 @@ export function useContractWriteUtility(
     waitStatus,
     waitIsError,
     waitError,
-    calls,
   };
 }
 

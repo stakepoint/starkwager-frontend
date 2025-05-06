@@ -90,17 +90,6 @@ export default function WalletDetails({
     }
   }, [balanceData, setWalletBalance, isFirstLoad]);
 
-  // Refresh balance every 30 seconds
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (address) {
-        refreshBalance();
-      }
-    }, 30000);
-
-    return () => clearInterval(intervalId);
-  }, [address, refetchBalance]);
-
   // Combine refresh functions from both implementations
   const refreshBalance = useCallback(() => {
     if (address) {
@@ -110,6 +99,18 @@ export default function WalletDetails({
       }
     }
   }, [address, refetchBalance, contextRefreshBalance]);
+
+  // Refresh balance every 30 seconds
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (address) {
+        refreshBalance();
+      }
+    }, 30000);
+
+    return () => clearInterval(intervalId);
+  }, [address, refetchBalance, refreshBalance]);
+
 
   // Refresh balance when walletBalance prop changes (e.g., after withdraw/deposit)
   useEffect(() => {
@@ -223,7 +224,7 @@ export default function WalletDetails({
                 refreshBalance();
               }}
               data-testid="withdraw-button"
-              disabled={displayBalance <= 0}
+              disabled={typeof displayBalance === 'number' && displayBalance <= 0}
             >
               <span className="dark:hidden">
                 <WithdrawIcon />
