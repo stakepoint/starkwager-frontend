@@ -1,28 +1,130 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Copy, Plus, RefreshCw } from "lucide-react";
 import { WithdrawIcon } from "@/svgs/withdrawIcon";
 import { WithdrawIconLight } from "@/svgs/withdrawIconLight";
 import { useWallet } from "@/contexts/WalletContext";
 import { useAccount } from "@starknet-react/core";
-import { formatBalance } from "@/lib/utils";
+import { formatBalance, addressShortner } from "@/lib/utils";
+import { useContractFetch } from "@/lib/blockchain-utils";
+import { fromU256 } from "@/lib/wallet-utils";
+
+// Simple wallet balance ABI
+const walletBalanceAbi = [
+  {
+    name: "get_wallet_balance",
+    type: "function",
+    inputs: [
+      {
+        name: "account",
+        type: "core::starknet::contract_address::ContractAddress"
+      }
+    ],
+    outputs: [
+      {
+        name: "balance",
+        type: "core::integer::u256"
+      }
+    ],
+    state_mutability: "view"
+  }
+];
+
+// Contract address should come from environment variables in production
+const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_WALLET_CONTRACT_ADDRESS as `0x${string}` || "0x1234567890123456789012345678901234567890";
 
 interface WalletDetailsProps {
   setIsFundModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsWithdrawModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setWalletBalance: React.Dispatch<React.SetStateAction<number>>;
+  walletBalance: number;
 }
 
 export default function WalletDetails({
   setIsFundModalOpen,
   setIsWithdrawModalOpen,
+  setWalletBalance,
+  walletBalance = 1000 // Default value for demo
 }: WalletDetailsProps) {
   const { address } = useAccount();
-  const { balance, isLoading, error, refreshBalance } = useWallet();
+  const { balance, isLoading, error, refreshBalance: contextRefreshBalance } = useWallet();
+  const [displayedBalance, setDisplayedBalance] = useState(walletBalance);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const previousBalanceRef = useRef(walletBalance);
+  
+  // Fetch wallet balance from contract
+  const {
+    readData: balanceData,
+    dataRefetch: refetchBalance,
+  } = useContractFetch(
+    walletBalanceAbi,
+    "get_wallet_balance",
+    CONTRACT_ADDRESS,
+    address ? [address] : []
+  );
 
-  const displayAddress = address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Not Connected';
-  const formattedBalance = formatBalance(balance);
+  // Update the wallet balance when data is fetched, but maintain the previous displayed value until new data is available
+  useEffect(() => {
+    if (balanceData && Array.isArray(balanceData) && balanceData.length > 0) {
+      // Assuming the balance is returned as the first element in the array
+      // and is a u256 object with low and high properties
+      const u256Balance = balanceData[0];
+      if (u256Balance && typeof u256Balance === 'object') {
+        const decimalBalance = fromU256(u256Balance);
+        
+        // Update the parent component's state
+        setWalletBalance(decimalBalance);
+        
+        // Only update the displayed balance if this isn't the initial load or if there's a change
+        if (!isFirstLoad || Math.abs(decimalBalance - previousBalanceRef.current) > 0.001) {
+          setDisplayedBalance(decimalBalance);
+          previousBalanceRef.current = decimalBalance;
+        }
+        
+        if (isFirstLoad) {
+          setIsFirstLoad(false);
+        }
+      }
+    }
+  }, [balanceData, setWalletBalance, isFirstLoad]);
+
+  // Combine refresh functions from both implementations
+  const refreshBalance = useCallback(() => {
+    if (address) {
+      refetchBalance();
+      if (contextRefreshBalance) {
+        contextRefreshBalance();
+      }
+    }
+  }, [address, refetchBalance, contextRefreshBalance]);
+
+  // Refresh balance every 30 seconds
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (address) {
+        refreshBalance();
+      }
+    }, 30000);
+
+    return () => clearInterval(intervalId);
+  }, [address, refetchBalance, refreshBalance]);
+
+
+  // Refresh balance when walletBalance prop changes (e.g., after withdraw/deposit)
+  useEffect(() => {
+    if (!isFirstLoad && Math.abs(walletBalance - displayedBalance) > 0.001) {
+      setDisplayedBalance(walletBalance);
+      previousBalanceRef.current = walletBalance;
+      refreshBalance();
+    }
+  }, [walletBalance, displayedBalance, isFirstLoad, refreshBalance]);
+
+  // For display purposes, prioritize context values if available, otherwise use contract values
+  const displayAddress = address ? addressShortner(address) : "Not Connected";
+  const displayBalance = isLoading ? displayedBalance : (balance !== undefined ? balance : displayedBalance);
+  const formattedBalance = formatBalance(displayBalance);
 
   return (
     <div>
@@ -101,7 +203,10 @@ export default function WalletDetails({
             <Button
               className="rounded-sm bg-body-bg dark:bg-grey-7 text-blue-950 dark:text-white h-12 w-12"
               size="icon"
-              onClick={() => setIsFundModalOpen(true)}
+              onClick={() => {
+                setIsFundModalOpen(true);
+                refreshBalance();
+              }}
               data-testid="add-money-button"
               disabled={!address}
             >
@@ -114,9 +219,12 @@ export default function WalletDetails({
             <Button
               className="rounded-sm bg-body-bg dark:bg-grey-7 text-blue-950 dark:text-white h-12 w-12"
               size="icon"
-              onClick={() => setIsWithdrawModalOpen(true)}
+              onClick={() => {
+                setIsWithdrawModalOpen(true);
+                refreshBalance();
+              }}
               data-testid="withdraw-button"
-              disabled={!address || parseFloat(balance) <= 0}
+              disabled={typeof displayBalance === 'number' && displayBalance <= 0}
             >
               <span className="dark:hidden">
                 <WithdrawIcon />

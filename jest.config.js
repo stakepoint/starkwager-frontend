@@ -5,9 +5,14 @@ module.exports = {
     "<rootDir>/jest.setup.js",
     "<rootDir>/src/test-utils/setup.ts",
   ],
+  testEnvironment: 'jest-environment-jsdom',
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1",
-    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    // Handle module aliases
+    '^@/components/(.*)$': '<rootDir>/src/components/$1',
+    '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
+    '^@/hooks/(.*)$': '<rootDir>/src/hooks/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
   transform: {
       "^.+\\.(ts|tsx)$": [
