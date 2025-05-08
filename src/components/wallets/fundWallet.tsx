@@ -57,11 +57,38 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({
     amountParam ? [amountParam] : []
   );
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    
+    // Only allow digits and a single decimal point
+    if (value.match(/^-?\d*\.?\d*$/)) {
+      setInputValue(value);
+      setInputWidth(Math.max(100, value.length * 30));
+    }
+    
+    if (error) {
+      setError(null);
+    }
+  };
+
   const handleFundWallet = () => {
     setError(null);
     const amount = parseFloat(inputValue);
 
+    // Check for invalid input
+    if (inputValue.includes('..') || inputValue.match(/[^0-9.-]/) || inputValue.startsWith('-')) {
+      setError("Please enter a valid amount");
+      return;
+    }
+
+    // Check for negative or zero amount
     if (isNaN(amount) || amount <= 0) {
+      setError("Please enter a valid amount");
+      return;
+    }
+
+    // Check for very large numbers
+    if (amount > 1e20) {
       setError("Please enter a valid amount");
       return;
     }
@@ -161,16 +188,6 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({
       inputRef.current.focus();
     }
   }, [fundState]);
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value.replace(/[^0-9.]/g, '');
-    setInputValue(value);
-    setInputWidth(Math.max(100, value.length * 30));
-    
-    if (error) {
-      setError(null);
-    }
-  };
 
   return (
     <div>
