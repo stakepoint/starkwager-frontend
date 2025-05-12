@@ -6,7 +6,7 @@ import { useAccount } from "@starknet-react/core";
 import { useContractWriteUtility } from "@/lib/blockchain-utils";
 import { toast } from "sonner";
 import { toU256, handleContractError } from "@/lib/wallet-utils";
-import { WALLET_CONTRACT_ABI, WALLET_CONTRACT_ADDRESS } from "@/constants/contract";
+import { WALLET_CONTRACT_ABI, WALLET_CONTRACT_ADDRESS, STARKNET_CONTRACT_ABI, STARKNET_CONTRACT_ADDRESS, ESCROW_CONTRACT_ADDRESS } from "@/constants/contract";
 
 interface FundWalletModalProps {
   onClose: () => void;
@@ -39,8 +39,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({
   };
 
   // Prepare the amount parameter for the contract
-  // const amountParam = getAmountInU256();
-  const amountParam = 1;
+  const amountParam = getAmountInU256();
 
   // Contract interaction hook
   const {
@@ -56,6 +55,21 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({
     WALLET_CONTRACT_ABI,
     WALLET_CONTRACT_ADDRESS,
     amountParam ? [amountParam] : []
+  );
+
+  const {
+    writeAsync: approveSpender,
+    writeData: approveData,
+    writeIsPending: approveIsPending,
+    waitIsLoading: approveWaitIsLoading,
+    waitIsError: approveWaitIsError,
+    waitError: approveWaitError,
+    waitStatus: approveWaitStatus,
+  } = useContractWriteUtility(
+    "approve",
+    STARKNET_CONTRACT_ABI,
+    STARKNET_CONTRACT_ADDRESS,
+    [ESCROW_CONTRACT_ADDRESS, amountParam]
   );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,10 +127,14 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({
       }
 
       setIsProcessing(true);
-      const result = await writeAsync([amountParam]);
-      
-      if (result?.transaction_hash) {
-        toast.success("Transaction submitted successfully!");
+      const approveResult = await approveSpender([amountParam]);
+      if (approveResult?.transaction_hash) {
+        toast.success("Approval transaction submitted successfully!");
+        const result = await writeAsync([amountParam]);
+        
+        if (result?.transaction_hash) {
+          toast.success("Transaction submitted successfully!");
+        }
       }
     } catch (error) {
       let errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
