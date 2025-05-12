@@ -39,7 +39,8 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({
   };
 
   // Prepare the amount parameter for the contract
-  const amountParam = getAmountInU256();
+  // const amountParam = getAmountInU256();
+  const amountParam = 1;
 
   // Contract interaction hook
   const {
