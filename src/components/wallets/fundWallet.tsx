@@ -130,11 +130,11 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({
       const approveResult = await approveSpender([amountParam]);
       if (approveResult?.transaction_hash) {
         toast.success("Approval transaction submitted successfully!");
-        const result = await writeAsync([amountParam]);
+        // const result = await writeAsync([amountParam]);
         
-        if (result?.transaction_hash) {
-          toast.success("Transaction submitted successfully!");
-        }
+        // if (result?.transaction_hash) {
+        //   toast.success("Transaction submitted successfully!");
+        // }
       }
     } catch (error) {
       let errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
