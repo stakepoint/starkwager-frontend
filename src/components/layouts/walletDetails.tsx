@@ -10,29 +10,8 @@ import { useAccount } from "@starknet-react/core";
 import { formatBalance, addressShortner } from "@/lib/utils";
 import { useContractFetch } from "@/lib/blockchain-utils";
 import { fromU256 } from "@/lib/wallet-utils";
+import { WALLET_CONTRACT_ABI } from "@/constants/contract";
 
-// Simple wallet balance ABI
-const walletBalanceAbi = [
-  {
-    name: "get_wallet_balance",
-    type: "function",
-    inputs: [
-      {
-        name: "account",
-        type: "core::starknet::contract_address::ContractAddress"
-      }
-    ],
-    outputs: [
-      {
-        name: "balance",
-        type: "core::integer::u256"
-      }
-    ],
-    state_mutability: "view"
-  }
-];
-
-// Contract address should come from environment variables in production
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_WALLET_CONTRACT_ADDRESS as `0x${string}` || "0x1234567890123456789012345678901234567890";
 
 interface WalletDetailsProps {
@@ -59,8 +38,8 @@ export default function WalletDetails({
     readData: balanceData,
     dataRefetch: refetchBalance,
   } = useContractFetch(
-    walletBalanceAbi,
-    "get_wallet_balance",
+    WALLET_CONTRACT_ABI,
+    "get_balance",
     CONTRACT_ADDRESS,
     address ? [address] : []
   );
@@ -93,9 +72,10 @@ export default function WalletDetails({
   // Combine refresh functions from both implementations
   const refreshBalance = useCallback(() => {
     if (address) {
-      refetchBalance();
       if (contextRefreshBalance) {
         contextRefreshBalance();
+      } else {
+        refetchBalance();
       }
     }
   }, [address, refetchBalance, contextRefreshBalance]);
