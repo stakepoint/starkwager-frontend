@@ -32,6 +32,22 @@ export const WALLET_CONTRACT_ABI = [
     outputs: [],
     state_mutability: "external"
   },
+  {
+    name: "get_balance",
+    type: "function",
+    inputs: [
+      {
+        name: "address",
+        type: "core::starknet::contract_address::ContractAddress"
+      }
+    ],
+    outputs: [
+      {
+        type: "core::integer::u256"
+      }
+    ],
+    state_mutability: "view"
+  }
   // ...other wallet functions if needed
 ];
 

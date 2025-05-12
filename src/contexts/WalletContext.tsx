@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { useAccount } from '@starknet-react/core';
 import { useContractFetch } from '@/lib/blockchain-utils';
-import { CONTRACT_ABI } from '@/constants/contract';
+import { WALLET_CONTRACT_ABI, WALLET_CONTRACT_ADDRESS } from '@/constants/contract';
 
 interface WalletContextType {
   balance: string;
@@ -45,11 +45,18 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
     readIsLoading,
     readError
   } = useContractFetch(
-    CONTRACT_ABI,
+    WALLET_CONTRACT_ABI,
     'get_balance',
-    process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
+    WALLET_CONTRACT_ADDRESS,
     address ? [address] : undefined 
   );
+
+  // Manual refresh function
+  const refreshBalance = useCallback(() => {
+    if (address) {
+      dataRefetch();
+    }
+  }, [address, dataRefetch]);
 
   // Update balance when data changes
   useEffect(() => {
@@ -72,13 +79,6 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
       setError(null); 
     }
   }, [readIsError, readError]);
-
-  // Manual refresh function
-  const refreshBalance = useCallback(() => {
-    if (address) {
-      dataRefetch();
-    }
-  }, [address, dataRefetch]);
 
   // Auto-refresh balance every 10 seconds if we have an address
   useEffect(() => {
