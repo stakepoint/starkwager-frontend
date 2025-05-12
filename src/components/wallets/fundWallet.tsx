@@ -127,7 +127,7 @@ const FundWalletModal: React.FC<FundWalletModalProps> = ({
       }
 
       setIsProcessing(true);
-      const approveResult = await approveSpender([amountParam]);
+      const approveResult = await approveSpender([ESCROW_CONTRACT_ADDRESS, amountParam]);
       if (approveResult?.transaction_hash) {
         toast.success("Approval transaction submitted successfully!");
         const result = await writeAsync([amountParam]);
