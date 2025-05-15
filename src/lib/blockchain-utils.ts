@@ -6,7 +6,7 @@ import {
   useTransactionReceipt,
 } from "@starknet-react/core";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { RpcProvider } from "starknet";
+import { CallData, RpcProvider } from "starknet";
 
 // Utility function to perform contract read operations
 export function useContractFetch(
@@ -51,13 +51,9 @@ export function useContractWriteUtility(
     }
 
     try {
-      // For debugging purposes
-      console.log("Contract call args:", JSON.stringify(args));
-      
-      // For u256 parameters (which are objects with low and high), we need to pass them directly
       return [contract.populate(functionName, args)];
     } catch (error) {
-      console.error("Error creating contract call:", error);
+      // console.error("Error creating contract call:", error);
       return undefined;
     }
   }, [contract, functionName, args]);
@@ -86,9 +82,10 @@ export function useContractWriteUtility(
         !callArgs ||
         callArgs.some((arg) => arg === undefined || arg === null)
       ) {
-        console.error("Contract not ready or invalid arguments provided.");
+        // console.error("Contract not ready or invalid arguments provided.");
         throw new Error("Contract not ready or invalid arguments provided.");
       }
+
       const calls = [contract.populate(functionName, callArgs)];
       return sendAsync(calls);
     },

@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useContext,
-  ReactNode,
-  useEffect,
-} from "react";
+import React, { createContext, useState, useContext, ReactNode } from "react";
 
 export interface WagerDataState {
   category: string;
@@ -45,15 +39,6 @@ export const CreateWagerProvider = ({ children }: CreateWagerProviderProps) => {
   const clearWagerData = () => {
     setWagerDataState(null);
   };
-
-  // ! remove soon
-  useEffect(() => {
-    console.log("on mount");
-
-    if (wagerData) {
-      console.log("wagerData", wagerData);
-    }
-  }, [wagerData]);
 
   return (
     <CreateWagerContext.Provider

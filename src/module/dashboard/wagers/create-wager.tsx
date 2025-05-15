@@ -90,10 +90,11 @@ export default function CreateWager() {
       };
 
       setWagerData(result);
-      router.push(`/dashboard/create-wager/${result.title}`);
-      console.log("Wager data saved to context:", result);
+      const formattedTitle = result.title.replace(/\s+/g, "-");
+      router.push(`/dashboard/create-wager/${formattedTitle}`);
+      // console.log("Wager data saved to context:", result);
     } catch (error) {
-      console.error("Submission Error:", error);
+      console.error("Submission Errosr:", error);
     } finally {
       setIsSubmitting(false);
     }
