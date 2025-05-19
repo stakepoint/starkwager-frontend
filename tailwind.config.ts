@@ -1,13 +1,30 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"],
+  darkMode: "class",
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        headingBlue: "rgba(16, 42, 86, 1)",
+        "grey-1": "#4A5578",
+        "grey-2": "#9DA4AE",
+        "grey-3": "#7D89B0",
+        "grey-5": "#6C737F",
+        "grey-7": "#384250",
+        "grey-8": "#1F2A37",
+        "grey-9": "#111927",
+        "grey-10": "#111322",
+        "body-bg": "#F9F9FB",
+        "dark-body-bg": "#111322",
+        "input-bg": "#EFF1F5",
+        "dark-input-bg": "#1F2A37",
+        "blue-1": "#102A56",
+        error: "#F04438",
+        success: "#17B268",
+        secondary: "#E0FE10",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -20,16 +37,16 @@ const config: Config = {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        "accent-100": {
+          DEFAULT: "hsl(var(--accent-100))",
           foreground: "hsl(var(--accent-foreground))",
         },
         destructive: {
@@ -52,9 +69,17 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontFamily: {
+        schabo: "var(--font-schabo-condensed)",
+        geistSans: "var(--font-geist-sans)",
+        geistMono: "var(--font-geist-mono)",
+        generalSans: "var(--font-general-sans)",
+        comedik: "var(--font-comedik)",
+      },
     },
   },
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
+
   plugins: [require("tailwindcss-animate")],
 };
+
 export default config;

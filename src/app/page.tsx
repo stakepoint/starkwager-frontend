@@ -1,20 +1,39 @@
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import React from "react";
+import Footer from "@/components/layouts/footer";
+import SidebarNavigation from "@/components/landingpage/SidebarNavigation";
 
-export default function Home() {
+import SecondSection from "@/components/second-section/SecondSection";
+import React from "react";
+import Hero from "@/components/landingpage/hero";
+import HowItWorksSection from "@/components/how-it-works/HowItWorksSection";
+import Impact from "@/components/landingpage/Impact";
+
+export default function Page() {
   return (
-    <section className=" h-screen flex items-center justify-center ">
-      <div className="grid gap-2">
-        <h1 className="tracking-tight text-xl">Welcome to starkwager</h1>
-        <Link
-          className={cn(buttonVariants({ variant: "default" }))}
-          href="/auth"
-        >
-          Login to continue
-        </Link>
-      </div>
-    </section>
+    <div className="flex min-h-screen bg-[#0E101B] text-white">
+      {/* Sidebar Navigation */}
+      <SidebarNavigation />
+
+      {/* Main Content with appropriate padding to account for sidebar */}
+      <main className="flex-1 md:ml-64">
+        {/* Intro Section */}
+        <section id="intro" className="">
+          <div>
+            <Hero />
+          </div>
+        </section>
+        <SecondSection />
+
+        {/* How It Works Section */}
+        <section id="how-it-works" className="min-h-screen flex items-center">
+          <HowItWorksSection />
+        </section>
+
+        {/* Impact section  */}
+        <Impact />
+
+        {/* footer */}
+        <Footer />
+      </main>
+    </div>
   );
 }
