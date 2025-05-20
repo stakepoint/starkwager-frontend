@@ -1,5 +1,5 @@
 "use client";
-import { useCreateWagerContext } from "@/contextApi/createWager.context";
+import { useCreateWagerContext } from "@/contexts/createWager.context";
 import WagerSummary from "@/module/dashboard/wagers/wagers_summary";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";

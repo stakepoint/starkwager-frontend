@@ -7,7 +7,7 @@ import {
   convertToU64,
 } from "@/lib/starknet-utils";
 import React, { useState } from "react";
-import { useCreateWagerContext } from "@/contextApi/createWager.context";
+import { useCreateWagerContext } from "@/contexts/createWager.context";
 import { toast } from "sonner";
 import { WAGER_ABI, WALLET_CONTRACT_ADDRESS } from "@/constants/contract";
 import { CallData } from "starknet";

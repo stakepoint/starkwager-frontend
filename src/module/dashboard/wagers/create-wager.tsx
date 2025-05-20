@@ -13,7 +13,7 @@ import { z } from "zod";
 import {
   useCreateWagerContext,
   WagerDataState,
-} from "@/contextApi/createWager.context";
+} from "@/contexts/createWager.context";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@/contexts/WalletContext";
 
