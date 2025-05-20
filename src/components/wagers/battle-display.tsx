@@ -54,12 +54,20 @@ export function BattleDisplay({
           )}
           <div className="h-12 w-12 rounded-xl bg-gray-100 flex items-center justify-center">
             <div className="relative h-12 w-12 overflow-hidden rounded-xl">
-              <Image
-                src={player1.avatar}
-                alt="Player avatar"
-                fill
-                className="object-cover"
-              />
+              {typeof player1.avatar === "string" &&
+              player1.avatar.trim().startsWith("<svg") ? (
+                <div
+                  className="w-full h-full"
+                  dangerouslySetInnerHTML={{ __html: player1.avatar.trim() }}
+                />
+              ) : (
+                <Image
+                  src={player1.avatar}
+                  alt="Player avatar"
+                  fill
+                  className="object-cover"
+                />
+              )}
             </div>
           </div>
           <span className="text-sm font-medium dark:text-white">
@@ -87,16 +95,28 @@ export function BattleDisplay({
           )}
           <div className="h-12 w-12 rounded-xl bg-gray-100 dark:bg-blue-1 flex items-center justify-center">
             <div className="relative h-12 w-12 overflow-hidden rounded-xl">
-              <Image
-                src={
-                  isPending
-                    ? "/images/opponent.svg"
-                    : player2?.avatar || "/images/player2.svg"
-                }
-                alt="Player avatar"
-                fill
-                className="object-cover"
-              />
+              {isPending ? (
+                <Image
+                  src="/images/opponent.svg"
+                  alt="Player avatar"
+                  fill
+                  className="object-cover"
+                />
+              ) : player2?.avatar &&
+                typeof player2.avatar === "string" &&
+                player2.avatar.trim().startsWith("<svg") ? (
+                <div
+                  className="w-full h-full"
+                  dangerouslySetInnerHTML={{ __html: player2.avatar.trim() }}
+                />
+              ) : (
+                <Image
+                  src={player2?.avatar || "/images/player2.svg"}
+                  alt="Player avatar"
+                  fill
+                  className="object-cover"
+                />
+              )}
             </div>
           </div>
           <span className="text-xs md:text-sm font-medium dark:text-white">
