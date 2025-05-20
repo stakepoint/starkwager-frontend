@@ -15,39 +15,36 @@ import {
   WagerDataState,
 } from "@/contextApi/createWager.context";
 import { useRouter } from "next/navigation";
+import { useWallet } from "@/contexts/WalletContext";
 
-// Assuming userBalance is available in the component scope (i.e from the starknet provider)
-// Replace 50.00 with the actual balance variable
-const userBalance = 50.0;
-
-// Simplified schema: stake is always a number
-const wagerSchema = z.object({
-  category: z.string().min(1, "Category is required"),
-  hashtags: z.array(z.string()).min(1, "At least one hashtag is required"),
-  title: z
-    .string()
-    .min(1, "Title is required")
-    .max(50, "Title cannot exceed 50 characters"),
-  terms: z
-    .string()
-    .min(1, "Terms are required")
-    .max(1000, "Terms cannot exceed 1000 characters"),
-  stake: z
-    .number()
-    .int("Stake must be a whole number")
-    .positive("Stake must be a positive number")
-    .max(
-      userBalance,
-      `Stake cannot exceed your balance of ${userBalance} Strk`
-    ),
-});
-
-// Only one type needed now (stake is number)
-type WagerFormData = z.infer<typeof wagerSchema>;
+// Create a function that returns the schema with the current balance
+const createWagerSchema = (userBalance: number) =>
+  z.object({
+    category: z.string().min(1, "Category is required"),
+    hashtags: z.array(z.string()).min(1, "At least one hashtag is required"),
+    title: z
+      .string()
+      .min(1, "Title is required")
+      .max(50, "Title cannot exceed 50 characters"),
+    terms: z
+      .string()
+      .min(1, "Terms are required")
+      .max(1000, "Terms cannot exceed 1000 characters"),
+    stake: z
+      .number()
+      .int("Stake must be a whole number")
+      .positive("Stake must be a positive number")
+      .max(
+        userBalance,
+        `Stake cannot exceed your balance of ${userBalance} Strk`
+      ),
+  });
 
 export default function CreateWager() {
   const [openHashtagSelector, setOpenHashtagSelector] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { balance, isLoading: isBalanceLoading } = useWallet();
+  const userBalance = parseFloat(balance || "0");
 
   const router = useRouter();
 
@@ -59,7 +56,7 @@ export default function CreateWager() {
     watch,
     setValue,
   } = useForm<WagerFormData>({
-    resolver: zodResolver(wagerSchema),
+    resolver: zodResolver(createWagerSchema(userBalance)),
     defaultValues: {
       category: "",
       hashtags: [],
@@ -99,6 +96,9 @@ export default function CreateWager() {
       setIsSubmitting(false);
     }
   };
+
+  // Only one type needed now (stake is number)
+  type WagerFormData = z.infer<ReturnType<typeof createWagerSchema>>;
 
   return (
     <div className="w-full max-w-xl py-[4rem] mx-auto ">
