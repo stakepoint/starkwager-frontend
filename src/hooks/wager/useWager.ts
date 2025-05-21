@@ -1,6 +1,4 @@
-import { WAGER_CONTRACT_ADDRESS } from "@/constants/contracts";
 import { convertToByteArray, convertToU256 } from "@/lib/starknet-utils";
-import { WAGER_ABI } from "@/constants/contracts";
 import { useContractWriteUtility } from "@/lib/blockchain-utils";
 import {
   convertToContractCategory,
@@ -8,15 +6,20 @@ import {
   convertToContractClaim,
   convertToU64,
 } from "@/lib/starknet-utils";
-import React from "react";
-import { useCreateWagerContext } from "@/contextApi/createWager.context";
+import React, { useState } from "react";
+import { useCreateWagerContext } from "@/contexts/createWager.context";
 import { toast } from "sonner";
+import { WAGER_ABI, WALLET_CONTRACT_ADDRESS } from "@/constants/contract";
+import { CallData } from "starknet";
+import { useRouter } from "next/navigation";
 
 export const useCreateWager = () => {
+  const router = useRouter();
+
   const { writeAsync, writeIsPending } = useContractWriteUtility(
     "create_wager",
     WAGER_ABI,
-    WAGER_CONTRACT_ADDRESS
+    WALLET_CONTRACT_ADDRESS
   );
 
   const { wagerData } = useCreateWagerContext();
@@ -26,8 +29,6 @@ export const useCreateWager = () => {
       if (!wagerData) {
         throw new Error("Wager data is not available");
       }
-
-      //   console.log("Wager data read from context in createWager:", wagerData);
 
       const convertedArgs = [
         convertToContractCategory(wagerData.category),
@@ -39,33 +40,43 @@ export const useCreateWager = () => {
         convertToU64(wagerData.resolutionTime),
       ];
 
-      //   console.log("Final convertedArgs:", convertedArgs);
+      const calldata = CallData.compile(convertedArgs);
 
-      // Pass convertedArgs directly to writeAsync
-      //   console.log("Calling writeAsync for create_wager");
-      const result = await writeAsync(convertedArgs);
+      const result = await writeAsync(calldata);
 
-      //   console.log("Create Wager transaction submitted:", result);
+      if (result.transaction_hash) {
+        toast.success("Wager created successfully!", {
+          className: "bg-green-500 text-white border-none",
+        });
+
+        router.push(
+          `/dashboard/create-wager/${result.transaction_hash}/invite`
+        );
+      }
 
       return result;
     } catch (error) {
-      let errorMessage =
-        error instanceof Error ? error.message : "An unknown error occurred";
-      //   console.error("Error submitting create wager transaction:", error);
+      let errorMessage = "An unknown error occurred";
 
-      switch (errorMessage) {
-        case "No connector connected":
-          errorMessage = "Please connect your wallet";
-          break;
-        default:
-          errorMessage = "An unknown error occurred";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      // Handle specific contract errors
+      if (errorMessage.includes("u256_sub Overflow")) {
+        errorMessage = "Insufficient balance for the stake amount";
+      } else if (errorMessage.includes("argent/multicall-failed")) {
+        errorMessage =
+          "Transaction failed. Please check your balance and try again.";
+      } else if (errorMessage.includes("No connector connected")) {
+        errorMessage = "Please connect your wallet";
       }
 
       toast.error(errorMessage, {
         className: "bg-red-500 text-white border-none",
       });
     }
-  }, [writeAsync, wagerData]);
+  }, [writeAsync, wagerData, router]);
 
   return { createWager, writeIsPending };
 };

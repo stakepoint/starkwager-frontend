@@ -1,8 +1,8 @@
 "use client";
-import { useCreateWagerContext } from "@/contextApi/createWager.context";
+import { useCreateWagerContext } from "@/contexts/createWager.context";
 import WagerSummary from "@/module/dashboard/wagers/wagers_summary";
 import { useParams, useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 
 function CreateWagerSummaryPage() {
   const router = useRouter();
@@ -11,11 +11,11 @@ function CreateWagerSummaryPage() {
 
   const { wagerData, clearWagerData } = useCreateWagerContext();
 
-  useEffect(() => {
-    console.log("create wager summary page mounted");
-  }, []);
-
-  if (!wagerData || !wagerId || wagerId !== wagerData?.title) {
+  if (
+    !wagerData ||
+    !wagerId ||
+    wagerId !== wagerData?.title.replace(/\s+/g, "-")
+  ) {
     clearWagerData();
     router.push("/dashboard/create-wager");
 

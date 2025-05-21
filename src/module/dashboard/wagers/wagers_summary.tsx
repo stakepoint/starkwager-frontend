@@ -3,6 +3,17 @@ import { WagerLayout } from "@/components/wagers/wager-layout";
 import { BattleDisplay } from "@/components/wagers/battle-display";
 import { WagerDetails } from "@/components/wagers/wager_details";
 import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+interface UserProfile {
+  username: string;
+  picture: string;
+}
+
+const cleanSvgString = (svgString: string) => {
+  // Remove outer quotes and unescape inner quotes
+  return svgString.replace(/^"|"$/g, "").replace(/\\"/g, '"');
+};
 
 const wagerDetails = {
   title: "Will Bitcoin Hit $100k Before January 31, 2025?",
@@ -44,6 +55,18 @@ export default function WagerSummary({
 }) {
   const searchParams = useSearchParams();
   const state = searchParams.get("state") || "pending";
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+
+  useEffect(() => {
+    const storedProfile = localStorage.getItem("userProfile");
+    if (storedProfile) {
+      const profile = JSON.parse(storedProfile);
+      if (profile.picture) {
+        profile.picture = cleanSvgString(profile.picture);
+      }
+      setUserProfile(profile);
+    }
+  }, []);
 
   const shouldShowClaimButton =
     (state === "active" || state === "won") &&
@@ -61,8 +84,12 @@ export default function WagerSummary({
         return (
           <BattleDisplay
             player1={{
-              username: "@noyi24_7",
-              avatar: "/images/avatar.svg",
+              username: userProfile?.username
+                ? `@${userProfile.username}`
+                : "@noyi24_7",
+              avatar: userProfile?.picture
+                ? userProfile.picture
+                : "/images/avatar.svg",
             }}
             isPending
             amount={`${wagerData.stake} STRK each`}

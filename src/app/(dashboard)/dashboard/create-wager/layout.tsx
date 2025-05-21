@@ -1,5 +1,5 @@
 "use client";
-import { CreateWagerProvider } from "@/contextApi/createWager.context";
+import { CreateWagerProvider } from "@/contexts/createWager.context";
 import { Toaster } from "sonner";
 export default function CreateWagerLayout({
   children,

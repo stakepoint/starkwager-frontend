@@ -1,4 +1,4 @@
-import { byteArray, type ByteArray, uint256 } from "starknet";
+import { byteArray, type ByteArray, uint256, cairo } from "starknet";
 
 export enum ContractCategory {
   SPORTS = 0,
@@ -41,7 +41,7 @@ export const convertToByteArray = (str: string): ByteArray => {
   return byteArray.byteArrayFromString(str);
 };
 
-type U256Value = { low: bigint; high: bigint };
+type U256Value = { low: string; high: string };
 
 export const convertToU256 = (num: number | string): U256Value => {
   if (num === "") {
@@ -51,16 +51,16 @@ export const convertToU256 = (num: number | string): U256Value => {
   try {
     const numStr = typeof num === "number" ? num.toString() : num;
 
-    // Assuming the input 'num' is in Ether, convert to Wei (smallest unit)
-    // Adjust 10**18 if your input number represents a different denomination
-    const amountInWei = BigInt(numStr) * BigInt(10 ** 18);
+    // For STRK, we use 10^9 (Gwei) instead of 10^18 (Wei)
+    const amountInGwei = BigInt(numStr) * BigInt(10 ** 9);
 
-    // Convert the BigInt amount (in Wei) to the u256 struture { low, high }
-    const u256Amount = uint256.bnToUint256(amountInWei);
+    // Convert to u256 using cairo helper
+    const u256Amount = cairo.uint256(amountInGwei);
 
+    // Return as strings to match contract expectations
     return {
-      low: BigInt(u256Amount.low),
-      high: BigInt(u256Amount.high),
+      low: u256Amount.low.toString(),
+      high: u256Amount.high.toString(),
     };
   } catch (error) {
     console.error("Error converting to U256:", error);
