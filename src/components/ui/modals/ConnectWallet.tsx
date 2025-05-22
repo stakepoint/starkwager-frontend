@@ -10,6 +10,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useEffect } from "react";
+import { useWalletStore } from "@/store/persistStore";
+import { useAccount } from "@starknet-react/core";
 
 interface HashtagSelectorProps {
   open: boolean;
@@ -18,6 +20,15 @@ interface HashtagSelectorProps {
 
 export function ConnectWallet({ open, onOpenChange }: HashtagSelectorProps) {
   const { connect, connectors, isSuccess, isError } = useConnect();
+  const { address } = useAccount();
+  const { setAddress, address: persistedAddress } = useWalletStore();
+
+  // Persist address in zustand store only if it changes
+  useEffect(() => {
+    if (address && address !== persistedAddress) {
+      setAddress(address);
+    }
+  }, [address, setAddress, persistedAddress]);
 
   useEffect(() => {
     if (isSuccess || isError) {

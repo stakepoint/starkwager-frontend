@@ -1,4 +1,4 @@
-import { useAccount } from "@starknet-react/core";
+import { useWalletStore } from "@/store/persistStore";
 import UserBar from "./user-bar";
 import ConnectWalletBtn from "./connect-wallet-btn";
 
@@ -9,7 +9,7 @@ const WalletBar = ({
   isWeb: boolean;
   userBarclass?: string;
 }) => {
-  const { address } = useAccount();
+  const address = useWalletStore((state) => state.address);
 
   return (
     <>
