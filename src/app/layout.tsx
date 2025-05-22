@@ -93,9 +93,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Providers>
-            <WalletProvider>
-              {children}
-            </WalletProvider>
+            <WalletProvider>{children}</WalletProvider>
           </Providers>
         </ThemeProvider>
       </body>

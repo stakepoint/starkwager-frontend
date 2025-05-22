@@ -12,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdownMenu";
+import { useWalletStore } from "@/store/persistStore";
 
 export default function UserBar({
   variation = "app",
@@ -21,9 +22,16 @@ export default function UserBar({
   className?: string;
 }) {
   const isWeb = variation === "web";
-  const { address } = useAccount();
+  const { address: liveAddress } = useAccount();
+  const persistedAddress = useWalletStore((state) => state.address);
+  const address = liveAddress || persistedAddress || undefined;
   const { disconnect } = useDisconnect();
-  const { data } = useStarkName({ address });
+  const { data } = useStarkName({
+    address:
+      typeof address === "string" && address.startsWith("0x")
+        ? (address as `0x${string}`)
+        : undefined,
+  });
   const { isCopied, copy } = useCopyToClipboard();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -97,7 +105,7 @@ export default function UserBar({
           <Copy className="mr-2 h-4 w-4" />
           {isCopied ? "Copied!" : "Copy Address"}
         </DropdownMenuItem>
-        <div className="dashed-line w-full h-[1px] my-2"></div>
+        <div className="dashed-line w-full h-[1px] my-2" />
         <DropdownMenuItem onClick={() => disconnect()}>
           <LogOut className="mr-2 h-4 w-4" />
           Disconnect

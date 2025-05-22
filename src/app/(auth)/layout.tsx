@@ -1,5 +1,5 @@
 import AuthNavbar from "@/components/layouts/navbar";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 
 export default function authlayout({ children }: { children: ReactNode }) {
   return (
