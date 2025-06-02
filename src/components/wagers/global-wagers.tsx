@@ -102,6 +102,13 @@ export default function GlobalWagers({
 }: GlobalWagersProps) {
   console.log("🔄 GlobalWagers rendering with BYPASS_API_FOR_TESTING:", BYPASS_API_FOR_TESTING);
   
+  // Always call hooks at the top level - before any conditional logic
+  const { data, isLoading, error, refetch, isRefetching } = useWagers({
+    limit,
+  });
+
+  console.log("🔄 useWagers state:", { data, isLoading, error, isRefetching });
+
   // Temporary bypass for testing
   if (BYPASS_API_FOR_TESTING) {
     console.log("🔄 Using direct dummy data (API bypassed)");
@@ -162,13 +169,6 @@ export default function GlobalWagers({
       </div>
     );
   }
-
-  // Normal API flow
-  const { data, isLoading, error, refetch, isRefetching } = useWagers({
-    limit,
-  });
-
-  console.log("🔄 useWagers state:", { data, isLoading, error, isRefetching });
 
   // Loading state
   if (isLoading) {
