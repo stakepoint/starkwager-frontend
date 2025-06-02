@@ -24,7 +24,7 @@ jest.mock("@/components/ui/WagerCards", () => {
 // Mock the WagerCardSkeleton component
 jest.mock("@/components/ui/skeletons/wagerCardSkeleton", () => {
   return function MockWagerCardSkeleton() {
-    return <div data-testid="wager-skeleton">Loading...</div>;
+    return <div data-testid="wager-card-skeleton">Loading...</div>;
   };
 });
 
@@ -58,6 +58,34 @@ const createMockQueryResult = (overrides: any = {}) => ({
   ...overrides,
 });
 
+// Mock wager data
+const mockWagers = [
+  {
+    id: "1",
+    title: "Will Bitcoin Hit $100k Before January 31, 2025?",
+    category: "Crypto",
+    hashtags: ["bitcoin", "crypto"],
+    terms: "Bitcoin must reach $100,000 USD by January 31, 2025",
+    stake: 100,
+    mode: "HeadToHead",
+    claim: "Yes",
+    resolutionTime: "2025-01-31T00:00:00Z",
+    status: "active" as const,
+    createdBy: {
+      address: "0x123",
+      username: "cryptobull",
+      picture: "/images/leftWagercardUserOneIcon.svg",
+    },
+    opponent: {
+      address: "0x456",
+      username: "bitcoinbear",
+      picture: "/images/RightWagercardUserOneIcon.svg",
+    },
+    createdAt: "2024-01-01T00:00:00Z",
+    updatedAt: "2024-01-01T00:00:00Z",
+  },
+];
+
 describe("GlobalWagers Component", () => {
   let queryClient: QueryClient;
 
@@ -85,9 +113,136 @@ describe("GlobalWagers Component", () => {
     );
   };
 
-  describe("Empty State Testing", () => {
-    it("shows enhanced empty state when no wagers are available (dummy data)", async () => {
-      // Mock useWagers to return empty data
+  describe("Loading State", () => {
+    it("shows skeleton loaders while loading", () => {
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          isLoading: true,
+          data: undefined,
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      expect(screen.getByText("Global Wagers")).toBeInTheDocument();
+      expect(screen.getByText("Loading...")).toBeInTheDocument();
+      expect(screen.getByText("Fetching wagers from backend...")).toBeInTheDocument();
+      
+      // Should show 3 skeleton loaders
+      const skeletons = screen.getAllByTestId("wager-card-skeleton");
+      expect(skeletons).toHaveLength(3);
+    });
+
+    it("shows loading state with proper header", () => {
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          isLoading: true,
+          data: undefined,
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      expect(screen.getByText("Global Wagers")).toBeInTheDocument();
+      expect(screen.getByText("Loading...")).toBeInTheDocument();
+    });
+
+    it("hides header when showHeader is false during loading", () => {
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          isLoading: true,
+          data: undefined,
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers showHeader={false} />);
+
+      expect(screen.queryByText("Global Wagers")).not.toBeInTheDocument();
+      expect(screen.getByText("Fetching wagers from backend...")).toBeInTheDocument();
+    });
+  });
+
+  describe("Error State", () => {
+    it("shows error message when API fails", () => {
+      const mockError = new Error("Failed to fetch wagers");
+      const mockRefetch = jest.fn();
+
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          isLoading: false,
+          error: mockError,
+          refetch: mockRefetch,
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      expect(screen.getByText("Failed to load wagers")).toBeInTheDocument();
+      expect(screen.getByText("Failed to fetch wagers")).toBeInTheDocument();
+      expect(screen.getByText("Backend: https://starkwager-backend.onrender.com")).toBeInTheDocument();
+    });
+
+    it("allows retry when error occurs", () => {
+      const mockError = new Error("Network error");
+      const mockRefetch = jest.fn();
+
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          isLoading: false,
+          error: mockError,
+          refetch: mockRefetch,
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      const retryButton = screen.getByText("Try Again");
+      fireEvent.click(retryButton);
+
+      expect(mockRefetch).toHaveBeenCalledTimes(1);
+    });
+
+    it("shows loading state during retry", () => {
+      const mockError = new Error("Network error");
+      const mockRefetch = jest.fn();
+
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          isLoading: false,
+          error: mockError,
+          refetch: mockRefetch,
+          isRefetching: true,
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      // Should show spinning icon during refetch
+      const refreshIcon = screen.getByTestId("refresh-icon");
+      expect(refreshIcon).toBeInTheDocument();
+      expect(refreshIcon).toHaveClass("animate-spin");
+    });
+
+    it("shows retry button in header during error", () => {
+      const mockError = new Error("Network error");
+      const mockRefetch = jest.fn();
+
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          isLoading: false,
+          error: mockError,
+          refetch: mockRefetch,
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      expect(screen.getByText("Retry")).toBeInTheDocument();
+    });
+  });
+
+  describe("Empty State", () => {
+    it("shows empty state when no wagers exist", () => {
       jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
         createMockQueryResult({
           data: {
@@ -101,22 +256,12 @@ describe("GlobalWagers Component", () => {
 
       renderWithQueryClient(<GlobalWagers />);
 
-      // Check for empty state elements
-      expect(screen.getByText("No Wagers Available")).toBeInTheDocument();
-      expect(screen.getByText("Currently testing empty state. Create your first wager to get started!")).toBeInTheDocument();
-      
-      // Check for the create button
+      expect(screen.getByText("No Active Wagers")).toBeInTheDocument();
+      expect(screen.getByText(/The community hasn't created any wagers yet/)).toBeInTheDocument();
       expect(screen.getByText("Create Your First Wager")).toBeInTheDocument();
-      
-      // Check for dev mode notice
-      expect(screen.getByText(/Dev Mode: Empty dummy data for testing empty state/)).toBeInTheDocument();
-      
-      // Check for the icon
-      expect(screen.getByRole("img", { hidden: true })).toBeInTheDocument(); // SVG icon
     });
 
-    it("shows API empty state when real API returns no wagers", async () => {
-      // Mock useWagers to simulate API returning empty data
+    it("shows backend status indicator in empty state", () => {
       jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
         createMockQueryResult({
           data: {
@@ -130,13 +275,11 @@ describe("GlobalWagers Component", () => {
 
       renderWithQueryClient(<GlobalWagers />);
 
-      // Should show different message for API empty state
-      await waitFor(() => {
-        expect(screen.getByText("No Wagers Available")).toBeInTheDocument();
-      });
+      expect(screen.getByText(/Backend Status:/)).toBeInTheDocument();
+      expect(screen.getByText(/No wagers found on backend/)).toBeInTheDocument();
     });
 
-    it("navigates to create wager page when create button is clicked", async () => {
+    it("navigates to create wager page when create button is clicked", () => {
       jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
         createMockQueryResult({
           data: {
@@ -155,32 +298,15 @@ describe("GlobalWagers Component", () => {
 
       expect(mockPush).toHaveBeenCalledWith("/dashboard/create-wager");
     });
+  });
 
-    it("can hide create button when showCreateButton prop is false", async () => {
+  describe("Populated State", () => {
+    it("displays wagers when data is available", () => {
       jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
         createMockQueryResult({
           data: {
-            wagers: [],
-            total: 0,
-            page: 1,
-            limit: 10,
-          },
-        })
-      );
-
-      // Note: We would need to modify the component to accept this prop
-      // For now, testing the default behavior
-      renderWithQueryClient(<GlobalWagers />);
-
-      expect(screen.getByText("Create Your First Wager")).toBeInTheDocument();
-    });
-
-    it("shows custom empty state title and description", async () => {
-      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
-        createMockQueryResult({
-          data: {
-            wagers: [],
-            total: 0,
+            wagers: mockWagers,
+            total: 1,
             page: 1,
             limit: 10,
           },
@@ -189,198 +315,303 @@ describe("GlobalWagers Component", () => {
 
       renderWithQueryClient(<GlobalWagers />);
 
-      // Check for default messages (since we're using dummy data)
-      expect(screen.getByText("No Wagers Available")).toBeInTheDocument();
-      expect(screen.getByText("Currently testing empty state. Create your first wager to get started!")).toBeInTheDocument();
+      expect(screen.getByText("Global Wagers")).toBeInTheDocument();
+      expect(screen.getByText("1 total")).toBeInTheDocument();
+      expect(screen.getByText("View All")).toBeInTheDocument();
     });
-  });
 
-  describe("Loading State", () => {
-    it("shows skeleton loaders while loading", () => {
+    it("shows backend connection status", () => {
       jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
         createMockQueryResult({
-          data: undefined,
-          isLoading: true,
-          isSuccess: false,
-          status: "pending" as const,
+          data: {
+            wagers: mockWagers,
+            total: 1,
+            page: 1,
+            limit: 10,
+          },
         })
       );
 
       renderWithQueryClient(<GlobalWagers />);
 
-      // Should show skeleton loaders
-      expect(screen.getAllByTestId("wager-skeleton")).toHaveLength(3);
-      expect(screen.getByText("Loading...")).toBeInTheDocument();
+      expect(screen.getByText("🔗 Connected to:")).toBeInTheDocument();
+      expect(screen.getByText("starkwager-backend.onrender.com")).toBeInTheDocument();
+    });
+
+    it("shows load more button when there are more wagers", () => {
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          data: {
+            wagers: mockWagers,
+            total: 20, // More than limit
+            page: 1,
+            limit: 10,
+          },
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      expect(screen.getByText("Load More Wagers")).toBeInTheDocument();
+    });
+
+    it("does not show load more button when all wagers are displayed", () => {
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          data: {
+            wagers: mockWagers,
+            total: 1, // Same as wagers length
+            page: 1,
+            limit: 10,
+          },
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      expect(screen.queryByText("Load More Wagers")).not.toBeInTheDocument();
+    });
+
+    it("renders wager cards correctly", () => {
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          data: {
+            wagers: mockWagers,
+            total: 1,
+            page: 1,
+            limit: 10,
+          },
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      expect(screen.getByTestId("wager-card-1")).toBeInTheDocument();
+      expect(screen.getByText("Will Bitcoin Hit $100k Before January 31, 2025?")).toBeInTheDocument();
     });
   });
 
-  describe("Error State", () => {
-    it("shows error message with retry button", () => {
+  describe("Component Props", () => {
+    it("respects limit prop", () => {
+      const mockUseWagers = jest.spyOn(useWagersHook, "useWagers");
+      mockUseWagers.mockReturnValue(
+        createMockQueryResult({
+          data: {
+            wagers: mockWagers,
+            total: 1,
+            page: 1,
+            limit: 5,
+          },
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers limit={5} />);
+
+      expect(mockUseWagers).toHaveBeenCalledWith({ limit: 5 });
+    });
+
+    it("hides header when showHeader is false", () => {
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          data: {
+            wagers: mockWagers,
+            total: 1,
+            page: 1,
+            limit: 10,
+          },
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers showHeader={false} />);
+
+      expect(screen.queryByText("Global Wagers")).not.toBeInTheDocument();
+    });
+
+    it("hides view all when showViewAll is false", () => {
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          data: {
+            wagers: mockWagers,
+            total: 1,
+            page: 1,
+            limit: 10,
+          },
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers showViewAll={false} />);
+
+      expect(screen.queryByText("View All")).not.toBeInTheDocument();
+      expect(screen.queryByText("1 total")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("Integration Flow", () => {
+    it("handles the complete flow: loading → populated", async () => {
       const mockRefetch = jest.fn();
+      const mockUseWagers = jest.spyOn(useWagersHook, "useWagers");
+
+      // Start with loading
+      mockUseWagers.mockReturnValue(
+        createMockQueryResult({
+          isLoading: true,
+          data: undefined,
+          refetch: mockRefetch,
+        })
+      );
+
+      const { rerender } = renderWithQueryClient(<GlobalWagers />);
+
+      expect(screen.getByText("Loading...")).toBeInTheDocument();
+      expect(screen.getByText("Fetching wagers from backend...")).toBeInTheDocument();
+
+      // Then populated state (simulating backend fallback to dummy data)
+      mockUseWagers.mockReturnValue(
+        createMockQueryResult({
+          isLoading: false,
+          data: {
+            wagers: mockWagers,
+            total: 1,
+            page: 1,
+            limit: 10,
+          },
+          refetch: mockRefetch,
+        })
+      );
+
+      rerender(<GlobalWagers />);
+
+      expect(screen.getByText("1 total")).toBeInTheDocument();
+      expect(screen.getByText("🔗 Connected to:")).toBeInTheDocument();
+      expect(screen.getByText("starkwager-backend.onrender.com")).toBeInTheDocument();
+    });
+
+    it("handles backend fallback scenario correctly", () => {
+      // This simulates the scenario where backend is empty but service returns dummy data
       jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
         createMockQueryResult({
-          data: undefined,
-          error: new Error("Failed to fetch wagers"),
-          isError: true,
-          isSuccess: false,
-          status: "error" as const,
+          data: {
+            wagers: mockWagers, // Dummy data from service
+            total: 5,
+            page: 1,
+            limit: 10,
+          },
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      // Should show the wagers (dummy data)
+      expect(screen.getByText("5 total")).toBeInTheDocument();
+      expect(screen.getByText("🔗 Connected to:")).toBeInTheDocument();
+      expect(screen.getByText("starkwager-backend.onrender.com")).toBeInTheDocument();
+    });
+
+    it("handles error to recovery flow", () => {
+      const mockRefetch = jest.fn();
+      const mockUseWagers = jest.spyOn(useWagersHook, "useWagers");
+
+      // Start with error
+      mockUseWagers.mockReturnValue(
+        createMockQueryResult({
+          isLoading: false,
+          error: new Error("Network error"),
           refetch: mockRefetch,
+        })
+      );
+
+      const { rerender } = renderWithQueryClient(<GlobalWagers />);
+
+      expect(screen.getByText("Failed to load wagers")).toBeInTheDocument();
+
+      // Then recovery with data
+      mockUseWagers.mockReturnValue(
+        createMockQueryResult({
+          isLoading: false,
+          data: {
+            wagers: mockWagers,
+            total: 1,
+            page: 1,
+            limit: 10,
+          },
+          refetch: mockRefetch,
+        })
+      );
+
+      rerender(<GlobalWagers />);
+
+      expect(screen.getByText("1 total")).toBeInTheDocument();
+    });
+  });
+
+  describe("Backend Integration", () => {
+    it("displays correct backend URL in error state", () => {
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          isLoading: false,
+          error: new Error("Connection failed"),
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      expect(screen.getByText("Backend: https://starkwager-backend.onrender.com")).toBeInTheDocument();
+    });
+
+    it("shows backend connection status in populated state", () => {
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          data: {
+            wagers: mockWagers,
+            total: 1,
+            page: 1,
+            limit: 10,
+          },
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      expect(screen.getByText("🔗 Connected to:")).toBeInTheDocument();
+      expect(screen.getByText("starkwager-backend.onrender.com")).toBeInTheDocument();
+    });
+  });
+
+  describe("Accessibility", () => {
+    it("has proper button roles and interactions", () => {
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          data: {
+            wagers: [],
+            total: 0,
+            page: 1,
+            limit: 10,
+          },
+        })
+      );
+
+      renderWithQueryClient(<GlobalWagers />);
+
+      const createButton = screen.getByRole("button", { name: /Create Your First Wager/i });
+      expect(createButton).toBeInTheDocument();
+      
+      // Should be focusable
+      createButton.focus();
+      expect(document.activeElement).toBe(createButton);
+    });
+
+    it("provides proper error messaging", () => {
+      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
+        createMockQueryResult({
+          isLoading: false,
+          error: new Error("Custom error message"),
         })
       );
 
       renderWithQueryClient(<GlobalWagers />);
 
       expect(screen.getByText("Failed to load wagers")).toBeInTheDocument();
-      expect(screen.getByText("Failed to fetch wagers")).toBeInTheDocument();
-      
-      const retryButton = screen.getByText("Try Again");
-      fireEvent.click(retryButton);
-      
-      expect(mockRefetch).toHaveBeenCalled();
-    });
-
-    it("shows authentication error message for API errors", () => {
-      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
-        createMockQueryResult({
-          data: undefined,
-          error: new Error("Failed to fetch wagers"),
-          isError: true,
-          isSuccess: false,
-          status: "error" as const,
-        })
-      );
-
-      renderWithQueryClient(<GlobalWagers />);
-
-      expect(screen.getByText(/API may require authentication/)).toBeInTheDocument();
-    });
-  });
-
-  describe("Populated State", () => {
-    it("renders wager cards when data is available (dummy data)", () => {
-      // Test will use dummy data by default since useDummyData = true
-      renderWithQueryClient(<GlobalWagers />);
-
-      // Should show dummy wagers
-      expect(screen.getByText(/Currently showing dummy data/)).toBeInTheDocument();
-      expect(screen.getByText(/Set.*testEmptyState = true.*to test empty state/)).toBeInTheDocument();
-    });
-
-    it("renders wager cards from real API data", async () => {
-      const mockData = {
-        wagers: [
-          {
-            id: "1",
-            title: "Test Wager 1",
-            category: "Sports",
-            hashtags: ["football"],
-            terms: "Test terms",
-            stake: 100,
-            mode: "HeadToHead",
-            claim: "Yes",
-            resolutionTime: "2024-12-31T00:00:00Z",
-            status: "active" as const,
-            createdBy: {
-              address: "0x123",
-              username: "user1",
-              picture: "/test.jpg",
-            },
-            opponent: {
-              address: "0x456",
-              username: "user2",
-              picture: "/test2.jpg",
-            },
-            createdAt: "2024-01-01T00:00:00Z",
-            updatedAt: "2024-01-01T00:00:00Z",
-          },
-        ],
-        total: 1,
-        page: 1,
-        limit: 10,
-      };
-
-      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
-        createMockQueryResult({
-          data: mockData,
-        })
-      );
-
-      // Note: This test would work if useDummyData was false
-      // For now, it tests the structure but dummy data takes precedence
-      renderWithQueryClient(<GlobalWagers />);
-
-      // With dummy data enabled, we'll see the dummy data message
-      expect(screen.getByText(/Currently showing dummy data/)).toBeInTheDocument();
-    });
-  });
-
-  describe("Component Props", () => {
-    it("respects limit prop", () => {
-      renderWithQueryClient(<GlobalWagers limit={5} />);
-      
-      // With dummy data, should respect the limit
-      // The component internally slices dummy data based on limit
-      expect(screen.getByText(/Currently showing dummy data/)).toBeInTheDocument();
-    });
-
-    it("hides header when showHeader is false", () => {
-      renderWithQueryClient(<GlobalWagers showHeader={false} />);
-      
-      // Should not show the "Global Wagers" header
-      expect(screen.queryByText("Global Wagers")).not.toBeInTheDocument();
-    });
-
-    it("hides view all link when showViewAll is false", () => {
-      renderWithQueryClient(<GlobalWagers showViewAll={false} />);
-      
-      // Should not show "View All" link
-      expect(screen.queryByText("View All")).not.toBeInTheDocument();
-    });
-  });
-
-  describe("Load More Functionality", () => {
-    it("shows load more button when there are more wagers", async () => {
-      const mockData = {
-        wagers: [
-          {
-            id: "1",
-            title: "Test Wager",
-            category: "Sports",
-            hashtags: ["test"],
-            terms: "Test terms",
-            stake: 100,
-            mode: "HeadToHead",
-            claim: "Yes",
-            resolutionTime: "2024-12-31T00:00:00Z",
-            status: "active" as const,
-            createdBy: {
-              address: "0x123",
-              username: "user1",
-              picture: "/test.jpg",
-            },
-            opponent: undefined,
-            createdAt: "2024-01-01T00:00:00Z",
-            updatedAt: "2024-01-01T00:00:00Z",
-          },
-        ],
-        total: 15, // More than limit
-        page: 1,
-        limit: 10,
-      };
-
-      const mockRefetch = jest.fn();
-      jest.spyOn(useWagersHook, "useWagers").mockReturnValue(
-        createMockQueryResult({
-          data: mockData,
-          refetch: mockRefetch,
-        })
-      );
-
-      // Note: This would work with real API data (useDummyData = false)
-      renderWithQueryClient(<GlobalWagers />);
-
-      // Currently shows dummy data, but structure is there
-      expect(screen.getByText(/Currently showing dummy data/)).toBeInTheDocument();
+      expect(screen.getByText("Custom error message")).toBeInTheDocument();
     });
   });
 }); 

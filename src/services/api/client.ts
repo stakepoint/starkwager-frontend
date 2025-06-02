@@ -17,6 +17,24 @@ export class ApiError extends Error {
 }
 
 /**
+ * Create a fetch request with timeout
+ */
+function fetchWithTimeout(url: string, options: RequestInit, timeout: number = API_CONFIG.TIMEOUT): Promise<Response> {
+  return new Promise((resolve, reject) => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+      reject(new Error(`Request timeout after ${timeout}ms`));
+    }, timeout);
+
+    fetch(url, { ...options, signal: controller.signal })
+      .then(resolve)
+      .catch(reject)
+      .finally(() => clearTimeout(timeoutId));
+  });
+}
+
+/**
  * Base API client for making HTTP requests
  */
 export const apiClient = {
@@ -28,6 +46,8 @@ export const apiClient = {
     params?: Record<string, any>
   ): Promise<ApiResponse<T>> {
     try {
+      console.log(`🌐 API GET: ${endpoint}`, params);
+      
       const url = new URL(`${API_CONFIG.BASE_URL}${endpoint}`);
 
       // Add query parameters if provided
@@ -39,13 +59,17 @@ export const apiClient = {
         });
       }
 
-      const response = await fetch(url.toString(), {
+      console.log(`🔗 Full URL: ${url.toString()}`);
+
+      const response = await fetchWithTimeout(url.toString(), {
         method: "GET",
         headers: API_CONFIG.HEADERS,
-      });
+      }, 10000); // 10 second timeout
 
+      console.log(`📡 Response status: ${response.status}`);
       return await processResponse<T>(response);
-    } catch (error) {
+    } catch (error: any) {
+      console.error(`❌ API GET failed for ${endpoint}:`, error);
       return handleApiError(error);
     }
   },
@@ -55,14 +79,18 @@ export const apiClient = {
    */
   async post<T>(endpoint: string, data?: any): Promise<ApiResponse<T>> {
     try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}${endpoint}`, {
+      console.log(`🌐 API POST: ${endpoint}`, data);
+      
+      const response = await fetchWithTimeout(`${API_CONFIG.BASE_URL}${endpoint}`, {
         method: "POST",
         headers: API_CONFIG.HEADERS,
         body: data ? JSON.stringify(data) : undefined,
-      });
+      }, 15000); // 15 second timeout for POST
 
+      console.log(`📡 Response status: ${response.status}`);
       return await processResponse<T>(response);
-    } catch (error) {
+    } catch (error: any) {
+      console.error(`❌ API POST failed for ${endpoint}:`, error);
       return handleApiError(error);
     }
   },
@@ -72,14 +100,18 @@ export const apiClient = {
    */
   async put<T>(endpoint: string, data?: any): Promise<ApiResponse<T>> {
     try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}${endpoint}`, {
+      console.log(`🌐 API PUT: ${endpoint}`, data);
+      
+      const response = await fetchWithTimeout(`${API_CONFIG.BASE_URL}${endpoint}`, {
         method: "PUT",
         headers: API_CONFIG.HEADERS,
         body: data ? JSON.stringify(data) : undefined,
-      });
+      }, 15000); // 15 second timeout for PUT
 
+      console.log(`📡 Response status: ${response.status}`);
       return await processResponse<T>(response);
-    } catch (error) {
+    } catch (error: any) {
+      console.error(`❌ API PUT failed for ${endpoint}:`, error);
       return handleApiError(error);
     }
   },
@@ -89,13 +121,17 @@ export const apiClient = {
    */
   async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
     try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}${endpoint}`, {
+      console.log(`🌐 API DELETE: ${endpoint}`);
+      
+      const response = await fetchWithTimeout(`${API_CONFIG.BASE_URL}${endpoint}`, {
         method: "DELETE",
         headers: API_CONFIG.HEADERS,
-      });
+      }, 10000); // 10 second timeout
 
+      console.log(`📡 Response status: ${response.status}`);
       return await processResponse<T>(response);
-    } catch (error) {
+    } catch (error: any) {
+      console.error(`❌ API DELETE failed for ${endpoint}:`, error);
       return handleApiError(error);
     }
   },
@@ -110,11 +146,13 @@ async function processResponse<T>(response: Response): Promise<ApiResponse<T>> {
   try {
     // Parse JSON response
     const data = await response.json();
+    console.log(`📦 Response data:`, data);
 
     if (response.ok) {
       return { data, status };
     } else {
       // Handle error response with JSON body
+      console.error(`❌ API Error Response:`, data);
       return {
         error: {
           message: data.message || "An error occurred",
@@ -144,6 +182,18 @@ async function processResponse<T>(response: Response): Promise<ApiResponse<T>> {
  */
 function handleApiError(error: any): ApiResponse<any> {
   console.error("API Request Error:", error);
+
+  // Handle specific error types
+  if (error.name === 'AbortError' || error.message?.includes('timeout')) {
+    return {
+      error: {
+        message: "Request timeout - please check your connection",
+        status: 408,
+        code: "TIMEOUT",
+      },
+      status: 408,
+    };
+  }
 
   return {
     error: {

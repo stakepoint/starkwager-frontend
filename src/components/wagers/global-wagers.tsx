@@ -8,24 +8,14 @@ import WagerCardSkeleton from "@/components/ui/skeletons/wagerCardSkeleton";
 import { AlertCircle, RefreshCw, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { wagerService } from "@/services/api/wagerService";
 
 /**
- * 🔧 TESTING CONFIGURATION
+ * 🔧 DEBUGGING CONFIGURATION
  * 
- * To test different states, modify these flags:
- * 
- * 1. Empty State Testing:
- *    - Set: useDummyData = true, testEmptyState = true
- * 
- * 2. Dummy Data Testing:
- *    - Set: useDummyData = true, testEmptyState = false
- * 
- * 3. Real API Testing:
- *    - Set: useDummyData = false
- * 
- * 4. Loading State Testing:
- *    - Set: useDummyData = false (and slow down network in dev tools)
+ * Set this to true to bypass API and use dummy data directly
  */
+const BYPASS_API_FOR_TESTING = false;
 
 interface GlobalWagersProps {
   limit?: number;
@@ -33,65 +23,17 @@ interface GlobalWagersProps {
   showViewAll?: boolean;
 }
 
-// Temporary dummy data for testing while auth issue is resolved
-const dummyWagers = [
-  {
-    id: "1",
-    title: "Will Bitcoin Hit $100k Before January 31, 2025?",
-    category: "Crypto",
-    hashtags: ["bitcoin", "crypto"],
-    terms: "Bitcoin must reach $100,000 USD by January 31, 2025",
-    stake: 100,
-    mode: "HeadToHead",
-    claim: "Yes",
-    resolutionTime: "2025-01-31T00:00:00Z",
-    status: "active" as const,
-    createdBy: {
-      address: "0x123",
-      username: "alice",
-      picture: "/images/leftWagercardUserOneIcon.svg",
-    },
-    opponent: {
-      address: "0x456",
-      username: "bob",
-      picture: "/images/RightWagercardUserOneIcon.svg",
-    },
-    createdAt: "2024-01-01T00:00:00Z",
-    updatedAt: "2024-01-01T00:00:00Z",
-  },
-  {
-    id: "2",
-    title: "Will Ethereum Reach $5000 by March 2025?",
-    category: "Crypto",
-    hashtags: ["ethereum", "crypto"],
-    terms: "Ethereum must reach $5,000 USD by March 2025",
-    stake: 50,
-    mode: "HeadToHead",
-    claim: "Yes",
-    resolutionTime: "2025-03-31T00:00:00Z",
-    status: "pending" as const,
-    createdBy: {
-      address: "0x789",
-      username: "charlie",
-      picture: "/images/leftWagercardUserOneIcon.svg",
-    },
-    opponent: undefined,
-    createdAt: "2024-01-02T00:00:00Z",
-    updatedAt: "2024-01-02T00:00:00Z",
-  },
-];
-
 // Enhanced Empty State Component
 function WagersEmptyState({ 
   showCreateButton = true,
   title = "No Active Wagers Found",
   description = "Be the first to create an exciting wager and challenge others!",
-  isDummyData = false
+  isBackendEmpty = false
 }: {
   showCreateButton?: boolean;
   title?: string;
   description?: string;
-  isDummyData?: boolean;
+  isBackendEmpty?: boolean;
 }) {
   const router = useRouter();
 
@@ -130,10 +72,10 @@ function WagersEmptyState({
         </p>
 
         {/* Development Notice */}
-        {isDummyData && (
+        {isBackendEmpty && (
           <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 mb-6">
             <p className="text-xs text-blue-800 dark:text-blue-200">
-              📝 <strong>Dev Mode:</strong> Empty dummy data for testing empty state
+              📝 <strong>Backend Status:</strong> No wagers found on backend. Showing demo data for testing.
             </p>
           </div>
         )}
@@ -158,62 +100,31 @@ export default function GlobalWagers({
   showHeader = true,
   showViewAll = true,
 }: GlobalWagersProps) {
-  // 🔧 Configuration flags for easy testing
-  const useDummyData = true;
-  const testEmptyState = false; // 👈 Set to TRUE to test empty state!
+  console.log("🔄 GlobalWagers rendering with BYPASS_API_FOR_TESTING:", BYPASS_API_FOR_TESTING);
   
-  const { data, isLoading, error, refetch, isRefetching } = useWagers({
-    limit,
-  });
-
-  // Use dummy data if enabled
-  if (useDummyData) {
-    // Test empty state or show wagers
-    const wagersToShow = testEmptyState ? [] : dummyWagers.slice(0, limit);
-    const dummyData = {
-      wagers: wagersToShow,
-      total: wagersToShow.length,
+  // Temporary bypass for testing
+  if (BYPASS_API_FOR_TESTING) {
+    console.log("🔄 Using direct dummy data (API bypassed)");
+    
+    const dummyWagers = wagerService.getDummyWagers().slice(0, limit);
+    const mockData = {
+      wagers: dummyWagers,
+      total: dummyWagers.length,
       page: 1,
       limit,
     };
 
-    // Empty state for dummy data
-    if (dummyData.wagers.length === 0) {
-      return (
-        <div className="space-y-4">
-          {showHeader && (
-            <div className="flex justify-between items-center">
-              <p className="text-center text-blue-1 dark:text-white text-base md:text-xl font-medium">
-                Global Wagers
-              </p>
-              {showViewAll && (
-                <p className="text-gray-600 dark:text-grey-5 text-[12px] lg:text-sm cursor-pointer">
-                  View All
-                </p>
-              )}
-            </div>
-          )}
-          <WagersEmptyState 
-            isDummyData={true}
-            title="No Wagers Available"
-            description="Currently testing empty state. Create your first wager to get started!"
-          />
-        </div>
-      );
-    }
-
-    // Show dummy wagers
     return (
       <div className="space-y-4">
         {showHeader && (
           <div className="flex justify-between items-center">
             <p className="text-center text-blue-1 dark:text-white text-base md:text-xl font-medium">
-              Global Wagers
+              Global Wagers (Debug Mode)
             </p>
             {showViewAll && (
               <div className="flex items-center gap-2">
                 <span className="text-gray-600 dark:text-grey-5 text-[12px] lg:text-sm">
-                  {dummyData.total} total
+                  {mockData.total} total
                 </span>
                 <p className="text-gray-600 dark:text-grey-5 text-[12px] lg:text-sm cursor-pointer hover:text-blue-1 transition-colors">
                   View All
@@ -224,7 +135,7 @@ export default function GlobalWagers({
         )}
         
         <div className="space-y-3">
-          {dummyData.wagers.map((wager) => {
+          {mockData.wagers.map((wager) => {
             const cardProps = transformWagerToCardProps(wager);
             return (
               <WagerCards
@@ -240,12 +151,28 @@ export default function GlobalWagers({
           })}
         </div>
 
+        {/* Debug Status Indicator */}
+        <div className="text-center pt-2">
+          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
+            <p className="text-xs text-yellow-800 dark:text-yellow-200">
+              🐛 <strong>Debug Mode:</strong> API bypassed, showing dummy data directly
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
 
+  // Normal API flow
+  const { data, isLoading, error, refetch, isRefetching } = useWagers({
+    limit,
+  });
+
+  console.log("🔄 useWagers state:", { data, isLoading, error, isRefetching });
+
   // Loading state
   if (isLoading) {
+    console.log("⏳ Showing loading state");
     return (
       <div className="space-y-4">
         {showHeader && (
@@ -265,12 +192,21 @@ export default function GlobalWagers({
             <WagerCardSkeleton key={index} />
           ))}
         </div>
+        <div className="text-center">
+          <p className="text-sm text-gray-500 dark:text-grey-5">
+            Attempting to connect to backend...
+          </p>
+          <p className="text-xs text-gray-400 dark:text-grey-6 mt-1">
+            Will show demo data if backend is unavailable
+          </p>
+        </div>
       </div>
     );
   }
 
   // Error state
   if (error) {
+    console.log("❌ Showing error state:", error);
     return (
       <div className="space-y-4">
         {showHeader && (
@@ -305,11 +241,9 @@ export default function GlobalWagers({
               <p className="text-sm text-red-600 dark:text-red-400 mt-1">
                 {error.message || "Something went wrong while fetching wagers"}
               </p>
-              {error.message === "Failed to fetch wagers" && (
-                <p className="text-xs text-red-500 dark:text-red-400 mt-1">
-                  API may require authentication. Please check with the backend team.
-                </p>
-              )}
+              <p className="text-xs text-red-500 dark:text-red-400 mt-1">
+                Backend: https://starkwager-backend.onrender.com
+              </p>
             </div>
             <Button
               variant="outline"
@@ -330,8 +264,9 @@ export default function GlobalWagers({
     );
   }
 
-  // Empty state for API data
+  // Empty state - this should rarely happen now due to fallback dummy data
   if (!data?.wagers || data.wagers.length === 0) {
+    console.log("🚫 Showing empty state");
     return (
       <div className="space-y-4">
         {showHeader && (
@@ -349,12 +284,14 @@ export default function GlobalWagers({
         <WagersEmptyState 
           title="No Active Wagers"
           description="The community hasn't created any wagers yet. Be the first to start a challenge!"
+          isBackendEmpty={true}
         />
       </div>
     );
   }
 
-  // Populated state with real API data
+  // Populated state with data (either from backend or dummy fallback)
+  console.log("✅ Showing populated state with data:", data);
   return (
     <div className="space-y-4">
       {showHeader && (
@@ -391,6 +328,8 @@ export default function GlobalWagers({
           );
         })}
       </div>
+
+      {/* Backend Status Indicator */}
 
       {data.total > limit && (
         <div className="text-center pt-4">
