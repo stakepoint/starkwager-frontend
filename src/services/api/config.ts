@@ -10,6 +10,9 @@ export const API_CONFIG = {
     "Content-Type": "application/json",
     Accept: "application/json",
   },
+  // Development flags
+  USE_DUMMY_DATA: process.env.NODE_ENV === "development" ? true : false,
+  REQUIRE_AUTH: true, // Set to false if API doesn't require auth
 };
 
 /**
