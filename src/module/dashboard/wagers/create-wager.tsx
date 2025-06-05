@@ -16,6 +16,8 @@ import {
 } from "@/contexts/createWager.context";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@/contexts/WalletContext";
+import { Spinner } from "@/components/ui/spinner";
+import { Hash, X } from "lucide-react";
 
 // Create a function that returns the schema with the current balance
 const createWagerSchema = (userBalance: number) =>
@@ -71,6 +73,11 @@ export default function CreateWager() {
   const title = watch("title");
   const terms = watch("terms");
   const selectedTags = watch("hashtags");
+
+  const removeHashtag = (tagToRemove: string) => {
+    const updatedTags = selectedTags.filter(tag => tag !== tagToRemove);
+    setValue("hashtags", updatedTags, { shouldValidate: true });
+  };
 
   const onSubmit: SubmitHandler<WagerFormData> = async (data) => {
     try {
@@ -146,6 +153,30 @@ export default function CreateWager() {
             )}
           </div>
         </div>
+
+        {/* Selected Hashtags Pills */}
+        {selectedTags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-2">
+            {selectedTags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center rounded-full bg-white dark:bg-grey-7 space-x-2 px-3 py-2 text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 transition-colors"
+              >
+                <span className="pr-1">
+                  <Hash className="h-4 w-4 p-1 dark:bg-white dark:text-blue-1 bg-blue-1 text-white rounded" />
+                </span>
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => removeHashtag(tag)}
+                  className="ml-1 rounded-full p-1 hover:bg-gray-300 dark:hover:bg-grey-6 transition-colors"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
 
         <div>
           <div className="mt-3">
@@ -235,7 +266,7 @@ export default function CreateWager() {
           >
             {isSubmitting ? (
               <div className="flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-1"></div>
+                <Spinner size="sm" />
                 <span>Processing...</span>
               </div>
             ) : (
