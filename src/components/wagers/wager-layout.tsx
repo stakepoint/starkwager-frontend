@@ -7,6 +7,7 @@ import { ModalView } from "@/components/ui/modals";
 import ClaimDisclaimerModal from "@/components/wagers/claim-disclaimer-modal";
 import DisagreementModal from "./disagreement-modal";
 import { useCreateWager } from "@/hooks/wager/useWager";
+import { Spinner } from "@/components/ui/spinner";
 
 interface WagerLayoutProps {
   children: ReactNode;
@@ -77,7 +78,7 @@ export function WagerLayout({
         >
           {writeIsPending ? (
             <div className="flex items-center gap-2">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-1"></div>
+              <Spinner size="sm" />
               <span>Processing...</span>
             </div>
           ) : (

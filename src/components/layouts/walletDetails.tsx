@@ -32,7 +32,7 @@ export default function WalletDetails({
   const [displayedBalance, setDisplayedBalance] = useState(walletBalance);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const previousBalanceRef = useRef(walletBalance);
-  
+
   // Fetch wallet balance from contract
   const {
     readData: balanceData,
@@ -52,16 +52,16 @@ export default function WalletDetails({
       const u256Balance = balanceData[0];
       if (u256Balance && typeof u256Balance === 'object') {
         const decimalBalance = fromU256(u256Balance);
-        
+
         // Update the parent component's state
         setWalletBalance(decimalBalance);
-        
+
         // Only update the displayed balance if this isn't the initial load or if there's a change
         if (!isFirstLoad || Math.abs(decimalBalance - previousBalanceRef.current) > 0.001) {
           setDisplayedBalance(decimalBalance);
           previousBalanceRef.current = decimalBalance;
         }
-        
+
         if (isFirstLoad) {
           setIsFirstLoad(false);
         }
