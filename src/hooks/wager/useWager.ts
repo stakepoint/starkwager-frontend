@@ -12,6 +12,10 @@ import { toast } from "sonner";
 import { WAGER_ABI, WALLET_CONTRACT_ADDRESS } from "@/constants/contract";
 import { CallData } from "starknet";
 import { useRouter } from "next/navigation";
+import { wagerService } from "@/services/api/wagerService";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useAccount } from "@starknet-react/core";
+import { useWalletStore } from "@/store/persistStore";
 
 export const useCreateWager = () => {
   const router = useRouter();
@@ -22,7 +26,18 @@ export const useCreateWager = () => {
     WALLET_CONTRACT_ADDRESS
   );
 
+  const address = useWalletStore((state) => state.address);
+
   const { wagerData } = useCreateWagerContext();
+
+  console.log({ wagerData });
+
+  const {
+    mutateAsync: createWagerServerRequest,
+    isPending: createWagerServerRequestPending,
+  } = useMutation({
+    mutationFn: wagerService.createWager,
+  });
 
   const createWager = React.useCallback(async () => {
     try {
@@ -30,8 +45,14 @@ export const useCreateWager = () => {
         throw new Error("Wager data is not available");
       }
 
+      if (!address) {
+        throw new Error("Wallet not connected");
+      }
+
+      const { id: categoryId, name: categoryName } = wagerData.category;
+
       const convertedArgs = [
-        convertToContractCategory(wagerData.category),
+        convertToContractCategory(categoryName),
         convertToByteArray(wagerData.title),
         convertToByteArray(wagerData.terms),
         convertToU256(Number(wagerData.stake)),
@@ -45,13 +66,34 @@ export const useCreateWager = () => {
       const result = await writeAsync(calldata);
 
       if (result.transaction_hash) {
-        toast.success("Wager created successfully!", {
-          className: "bg-green-500 text-white border-none",
-        });
+        const storedProfile = localStorage.getItem("auth_user");
 
-        router.push(
-          `/dashboard/create-wager/${result.transaction_hash}/invite`
-        );
+        if (!storedProfile) {
+          throw new Error("User profile not found");
+        }
+
+        const profile = JSON.parse(storedProfile) as { id: string };
+
+        await createWagerServerRequest({
+          name: wagerData.title,
+          description: wagerData.terms,
+          categoryId: categoryId,
+          stakeAmount: Number(wagerData.stake),
+          status: "active",
+          createdById: profile.id,
+          txHash: result.transaction_hash,
+          txStatus: "pending",
+          hashtags: wagerData.hashtags,
+        }).then((res) => {
+          console.log({ res });
+          toast.success("Wager created successfully!", {
+            className: "bg-green-500 text-white border-none",
+          });
+
+          router.push(
+            `/dashboard/create-wager/${result.transaction_hash}/invite`
+          );
+        });
       }
 
       return result;
@@ -76,7 +118,10 @@ export const useCreateWager = () => {
         className: "bg-red-500 text-white border-none",
       });
     }
-  }, [writeAsync, wagerData, router]);
+  }, [writeAsync, wagerData, router, address]);
 
-  return { createWager, writeIsPending };
+  return {
+    createWager,
+    createWagerLoadingState: writeIsPending || createWagerServerRequestPending,
+  };
 };

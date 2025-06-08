@@ -16,11 +16,16 @@ import {
 } from "@/contexts/createWager.context";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@/contexts/WalletContext";
+import { useQuery } from "@tanstack/react-query";
+import { wagerService } from "@/services/api/wagerService";
 
 // Create a function that returns the schema with the current balance
 const createWagerSchema = (userBalance: number) =>
   z.object({
-    category: z.string().min(1, "Category is required"),
+    category: z.object({
+      id: z.string().min(1, "Category is required"),
+      name: z.string().min(1, "Category is required"),
+    }),
     hashtags: z.array(z.string()).min(1, "At least one hashtag is required"),
     title: z
       .string()
@@ -58,7 +63,7 @@ export default function CreateWager() {
   } = useForm<WagerFormData>({
     resolver: zodResolver(createWagerSchema(userBalance)),
     defaultValues: {
-      category: "",
+      category: { id: "", name: "" },
       hashtags: [],
       title: "",
       terms: "",
@@ -87,7 +92,12 @@ export default function CreateWager() {
       };
 
       setWagerData(result);
-      const formattedTitle = result.title.replace(/\s+/g, "-");
+      const formattedTitle = result.title
+        .replace(/[^a-zA-Z0-9\s-]/g, "") // Remove special characters
+        .replace(/\s+/g, "-") // Replace spaces with hyphens
+        .toLowerCase(); // Convert to lowercase
+
+      console.log({ formattedTitle });
       router.push(`/dashboard/create-wager/${formattedTitle}`);
       // console.log("Wager data saved to context:", result);
     } catch (error) {
