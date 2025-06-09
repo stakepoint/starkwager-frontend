@@ -9,24 +9,21 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useQuery } from "@tanstack/react-query";
+import { wagerService } from "@/services/api/wagerService";
 
-const HASHTAGS = [
-  "Bitcoin",
-  "BTCto100k",
-  "BlockchainWager",
-  "STRKBet",
-  "CryptoTrends",
-  "Web3Challenge",
-  "ETH",
-  "DeFiPrediction",
-  "CryptoBetting",
-];
+interface Hashtag {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 interface HashtagSelectorProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  selectedTags: string[];
-  onTagsChange: (tags: string[]) => void;
+  selectedTags: Hashtag[];
+  onTagsChange: (tags: Hashtag[]) => void;
 }
 
 export function HashtagSelector({
@@ -35,13 +32,20 @@ export function HashtagSelector({
   selectedTags,
   onTagsChange,
 }: HashtagSelectorProps) {
-  const toggleTag = (tag: string) => {
-    if (selectedTags.includes(tag)) {
-      onTagsChange(selectedTags.filter((t) => t !== tag));
+  const toggleTag = (tag: Hashtag) => {
+    if (selectedTags.some((t) => t.id === tag.id)) {
+      onTagsChange(selectedTags.filter((t) => t.id !== tag.id));
     } else if (selectedTags.length < 4) {
       onTagsChange([...selectedTags, tag]);
     }
   };
+
+  const { data: hashtags } = useQuery({
+    queryKey: ["wagerHashtags"],
+    queryFn: wagerService.getAllHashtags,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+  });
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -55,26 +59,33 @@ export function HashtagSelector({
           Hashtags helps other users find your wager easily and quickly.
         </DialogDescription>
         <div className="flex flex-wrap gap-3">
-          {HASHTAGS.map((tag) => (
+          {hashtags?.map((tag: Hashtag) => (
             <Button
-              key={tag}
-              variant={selectedTags.includes(tag) ? "default" : "outline"}
+              key={tag.id}
+              variant={
+                selectedTags.some((t) => t.id === tag.id)
+                  ? "default"
+                  : "outline"
+              }
               onClick={() => toggleTag(tag)}
               className={`flex items-center justify-start gap-2 rounded-full ${
-                selectedTags.includes(tag)
+                selectedTags.some((t) => t.id === tag.id)
                   ? "bg-blue-1 text-white dark:text-blue-1 hover:bg-[#1E2875]/90 dark:bg-secondary"
                   : "hover:bg-[#1E2875]/10 dark:bg-grey-9"
               }`}
-              disabled={!selectedTags.includes(tag) && selectedTags.length >= 4}
+              disabled={
+                !selectedTags.some((t) => t.id === tag.id) &&
+                selectedTags.length >= 4
+              }
             >
               <Hash
                 className={`h-5 w-5 p-1 rounded ${
-                  selectedTags.includes(tag)
+                  selectedTags.some((t) => t.id === tag.id)
                     ? "dark:bg-blue-1 dark:text-secondary bg-white text-blue-1"
                     : "bg-blue-1 text-white dark:bg-white dark:text-blue-1"
                 }`}
               />
-              {tag}
+              {tag.name}
             </Button>
           ))}
         </div>

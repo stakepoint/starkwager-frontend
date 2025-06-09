@@ -30,8 +30,6 @@ export const useCreateWager = () => {
 
   const { wagerData } = useCreateWagerContext();
 
-  console.log({ wagerData });
-
   const {
     mutateAsync: createWagerServerRequest,
     isPending: createWagerServerRequestPending,
@@ -83,13 +81,14 @@ export const useCreateWager = () => {
           createdById: profile.id,
           txHash: result.transaction_hash,
           txStatus: "pending",
-          hashtags: wagerData.hashtags,
-        }).then((res) => {
-          console.log({ res });
+          hashtags: wagerData.hashtags.map((hashtag) => hashtag.name),
+        }).then((_res) => {
           toast.success("Wager created successfully!", {
             className: "bg-green-500 text-white border-none",
           });
 
+          // OR you can use the `id` to redirect to the wager page
+          // i.e res.id instead of result.transaction_hash
           router.push(
             `/dashboard/create-wager/${result.transaction_hash}/invite`
           );

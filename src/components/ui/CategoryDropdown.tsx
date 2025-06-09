@@ -33,7 +33,7 @@ export default function CategoryDropdown({
     queryKey: ["wagerCategories"],
     queryFn: wagerService.getAllCategories,
     refetchOnWindowFocus: false,
-    staleTime: 5 * 60 * 1000,
+    staleTime: Infinity,
   });
 
   // Sort categories so that 'Others' is always at the bottom

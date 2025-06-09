@@ -16,8 +16,6 @@ import {
 } from "@/contexts/createWager.context";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@/contexts/WalletContext";
-import { useQuery } from "@tanstack/react-query";
-import { wagerService } from "@/services/api/wagerService";
 
 // Create a function that returns the schema with the current balance
 const createWagerSchema = (userBalance: number) =>
@@ -26,7 +24,16 @@ const createWagerSchema = (userBalance: number) =>
       id: z.string().min(1, "Category is required"),
       name: z.string().min(1, "Category is required"),
     }),
-    hashtags: z.array(z.string()).min(1, "At least one hashtag is required"),
+    hashtags: z
+      .array(
+        z.object({
+          id: z.string(),
+          name: z.string(),
+          createdAt: z.string(),
+          updatedAt: z.string(),
+        })
+      )
+      .min(1, "At least one hashtag is required"),
     title: z
       .string()
       .min(1, "Title is required")
@@ -97,11 +104,10 @@ export default function CreateWager() {
         .replace(/\s+/g, "-") // Replace spaces with hyphens
         .toLowerCase(); // Convert to lowercase
 
-      console.log({ formattedTitle });
       router.push(`/dashboard/create-wager/${formattedTitle}`);
       // console.log("Wager data saved to context:", result);
     } catch (error) {
-      console.error("Submission Errosr:", error);
+      // console.error("Submission Errosr:", error);
     } finally {
       setIsSubmitting(false);
     }

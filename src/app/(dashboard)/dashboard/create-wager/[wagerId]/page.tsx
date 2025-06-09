@@ -38,6 +38,7 @@ function CreateWagerSummaryPage() {
       wagerData={{
         ...wagerData,
         category: wagerData.category.name,
+        hashtags: wagerData.hashtags.map((hashtag) => hashtag.name),
       }}
     />
   );
