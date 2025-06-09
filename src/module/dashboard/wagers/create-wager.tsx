@@ -5,7 +5,10 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { HashtagSelector } from "@/components/ui/modals/HashtagSelector";
+import {
+  HashtagSelector,
+  WagerHashtag,
+} from "@/components/ui/modals/HashtagSelector";
 import CategoryDropdown from "@/components/ui/CategoryDropdown";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -86,8 +89,8 @@ export default function CreateWager() {
   const terms = watch("terms");
   const selectedTags = watch("hashtags");
 
-  const removeHashtag = (tagToRemove: string) => {
-    const updatedTags = selectedTags.filter(tag => tag !== tagToRemove);
+  const removeHashtag = (tagToRemove: WagerHashtag) => {
+    const updatedTags = selectedTags.filter((tag) => tag.id !== tagToRemove.id);
     setValue("hashtags", updatedTags, { shouldValidate: true });
   };
 
@@ -175,13 +178,13 @@ export default function CreateWager() {
           <div className="flex flex-wrap gap-2 mt-2">
             {selectedTags.map((tag) => (
               <span
-                key={tag}
+                key={tag.id}
                 className="inline-flex items-center rounded-full bg-white dark:bg-grey-7 space-x-2 px-3 py-2 text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 transition-colors"
               >
                 <span className="pr-1">
                   <Hash className="h-4 w-4 p-1 dark:bg-white dark:text-blue-1 bg-blue-1 text-white rounded" />
                 </span>
-                {tag}
+                {tag.name}
                 <button
                   type="button"
                   onClick={() => removeHashtag(tag)}

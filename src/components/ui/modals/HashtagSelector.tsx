@@ -12,7 +12,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { wagerService } from "@/services/api/wagerService";
 
-interface Hashtag {
+export interface WagerHashtag {
   id: string;
   name: string;
   createdAt: string;
@@ -22,8 +22,8 @@ interface Hashtag {
 interface HashtagSelectorProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  selectedTags: Hashtag[];
-  onTagsChange: (tags: Hashtag[]) => void;
+  selectedTags: WagerHashtag[];
+  onTagsChange: (tags: WagerHashtag[]) => void;
 }
 
 export function HashtagSelector({
@@ -32,7 +32,7 @@ export function HashtagSelector({
   selectedTags,
   onTagsChange,
 }: HashtagSelectorProps) {
-  const toggleTag = (tag: Hashtag) => {
+  const toggleTag = (tag: WagerHashtag) => {
     if (selectedTags.some((t) => t.id === tag.id)) {
       onTagsChange(selectedTags.filter((t) => t.id !== tag.id));
     } else if (selectedTags.length < 4) {
@@ -59,7 +59,7 @@ export function HashtagSelector({
           Hashtags helps other users find your wager easily and quickly.
         </DialogDescription>
         <div className="flex flex-wrap gap-3">
-          {hashtags?.map((tag: Hashtag) => (
+          {hashtags?.map((tag: WagerHashtag) => (
             <Button
               key={tag.id}
               variant={
