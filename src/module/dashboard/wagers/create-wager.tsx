@@ -5,7 +5,10 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { HashtagSelector } from "@/components/ui/modals/HashtagSelector";
+import {
+  HashtagSelector,
+  WagerHashtag,
+} from "@/components/ui/modals/HashtagSelector";
 import CategoryDropdown from "@/components/ui/CategoryDropdown";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,12 +19,26 @@ import {
 } from "@/contexts/createWager.context";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@/contexts/WalletContext";
+import { Spinner } from "@/components/ui/spinner";
+import { Hash, X } from "lucide-react";
 
 // Create a function that returns the schema with the current balance
 const createWagerSchema = (userBalance: number) =>
   z.object({
-    category: z.string().min(1, "Category is required"),
-    hashtags: z.array(z.string()).min(1, "At least one hashtag is required"),
+    category: z.object({
+      id: z.string().min(1, "Category is required"),
+      name: z.string().min(1, "Category is required"),
+    }),
+    hashtags: z
+      .array(
+        z.object({
+          id: z.string(),
+          name: z.string(),
+          createdAt: z.string(),
+          updatedAt: z.string(),
+        })
+      )
+      .min(1, "At least one hashtag is required"),
     title: z
       .string()
       .min(1, "Title is required")
@@ -58,7 +75,7 @@ export default function CreateWager() {
   } = useForm<WagerFormData>({
     resolver: zodResolver(createWagerSchema(userBalance)),
     defaultValues: {
-      category: "",
+      category: { id: "", name: "" },
       hashtags: [],
       title: "",
       terms: "",
@@ -71,6 +88,11 @@ export default function CreateWager() {
   const title = watch("title");
   const terms = watch("terms");
   const selectedTags = watch("hashtags");
+
+  const removeHashtag = (tagToRemove: WagerHashtag) => {
+    const updatedTags = selectedTags.filter((tag) => tag.id !== tagToRemove.id);
+    setValue("hashtags", updatedTags, { shouldValidate: true });
+  };
 
   const onSubmit: SubmitHandler<WagerFormData> = async (data) => {
     try {
@@ -87,11 +109,15 @@ export default function CreateWager() {
       };
 
       setWagerData(result);
-      const formattedTitle = result.title.replace(/\s+/g, "-");
+      const formattedTitle = result.title
+        .replace(/[^a-zA-Z0-9\s-]/g, "") // Remove special characters
+        .replace(/\s+/g, "-") // Replace spaces with hyphens
+        .toLowerCase(); // Convert to lowercase
+
       router.push(`/dashboard/create-wager/${formattedTitle}`);
       // console.log("Wager data saved to context:", result);
     } catch (error) {
-      console.error("Submission Errosr:", error);
+      // console.error("Submission Errosr:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -146,6 +172,30 @@ export default function CreateWager() {
             )}
           </div>
         </div>
+
+        {/* Selected Hashtags Pills */}
+        {selectedTags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-2">
+            {selectedTags.map((tag) => (
+              <span
+                key={tag.id}
+                className="inline-flex items-center rounded-full bg-white dark:bg-grey-7 space-x-2 px-3 py-2 text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 transition-colors"
+              >
+                <span className="pr-1">
+                  <Hash className="h-4 w-4 p-1 dark:bg-white dark:text-blue-1 bg-blue-1 text-white rounded" />
+                </span>
+                {tag.name}
+                <button
+                  type="button"
+                  onClick={() => removeHashtag(tag)}
+                  className="ml-1 rounded-full p-1 hover:bg-gray-300 dark:hover:bg-grey-6 transition-colors"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
 
         <div>
           <div className="mt-3">
@@ -235,7 +285,7 @@ export default function CreateWager() {
           >
             {isSubmitting ? (
               <div className="flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-1"></div>
+                <Spinner size="sm" />
                 <span>Processing...</span>
               </div>
             ) : (
