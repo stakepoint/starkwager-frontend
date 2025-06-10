@@ -15,7 +15,11 @@ function CreateWagerSummaryPage() {
   if (
     !wagerData ||
     !wagerId ||
-    wagerId !== wagerData?.title.replace(/\s+/g, "-")
+    wagerId !==
+      wagerData?.title
+        .replace(/[^a-zA-Z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .toLowerCase()
   ) {
     clearWagerData();
     router.push("/dashboard/create-wager");
@@ -30,7 +34,15 @@ function CreateWagerSummaryPage() {
     );
   }
 
-  return <WagerSummary wagerData={wagerData} />;
+  return (
+    <WagerSummary
+      wagerData={{
+        ...wagerData,
+        category: wagerData.category.name,
+        hashtags: wagerData.hashtags.map((hashtag) => hashtag.name),
+      }}
+    />
+  );
 }
 
 export default CreateWagerSummaryPage;

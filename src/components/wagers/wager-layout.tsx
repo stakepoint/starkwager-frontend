@@ -26,7 +26,7 @@ export function WagerLayout({
   const [hasClaimed, setHasClaimed] = useState(false);
   const [isDisagreementOpen, setIsDisagreementOpen] = useState(false);
 
-  const { createWager, writeIsPending } = useCreateWager();
+  const { createWager, createWagerLoadingState } = useCreateWager();
 
   const handleClaimClick = () => {
     setIsDisclaimerOpen(true);
@@ -74,9 +74,9 @@ export function WagerLayout({
           onClick={() => createWager()}
           size={"lg"}
           className="w-full max-w-[343px] mx-auto h-14 text-lg font-medium tracking-[-0.36px] dark:bg-secondary"
-          disabled={writeIsPending}
+          disabled={createWagerLoadingState}
         >
-          {writeIsPending ? (
+          {createWagerLoadingState ? (
             <div className="flex items-center gap-2">
               <Spinner size="sm" />
               <span>Processing...</span>

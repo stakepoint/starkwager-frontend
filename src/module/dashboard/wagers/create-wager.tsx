@@ -5,7 +5,10 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { HashtagSelector } from "@/components/ui/modals/HashtagSelector";
+import {
+  HashtagSelector,
+  WagerHashtag,
+} from "@/components/ui/modals/HashtagSelector";
 import CategoryDropdown from "@/components/ui/CategoryDropdown";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,8 +25,20 @@ import { Hash, X } from "lucide-react";
 // Create a function that returns the schema with the current balance
 const createWagerSchema = (userBalance: number) =>
   z.object({
-    category: z.string().min(1, "Category is required"),
-    hashtags: z.array(z.string()).min(1, "At least one hashtag is required"),
+    category: z.object({
+      id: z.string().min(1, "Category is required"),
+      name: z.string().min(1, "Category is required"),
+    }),
+    hashtags: z
+      .array(
+        z.object({
+          id: z.string(),
+          name: z.string(),
+          createdAt: z.string(),
+          updatedAt: z.string(),
+        })
+      )
+      .min(1, "At least one hashtag is required"),
     title: z
       .string()
       .min(1, "Title is required")
@@ -60,7 +75,7 @@ export default function CreateWager() {
   } = useForm<WagerFormData>({
     resolver: zodResolver(createWagerSchema(userBalance)),
     defaultValues: {
-      category: "",
+      category: { id: "", name: "" },
       hashtags: [],
       title: "",
       terms: "",
@@ -74,8 +89,8 @@ export default function CreateWager() {
   const terms = watch("terms");
   const selectedTags = watch("hashtags");
 
-  const removeHashtag = (tagToRemove: string) => {
-    const updatedTags = selectedTags.filter(tag => tag !== tagToRemove);
+  const removeHashtag = (tagToRemove: WagerHashtag) => {
+    const updatedTags = selectedTags.filter((tag) => tag.id !== tagToRemove.id);
     setValue("hashtags", updatedTags, { shouldValidate: true });
   };
 
@@ -94,11 +109,15 @@ export default function CreateWager() {
       };
 
       setWagerData(result);
-      const formattedTitle = result.title.replace(/\s+/g, "-");
+      const formattedTitle = result.title
+        .replace(/[^a-zA-Z0-9\s-]/g, "") // Remove special characters
+        .replace(/\s+/g, "-") // Replace spaces with hyphens
+        .toLowerCase(); // Convert to lowercase
+
       router.push(`/dashboard/create-wager/${formattedTitle}`);
       // console.log("Wager data saved to context:", result);
     } catch (error) {
-      console.error("Submission Errosr:", error);
+      // console.error("Submission Errosr:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -159,13 +178,13 @@ export default function CreateWager() {
           <div className="flex flex-wrap gap-2 mt-2">
             {selectedTags.map((tag) => (
               <span
-                key={tag}
+                key={tag.id}
                 className="inline-flex items-center rounded-full bg-white dark:bg-grey-7 space-x-2 px-3 py-2 text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 transition-colors"
               >
                 <span className="pr-1">
                   <Hash className="h-4 w-4 p-1 dark:bg-white dark:text-blue-1 bg-blue-1 text-white rounded" />
                 </span>
-                {tag}
+                {tag.name}
                 <button
                   type="button"
                   onClick={() => removeHashtag(tag)}

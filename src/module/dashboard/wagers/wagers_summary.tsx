@@ -58,7 +58,7 @@ export default function WagerSummary({
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
   useEffect(() => {
-    const storedProfile = localStorage.getItem("userProfile");
+    const storedProfile = localStorage.getItem("auth_user");
     if (storedProfile) {
       const profile = JSON.parse(storedProfile);
       if (profile.picture) {

@@ -1,8 +1,8 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
 export interface WagerDataState {
-  category: string;
-  hashtags: string[];
+  category: { id: string; name: string };
+  hashtags: { id: string; name: string }[];
   title: string;
   terms: string;
   stake: number | undefined;
