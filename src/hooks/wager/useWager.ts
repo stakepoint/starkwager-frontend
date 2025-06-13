@@ -17,8 +17,28 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAccount } from "@starknet-react/core";
 import { useWalletStore } from "@/store/persistStore";
 
-export const useCreateWager = () => {
+export interface Wager {
+  id: string;
+  name: string;
+  description: string;
+  categoryId: string;
+  stakeAmount: number;
+  status: "active" | "pending" | "completed";
+  createdById: string;
+  txHash: string;
+  txStatus: string;
+  hashtags: string[];
+  participants?: {
+    id: string;
+    username: string;
+    avatar: string;
+  }[];
+}
+
+export const useWager = () => {
   const router = useRouter();
+  const address = useWalletStore((state) => state.address);
+  const { wagerData } = useCreateWagerContext();
 
   const { writeAsync, writeIsPending } = useContractWriteUtility(
     "create_wager",
@@ -26,15 +46,29 @@ export const useCreateWager = () => {
     WALLET_CONTRACT_ADDRESS
   );
 
-  const address = useWalletStore((state) => state.address);
-
-  const { wagerData } = useCreateWagerContext();
-
   const {
     mutateAsync: createWagerServerRequest,
     isPending: createWagerServerRequestPending,
   } = useMutation({
     mutationFn: wagerService.createWager,
+  });
+
+  const {
+    data: wagers,
+    isLoading: isLoadingWagers,
+    error: wagersError,
+    refetch: refetchWagers,
+  } = useQuery({
+    queryKey: ["wagers"],
+    queryFn: async () => {
+      try {
+        const response = await wagerService.getAllWagers();
+        return (response.data as Wager[]).filter(wager => wager.status === "active");
+      } catch (error) {
+        console.error("Error fetching wagers:", error);
+        throw error;
+      }
+    },
   });
 
   const createWager = React.useCallback(async () => {
@@ -87,8 +121,6 @@ export const useCreateWager = () => {
             className: "bg-green-500 text-white border-none",
           });
 
-          // OR you can use the `id` to redirect to the wager page
-          // i.e res.id instead of result.transaction_hash
           router.push(
             `/dashboard/create-wager/${result.transaction_hash}/invite`
           );
@@ -122,5 +154,9 @@ export const useCreateWager = () => {
   return {
     createWager,
     createWagerLoadingState: writeIsPending || createWagerServerRequestPending,
+    wagers,
+    isLoadingWagers,
+    wagersError,
+    refetchWagers,
   };
 };

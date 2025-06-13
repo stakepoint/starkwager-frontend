@@ -14,12 +14,16 @@ import HashtagsModal from "@/components/ui/hashtags";
 import WagerTabOptions from "@/components/ui/wager-tab-options";
 import ClaimWager from "@/components/ui/claimWager";
 import { useRouter } from "next/navigation";
+import { useWager } from "@/hooks/wager/useWager";
+import WagerCardSkeleton from "@/components/ui/skeletons/wagerCardSkeleton";
 
 export default function DashboardHome() {
   const [isFundModalOpen, setIsFundModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [isHashtagModalOpen, setIsHashtagModalOpen] = useState(false);
-  const [walletBalance, setWalletBalance] = useState(1000); // Default wallet balance
+  const [walletBalance, setWalletBalance] = useState(0);
+
+  const { wagers, isLoadingWagers, wagersError } = useWager();
 
   const router = useRouter();
 
@@ -27,36 +31,9 @@ export default function DashboardHome() {
     router.push("/dashboard/create-wager");
   };
 
-  // Handle successful withdrawal by updating the balance immediately
-  const handleSuccessfulWithdraw = (amount: number) => {
-    // Update the balance immediately for a better UX
-    setWalletBalance(prevBalance => {
-      const newBalance = Math.max(0, prevBalance - amount);
-      return Number(newBalance.toFixed(2)); // Ensure we have 2 decimal places
-    });
-    
-    // Close the modal after a short delay to allow the user to see the success message
-    setTimeout(() => {
-      setIsWithdrawModalOpen(false);
-    }, 3000);
+  const handleSuccessfulWithdraw = (newBalance: number) => {
+    setWalletBalance(newBalance);
   };
-
-  const wagerCards = [
-    {
-      wagerId: "1",
-      question: "Will Bitcoin Hit $100k Before January 31, 2025?",
-      wagerStatus: "active" as const,
-      leftUser: {
-        username: "@noyi24_7",
-        icon: "/images/leftWagercardUserOneIcon.svg",
-      },
-      rightUser: {
-        username: "@jane_doe",
-        icon: "/images/RightWagercardUserOneIcon.svg",
-      },
-      stakeAmount: 10,
-    },
-  ];
 
   return (
     <>
@@ -93,7 +70,26 @@ export default function DashboardHome() {
           walletBalance={walletBalance}
           setWalletBalance={setWalletBalance}
         />
-        {wagerCards.length > 0 ? (
+        {isLoadingWagers ? (
+          <div className="space-y-4">
+            <WagerTabOptions />
+            <div className="mt-10">
+              <div className="flex justify-between items-center">
+                <p className="text-center text-blue-1 dark:text-white text-base md:text-xl font-medium">
+                  Global Wagers
+                </p>
+              </div>
+              <div className="space-y-3">
+                <WagerCardSkeleton />
+                <WagerCardSkeleton />
+              </div>
+            </div>
+          </div>
+        ) : wagersError ? (
+          <div className="text-center text-red-500">
+            Error loading wagers. Please try again later.
+          </div>
+        ) : wagers && wagers.length > 0 ? (
           <div className="space-y-4">
             <WagerTabOptions />
             <div
@@ -115,17 +111,21 @@ export default function DashboardHome() {
                   View All
                 </p>
               </div>
-              {wagerCards.map((card, idx) => (
+              {wagers.map((wager) => (
                 <WagerCards
-                  key={idx}
-                  wagerId={card.wagerId}
-                  question={card.question}
-                  wagerStatus={
-                    card.wagerStatus as "active" | "pending" | "completed"
-                  }
-                  leftUser={card.leftUser}
-                  rightUser={card.rightUser}
-                  stakeAmount={card.stakeAmount}
+                  key={wager.id}
+                  wagerId={wager.id}
+                  question={wager.name}
+                  wagerStatus={wager.status}
+                  stakeAmount={wager.stakeAmount}
+                  leftUser={{
+                    username: wager.participants?.[0]?.username || "Awaiting Opponent",
+                    icon: wager.participants?.[0]?.avatar || "/images/opponent.svg",
+                  }}
+                  rightUser={{
+                    username: wager.participants?.[1]?.username || "Awaiting Opponent",
+                    icon: wager.participants?.[1]?.avatar || "/images/opponent.svg",
+                  }}
                 />
               ))}
             </div>
