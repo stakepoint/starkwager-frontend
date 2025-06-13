@@ -29,8 +29,14 @@ const getAllHashtags = async (): Promise<any> => {
   return response.data;
 };
 
+const getAllWagers = async (): Promise<any> => {
+  const response = await axiosClient.get(API_ENDPOINTS.WAGER.ALL);
+  return response.data;
+};
+
 export const wagerService = {
   createWager,
   getAllCategories,
   getAllHashtags,
+  getAllWagers,
 };
