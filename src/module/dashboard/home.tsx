@@ -119,12 +119,12 @@ export default function DashboardHome() {
                   wagerStatus={wager.status}
                   stakeAmount={wager.stakeAmount}
                   leftUser={{
-                    username: wager.participants?.[0]?.username || "Awaiting Opponent",
-                    icon: wager.participants?.[0]?.avatar || "/images/opponent.svg",
+                    username: wager.creatorUsername,
+                    icon: "/images/avatar.svg",
                   }}
                   rightUser={{
-                    username: wager.participants?.[1]?.username || "Awaiting Opponent",
-                    icon: wager.participants?.[1]?.avatar || "/images/opponent.svg",
+                    username: wager.participants?.[0]?.username || "Awaiting Opponent",
+                    icon: wager.participants?.[0]?.avatar || "/images/opponent.svg",
                   }}
                 />
               ))}
@@ -134,7 +134,7 @@ export default function DashboardHome() {
           <EmptyStateView />
         )}
 
-        <ClaimWager />
+        {/* <ClaimWager /> */}
         <div className="pt-5 lg:hidden">
           <Button
             onClick={handleCreateWager}

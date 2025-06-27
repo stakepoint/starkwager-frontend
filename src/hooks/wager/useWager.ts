@@ -16,6 +16,7 @@ import { wagerService } from "@/services/api/wagerService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAccount } from "@starknet-react/core";
 import { useWalletStore } from "@/store/persistStore";
+import { userService } from "@/services/api/userService";
 
 export interface Wager {
   id: string;
@@ -63,7 +64,26 @@ export const useWager = () => {
     queryFn: async () => {
       try {
         const response = await wagerService.getAllWagers();
-        return (response.data as Wager[]).filter(wager => wager.status === "active");
+        const wagersData = (response.data as Wager[]).filter(wager => wager.status === "active");
+        // Collect unique creator IDs
+        const creatorIds = Array.from(new Set(wagersData.map(w => w.createdById)));
+        // Fetch and cache creator info
+        const creatorCache: Record<string, { username: string; picture: string | null }> = {};
+        await Promise.all(
+          creatorIds.map(async (id) => {
+            try {
+              const user = await userService.getUserById(id);
+              creatorCache[id] = { username: user.username, picture: user.picture };
+            } catch {
+              creatorCache[id] = { username: "Unknown Creator", picture: null };
+            }
+          })
+        );
+        // Attach creator info to each wager
+        return wagersData.map(wager => ({
+          ...wager,
+          creatorUsername: creatorCache[wager.createdById]?.username || "Unknown Creator",
+        }));
       } catch (error) {
         console.error("Error fetching wagers:", error);
         throw error;
