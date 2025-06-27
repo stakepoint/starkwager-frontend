@@ -44,7 +44,13 @@ const updateUser = async (params: UpdateUserParams): Promise<User> => {
   return response.data;
 };
 
+const getUserById = async (userId: string): Promise<User> => {
+  const response = await axiosClient.get(API_ENDPOINTS.USERS.GET(userId));
+  return response.data;
+};
+
 export const userService = {
   createUser,
   updateUser,
+  getUserById,
 };

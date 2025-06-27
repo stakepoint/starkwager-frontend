@@ -100,7 +100,7 @@ const WagerCards: React.FC<WagerCardProps> = ({
             className="w-8 h-8 md:w-20 md:h-20 rounded-lg mb-1 mx-auto"
           />
           <span className="text-blue-1 dark:text-white font-medium text-[12px] md:text-sm">
-            {leftUser.username}
+            @{leftUser.username}
           </span>
         </div>
 

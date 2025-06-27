@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { ModalView } from "@/components/ui/modals";
 import ClaimDisclaimerModal from "@/components/wagers/claim-disclaimer-modal";
 import DisagreementModal from "./disagreement-modal";
-import { useCreateWager } from "@/hooks/wager/useWager";
+import { useWager } from "@/hooks/wager/useWager";
 import { Spinner } from "@/components/ui/spinner";
 
 interface WagerLayoutProps {
@@ -26,7 +26,7 @@ export function WagerLayout({
   const [hasClaimed, setHasClaimed] = useState(false);
   const [isDisagreementOpen, setIsDisagreementOpen] = useState(false);
 
-  const { createWager, createWagerLoadingState } = useCreateWager();
+  const { createWager, createWagerLoadingState } = useWager();
 
   const handleClaimClick = () => {
     setIsDisclaimerOpen(true);
