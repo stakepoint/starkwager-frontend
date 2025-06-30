@@ -9,20 +9,20 @@ const countWithText = [
 const Impact = () => {
   return (
     <div>
-      <div className=" flex flex-col max-w-3xl mx-auto gap-5 text-left">
+      <div className=" flex flex-col max-w-xl xl:max-w-4xl 2xl:max-w-6xl mx-auto gap-5 text-left">
         <p className=" text-[#E0FE10] text-xl sm:text-2xl -rotate-2 px-2 font-comedik">
           the impact so far;
         </p>
-        <div className="flex flex-col md:flex-row justify gap-4 -between px-2 my-4">
+        <div className="flex flex-col md:flex-row justify gap-4 justify-between px-2 my-4">
           {countWithText.map(({ count, text }) => (
             <div
               key={text}
               className="flex flex-col justify-between mr-10 text-left"
             >
-              <span className="text-4xl sm:text-5xl md:text-6xl font-bold font-schabo">
+              <span className="text-7xl sm:text-5xl md:text-6xl font-bold font-schabo">
                 {count}+
               </span>
-              <span className="flex flex-wrap text-ellipsis w-3/4 font-semibold uppercase  text-sm">
+              <span className="flex flex-wrap text-ellipsis w-full md:w-3/4 font-semibold uppercase text-base  md:text-sm">
                 {text}
               </span>
             </div>
@@ -39,9 +39,9 @@ const Impact = () => {
           className="w-full h-full object-cover md:object-contain object-center mb-10 rounded-md"
         />
       </div>
-      <div className="flex flex-col max-w-3xl mx-auto gap-5 text-left">
+      <div className="flex flex-col pr-4 md:max-w-xl xl:max-w-4xl 2xl:max-w-6xl mx-auto gap-5 text-left">
         <p className="text-2xl sm:text-3xl md:text-4xl uppercase text-[#E0FE10] -rotate-2 px-2  text-ellipsis max-w-sm font-comedik">
-          you&apos;ve made it this far, so here&apos;s the tl;dr:
+          you&apos;ve made it this far, so <br /> here&apos;s the tl;dr:
         </p>
         <p className="flex flex-wrap w-3/4 font-medium text-wrap px-2">
           StrkWager is here to make betting transparent, fun and trustless. No
@@ -64,17 +64,18 @@ const Impact = () => {
           />
         </div>
         {/* eft-0 top-0 transform -translate-x-10 -translate-y-10 */}
-        <div className="flex px-2 md:flex-row w-full gap-10 mr-10 py-5 text-left uppercase">
-          <div className="max-w-5xl text-white font-schabo">
-            <p className="text-3xl md:text-6xl font-bold">ready to</p>
-            <p className="text-2xl md:text-6xl font-bold">place your</p>
-            <p className="text-2xl md:text-6xl font-bold">first wager?</p>
+        <div className="flex px-2 md:flex-row w-full justify-between gap-2 md:gap-10 mr-10 py-5 text-left uppercase">
+          <div className="flex ">
+            {" "}
+            <p className="text-6xl max-w-64 font-bold text-white font-schabo">
+              Ready to place your first wager?
+            </p>{" "}
           </div>
-          <div className="flex flex-col gap-5">
-            <p className="text-[#E0FE10] text-xl w-1/2 -rotate-2 font-comedik leading-none">
+          <div className="flex flex-col gap-5 justify-center flex-1 md:flex-auto">
+            <p className="text-[#E0FE10] max-w-64 text-2xl  -rotate-2 font-comedik leading-none">
               were open to contributors and players alike
             </p>
-            <p className="text-[#E0FE10] text-4xl font-comedik">
+            <p className="text-[#E0FE10] text-5xl font-comedik">
               lets connect!
             </p>
           </div>

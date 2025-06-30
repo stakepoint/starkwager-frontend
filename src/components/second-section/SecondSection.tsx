@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
-import { RoleWord } from "../role-word"
-const sectionImage = "/images/SecondSectionImage.svg"
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { RoleWord } from "../role-word";
+const sectionImage = "/images/SecondSectionImage.svg";
 
 export default function SecondSection() {
-  const elementRef = useRef(null)
-  const [isVisible, setIsVisible] = useState(false)
+  const elementRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const roles = [
     "FAIRNESS",
@@ -21,61 +21,63 @@ export default function SecondSection() {
     "WINNING",
     "TRUST",
     "FAIRNESS",
-  ]
+  ];
 
   useEffect(() => {
-    const currentElement = elementRef.current
+    const currentElement = elementRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.unobserve(entry.target)
+          setIsVisible(true);
+          observer.unobserve(entry.target);
         }
       },
       {
         root: null,
         rootMargin: "0px",
         threshold: 0.5,
-      },
-    )
+      }
+    );
 
     if (currentElement) {
-      observer.observe(currentElement)
+      observer.observe(currentElement);
     }
 
     return () => {
       if (currentElement) {
-        observer.disconnect()
+        observer.disconnect();
       }
-    }
-  }, [])
+    };
+  }, []);
 
   return (
-    <section className="w-full flex flex-col items-center gap-20 justify-center py-2 px-2 ">
-      <section className="flex flex-col md:flex-row items-center justify-center gap-2">
-        <div className="w-full max-w-[520px] ">
-          <div className="flex items-center justify-center  mb-3 ">
-            <h1 className="text-[#EFF8FF] font-normal text-[64px] leading-[60px] md:text-8xl font-schabo">
+    <section className="w-full flex flex-col items-center gap-10 md:gap-20 justify-center py-2  mx-auto px-4 md:max-w-xl xl:max-w-4xl 2xl:max-w-6xl pt-14 md:pt-0">
+      <section className="flex flex-col md:flex-row items-center justify-between w-full gap-2">
+        <div className=" ">
+          <div className="flex items-center justify-between md:justify-center  mb-3 ">
+            <h1 className="text-[#EFF8FF] font-normal text-6xl md:text-8xl font-schabo">
               MILLIONS OF <br /> WAGERER GET <br /> SHORTCHANGED
             </h1>
             <h3 className="text-[#E0FE10] text-lg leading-[30px] font-normal  md:text-[32px] ml-[-4%] mt-[-5%] transform rotate-[-2deg] whitespace-nowrap font-comedik">
-              Every <br /> <span className=" text-[28px] md:text-[40px] ">Single Day</span>
+              Every <br />{" "}
+              <span className=" text-[28px] md:text-[40px] ">Single Day</span>
             </h3>
           </div>
 
           <p className="text-[#EFF8FF] text-base font-medium font-generalSans ">
-            Beyond high fees and rigged odds, traditional wagering platforms control the outcome and the funds—leaving
-            you with nothing but frustration.
+            Beyond high fees and rigged odds, traditional wagering platforms
+            control the outcome and the funds—leaving you with nothing but
+            frustration.
           </p>
         </div>
 
-        <div className="w-full max-w-[391.5px] flex flex-col justify-center items-start">
+        <div className="w-full flex flex-col justify-between items-center">
           <Image
             src={sectionImage || "/placeholder.svg"}
             width={100}
             height={100}
             alt="Wagering illustration"
-            className="object-cover w-[343px] h-[228px] md:w-[391.5px] md:h-[261px] "
+            className="object-cover w-[343px] h-[228px] md:w-[500px] md:h-[300px] "
           />
 
           <div className="h-[145px] mt-3 ml-5 flex items-end justify-end">
@@ -117,46 +119,59 @@ export default function SecondSection() {
         </div>
       </section>
 
-      <section className="w-full h-[435px] md:h-[435px] relative flex items-center justify-center">
-        <div className="absolute top-[6%] md:top-0 left-[40%] md:left-[34%] translate-x-[-50%] flex flex-col gap-5">
-          <h3 className="text-[#E0FE10] leading-[30px] font-normal max-w-[243.4px] text-2xl md:text-[32px] transform rotate-[-2deg] font-comedik">
-            <span className="relative after:content-[''] after:absolute after:left-0 after:top-[50%] transform translate-x-[-50%] after:w-full after:h-[4px] after:bg-[#6C737F] after:rounded-full">
-              Isn&rsquo;t Wagering just{" "}
-            </span>
-            <br />
-            <span className="relative after:content-[''] after:absolute after:left-0 after:top-[50%] transform translate-x-[-50%] after:w-full after:h-[4px] after:bg-[#6C737F] after:rounded-full">
-              about taking risks?
-            </span>
+      <section className="w-full md:h-fit relative flex flex-col items-center justify-between">
+        <div className="flex flex-col w-full ">
+          {" "}
+          <h3 className="w-[50%] line-through  text-[#E0FE10] leading-[30px] font-normal  text-2xl md:text-[32px] transform rotate-[-2deg] font-comedik">
+            Isn’t Wagering just about taking risks?
           </h3>
-
-          <div className="flex justify-start gap-4 items-end">
-            <span className="font-comedik text-[#6C737F] text-base font-normal transform rotate-[-2deg]">
-            &quot;Red <br /> car&quot;
-            </span>
-
-            <h3 className="text-[#E0FE10] leading-[30px] font-normal max-w-[243.4px] text-2xl md:text-[32px] transform rotate-[-2deg] font-comedik">
-              NO.WAY.
-            </h3>
-          </div>
+         <div className="flex my-2"> <span className="font-comedik text-[#6C737F] text-base font-normal transform rotate-[-2deg]">
+            &quot;Red <br className="hidden md:flex" />x car&quot;
+          </span>
+          <h3 className="text-[#E0FE10] leading-[30px] font-normal max-w-[243.4px] text-2xl md:text-[32px] transform rotate-[-2deg] font-comedik">
+            NO.WAY.
+          </h3></div>
         </div>
 
-        <div className="text-changer font-schabo font-normal items-center flex pb-[10px] gap-2 md:gap-5 box-content overflow-hidden h-[100px] text-[56px] leading-[70px] md:h-[90px] md:text-[96px] lg:h-[300px] lg:text-[120px] md:leading-[150px]">
-          <h1 className="intro-text mt-[-2px] text-[#fafafa]">IT&rsquo;S ABOUT</h1>
-          <div className="roles-container relative overflow-hidden flex flex-col">
+        <div className="text-changer  font-schabo font-normal items-center flex justify-center w-full pb-[10px] gap-2 md:gap-5 box-content overflow-hidden h-[100px] text-[56px] leading-[70px] md:h-[90px] md:text-[96px] lg:h-[300px] lg:text-[120px] md:leading-[150px]">
+          <h1 className="intro-text mt-[-2px] text-[#fafafa]">
+            IT&rsquo;S ABOUT
+          </h1>
+          <div className="roles-container relative overflow-hidden flex flex-col  ">
             {roles.map((word, index) => (
               <RoleWord key={index} word={word} />
             ))}
           </div>
-        </div>
-
-        <div className="text-[#E0FE10] z-0 font-comedik flex md:flex-col items-center justify-center right-[30%] md:right-[5%] translate-x-[-30%] bottom-[25%] md:bottom-[25%] font-normal text-xl md:text-2xl transform rotate-[-4deg] md:rotate-[-26deg] absolute">
-          <span>AND THAT&apos;S WHY WE</span>
-          <div className="flex items-center justify-center gap-1">
-            <span> LOVE &rsquo;EM </span>
-            <Image src="/images/Smiley-In-Love--Streamline-Core-Remix.svg" alt="smiley-icon" height={26} width={26} />
+          <div className="h-full hidden md:flex justify-end text-center items-end relative">
+            <div className="text-[#E0FE10] z-0 font-comedik flex md:flex-col items-center justify-center font-normal text-xl md:text-2xl rotate-[-4deg] md:rotate-[-26deg]">
+              <span className="">AND THAT&apos;S WHY WE</span>
+              <div className="flex items-center justify-center gap-1">
+                <span> LOVE &rsquo;EM </span>
+                <Image
+                  src="/images/Smiley-In-Love--Streamline-Core-Remix.svg"
+                  alt="smiley-icon"
+                  height={26}
+                  width={26}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
+      <div className="h-full flex md:hidden justify-end text-center items-end relative">
+            <div className="text-[#E0FE10] z-0 font-comedik flex md:flex-col items-center justify-center font-normal text-xl md:text-2xl rotate-[-4deg] md:rotate-[-26deg]">
+              <span className="">AND THAT&apos;S WHY WE</span>
+              <div className="flex items-center justify-center gap-1">
+                <span> <span className="ml-1 underline">LOVE</span> &rsquo;EM </span>
+                <Image
+                  src="/images/Smiley-In-Love--Streamline-Core-Remix.svg"
+                  alt="smiley-icon"
+                  height={26}
+                  width={26}
+                />
+              </div>
+            </div>
+          </div>
     </section>
-  )
+  );
 }
