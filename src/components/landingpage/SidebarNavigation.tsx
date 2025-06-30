@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import WalletBar from "../ui/wallet-bar";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { toast } from "sonner";
+import { Spinner } from "@/components/ui/spinner";
 
 interface SidebarNavigationProps {
   className?: string;
@@ -33,6 +34,7 @@ const SidebarNavigation: FC<SidebarNavigationProps> = ({ className }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { address } = useAccount();
   const { login } = useAuth();
 
@@ -40,14 +42,8 @@ const SidebarNavigation: FC<SidebarNavigationProps> = ({ className }) => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-
-    // Set initial value
     checkMobile();
-
-    // Add event listener for window resize
     window.addEventListener("resize", checkMobile);
-
-    // Cleanup
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
@@ -56,13 +52,10 @@ const SidebarNavigation: FC<SidebarNavigationProps> = ({ className }) => {
   };
 
   const handleNavClick = (href: string) => {
-    // Smooth scroll to section
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
-
-    // Close mobile sidebar after clicking
     if (isMobile) {
       setIsOpen(false);
     }
@@ -70,22 +63,19 @@ const SidebarNavigation: FC<SidebarNavigationProps> = ({ className }) => {
 
   const handleLaunchApp = async () => {
     if (!address) return;
-
+    setIsLoading(true);
     try {
-      // Call login with just the address
       const response = await login({ address } as any);
-
-      // Check if the user needs to be redirected to setup
       if (response.user?.username === null || response.user?.username === "") {
-        // User doesn't have a username yet
         router.push("/setup");
       } else {
-        // User already exists with username or was logged in successfully
         router.push("/dashboard");
       }
     } catch (error) {
       console.error("Error during authentication:", error);
       toast.error("Failed to authenticate. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -215,7 +205,9 @@ const SidebarNavigation: FC<SidebarNavigationProps> = ({ className }) => {
               <Button
                 onClick={handleLaunchApp}
                 className="bg-[#E0FE10] text-[#102A56] hover:bg-[#a8d500] font-medium py-3 px-6 md:px-8 md:py-3 text-sm md:text-base rounded-md w-full"
+                disabled={isLoading}
               >
+                {isLoading ? <Spinner size="sm" className="mr-2" /> : null}
                 Launch App
               </Button>
             )}
