@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function HowItWorksSection() {
   return (
-    <main className="min-h-screen text-white w-full mx-auto  md:max-w-xl xl:max-w-4xl 2xl:max-w-6xl">
+    <div className="text-white w-full mx-auto md:max-w-xl xl:max-w-4xl 2xl:max-w-6xl">
       {/* Hero Section */}{" "}
       <section className="hidden md:flex py-16 md:py-24 px-4">
         <div className="flex gap-12 items-center justify-between w-full">
@@ -231,6 +231,6 @@ export default function HowItWorksSection() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
