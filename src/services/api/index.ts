@@ -9,3 +9,5 @@ export * from "./client";
 
 // Export specific services
 export * from "./userService";
+
+export * from "./wagerService";

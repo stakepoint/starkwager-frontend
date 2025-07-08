@@ -17,6 +17,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAccount } from "@starknet-react/core";
 import { useWalletStore } from "@/store/persistStore";
 import { userService } from "@/services/api/userService";
+import { useAuth } from "../auth/useAuth";
 
 export interface Wager {
   id: string;
@@ -34,6 +35,14 @@ export interface Wager {
     username: string;
     avatar: string;
   }[];
+  createdBy: {
+    username: string;
+    avatar: string;
+  };
+}
+
+interface UseWagersOptions {
+  useMockData?: boolean;
 }
 
 export const useWager = () => {
@@ -64,25 +73,36 @@ export const useWager = () => {
     queryFn: async () => {
       try {
         const response = await wagerService.getAllWagers();
-        const wagersData = (response.data as Wager[]).filter(wager => wager.status === "active");
+        const wagersData = (response.data as Wager[]).filter(
+          (wager) => wager.status === "active"
+        );
         // Collect unique creator IDs
-        const creatorIds = Array.from(new Set(wagersData.map(w => w.createdById)));
+        const creatorIds = Array.from(
+          new Set(wagersData.map((w) => w.createdById))
+        );
         // Fetch and cache creator info
-        const creatorCache: Record<string, { username: string; picture: string | null }> = {};
+        const creatorCache: Record<
+          string,
+          { username: string; picture: string | null }
+        > = {};
         await Promise.all(
           creatorIds.map(async (id) => {
             try {
               const user = await userService.getUserById(id);
-              creatorCache[id] = { username: user.username, picture: user.picture };
+              creatorCache[id] = {
+                username: user.username,
+                picture: user.picture,
+              };
             } catch {
               creatorCache[id] = { username: "Unknown Creator", picture: null };
             }
           })
         );
         // Attach creator info to each wager
-        return wagersData.map(wager => ({
+        return wagersData.map((wager) => ({
           ...wager,
-          creatorUsername: creatorCache[wager.createdById]?.username || "Unknown Creator",
+          creatorUsername:
+            creatorCache[wager.createdById]?.username || "Unknown Creator",
         }));
       } catch (error) {
         console.error("Error fetching wagers:", error);
@@ -180,3 +200,99 @@ export const useWager = () => {
     refetchWagers,
   };
 };
+
+export function useWagers(options: UseWagersOptions = {}) {
+  const { tokens, isAuthenticated } = useAuth();
+  const { useMockData = false } = options;
+
+  return useQuery<Wager[]>({
+    queryKey: ["wagers", { useMockData }],
+    queryFn: async () => {
+      if (useMockData) {
+        const mockData = await wagerService.getMockWagers();
+        return processWagersData(mockData);
+      }
+
+      if (!tokens?.accessToken) {
+        throw new Error("No access token available");
+      }
+
+      const response = await wagerService.getAllWagers(tokens.accessToken);
+      return processWagersData(response);
+    },
+    enabled: useMockData || (isAuthenticated && !!tokens?.accessToken),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+    retry: (failureCount, error: any) => {
+      // Don't retry on auth errors
+      if (error?.response?.status === 401 || error?.response?.status === 403) {
+        return false;
+      }
+      return failureCount < 3;
+    },
+  });
+}
+
+// Helper function to process wagers data
+function processWagersData(wagers: any[]): Wager[] {
+  return wagers.map((wager: any) => {
+    // Create proper user objects for the left and right sides
+    const leftUser = {
+      username:
+        wager.createdBy?.username || `@${wager.creatorUsername || "creator"}`,
+      icon: wager.createdBy?.avatar || "/images/leftWagercardUserOneIcon.svg",
+    };
+
+    // Check if there's an opponent/second participant
+    const opponent =
+      wager.participants && wager.participants.length > 1
+        ? wager.participants[1]
+        : null;
+
+    const rightUser = opponent
+      ? {
+          id: "123" + wager.createdById,
+          username: opponent.username || "@opponent",
+          icon: opponent.avatar || "/images/rightWagercardUserOneIcon.svg",
+        }
+      : {
+          id: "123" + wager.createdById,
+          username: "Awaiting Opponent",
+          icon: "/images/opponent.svg",
+        };
+
+    return {
+      ...wager,
+      createdBy: leftUser,
+      rightUser,
+      // Keep the original creatorUsername for fallback
+      creatorUsername:
+        wager.createdBy?.username || wager.creatorUsername || "Unknown Creator",
+    };
+  });
+}
+
+// Helper hook to get filtered wagers by status
+export function useWagersByStatus(options: UseWagersOptions = {}) {
+  const { data: wagers = [], ...queryResult } = useWagers(options);
+
+  const activeWagers = wagers.filter(
+    (wager) => wager.status.toLowerCase() === "active"
+  );
+
+  const pendingWagers = wagers.filter(
+    (wager) => wager.status.toLowerCase() === "pending"
+  );
+
+  const completeWagers = wagers.filter(
+    (wager) => wager.status.toLowerCase() === "completed"
+  );
+
+  return {
+    activeWagers,
+    pendingWagers,
+    completeWagers,
+    allWagers: wagers,
+    ...queryResult,
+  };
+}
