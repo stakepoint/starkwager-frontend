@@ -35,6 +35,10 @@ export interface Wager {
     username: string;
     avatar: string;
   }[];
+  createdBy: {
+    username: string;
+    avatar: string;
+  };
 }
 
 interface UseWagersOptions {
@@ -241,24 +245,25 @@ function processWagersData(wagers: any[]): Wager[] {
 
     // Check if there's an opponent/second participant
     const opponent =
-      wager.opponent ||
-      (wager.participants && wager.participants.length > 1
+      wager.participants && wager.participants.length > 1
         ? wager.participants[1]
-        : null);
+        : null;
 
     const rightUser = opponent
       ? {
+          id: "123" + wager.createdById,
           username: opponent.username || "@opponent",
           icon: opponent.avatar || "/images/rightWagercardUserOneIcon.svg",
         }
       : {
+          id: "123" + wager.createdById,
           username: "Awaiting Opponent",
           icon: "/images/opponent.svg",
         };
 
     return {
       ...wager,
-      leftUser,
+      createdBy: leftUser,
       rightUser,
       // Keep the original creatorUsername for fallback
       creatorUsername:

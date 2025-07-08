@@ -112,12 +112,13 @@ export default function Wagers() {
           // Extract user data properly from the processed wager data
           const leftUser: User = (wager as any).leftUser || {
             username: wager.name || "@unknown",
-            icon: "/images/leftWagercardUserOneIcon.svg",
+            icon:
+              wager.createdBy.avatar || "/images/leftWagercardUserOneIcon.svg",
           };
 
           const rightUser: User = (wager as any).rightUser || {
-            username: "Awaiting Opponent",
-            icon: "/images/opponent.svg",
+            username: wager.participants?.[0].username || "Awaiting Opponent",
+            icon: wager.participants?.[0].avatar || "/images/opponent.svg",
           };
 
           return (
