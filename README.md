@@ -3,7 +3,7 @@
   ![Container](https://github.com/user-attachments/assets/9bff87ad-48d6-4237-8139-81d9ff94ede8)
 </div>
 
-## STARKWAGER - FRONTEND 🎲
+## STARKWAGER - FRONTEND - UPDATED BY ME TODAY 🎲
 
 **StarkWager** is a decentralized application (dApp) designed to leverage the **StarkNet** ecosystem, enabling users to place wagers on simple agreements or competitions with minimal transaction fees. The app ensures a seamless experience for users to deposit, withdraw, and interact with wagers, making it a powerful tool in the StarkNet ecosystem.
 
