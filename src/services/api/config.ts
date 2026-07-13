@@ -19,6 +19,7 @@ export const API_ENDPOINTS = {
   // Auth endpoints
   AUTH: {
     CREATE: "/auth/create-login",
+    REFRESH: "/auth/refresh-token",
   },
 
   // User endpoints
